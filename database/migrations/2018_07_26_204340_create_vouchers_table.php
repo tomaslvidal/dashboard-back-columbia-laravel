@@ -19,6 +19,7 @@ class CreateVouchersTable extends Migration
             $table->text('description');
             $table->string('fileName');
             $table->timestamps();
+            $table->softDeletes();  
         });
     }
 
