@@ -15,7 +15,15 @@ class CreateDestinationsTable extends Migration
     {
         Schema::create('destinations', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->string('subtitle');
+            $table->string('description');
+            $table->string('image1');
+            $table->string('image2');
+            $table->string('image3');
+            $table->string('image4');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
