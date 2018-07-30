@@ -3,10 +3,18 @@
 namespace Columbia;
 
 use Illuminate\Notifications\Notifiable;
+// use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    protected $table = 'users';
+
+    protected $primaryKey = 'id';
+
+    // protected $timestamps = false;
+
     use Notifiable;
 
     /**
@@ -26,4 +34,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function vouchers()
+    {
+        return $this->belongsToMany('Columbia\UserVoucher');
+    }
 }
