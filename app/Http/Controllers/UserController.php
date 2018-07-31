@@ -3,74 +3,42 @@
 namespace Columbia\Http\Controllers;
 
 use Columbia\User;
+
 use Columbia\Voucher;
-// use Carbon\Carbon;
+
 use Illuminate\Http\Request;
+
+use Columbia\Http\Resources\UserCollection;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return User::all();
+        return new UserCollection(User::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $user = User::create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Columbia\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::where('id', $id)->get();
 
-        return $user;
+        return new UserCollection($user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Columbia\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Columbia\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function update($id, Request $request)
     {
         $user = User::find($id);
@@ -78,12 +46,6 @@ class UserController extends Controller
         $user->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Columbia\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $user = User::find($id);

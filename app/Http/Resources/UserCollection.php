@@ -14,6 +14,24 @@ class UserCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $users = collect([]);
+
+        foreach ($this->collection as $user){
+            $vouchers = $user->vouchers()->get();
+
+            // foreach ($vouchers as $key => $voucher){
+            //     $created_at = $vouchers[$key]['pivot']['created_at'];
+
+            //     $vouchers[$key]['pivot_created_at'] = $created_at;
+
+            //     unset($vouchers[$key]['pivot']);
+            // }
+
+            $user->vouchers = $vouchers;
+
+            $users->push($user);
+        }
+
+        return $users;
     }
 }
