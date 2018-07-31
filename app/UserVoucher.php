@@ -2,15 +2,17 @@
 
 namespace Columbia;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserVoucher extends Model
+class UserVoucher extends Pivot
 {
-    protected $table = 'user_voucher';
+    // protected $table = 'user_voucher';
 
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
+
+    // protected $touches = ['users', 'vouchers'];
 
     // protected $timestamps = false;
 
-    protected $guarded = [];
+    // protected $guarded = [];
 }

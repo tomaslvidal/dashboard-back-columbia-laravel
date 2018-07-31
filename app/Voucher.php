@@ -16,6 +16,6 @@ class Voucher extends Model
 
     public function users()
     {
-        return $this->belongsToMany('Columbia\UserVoucher');
+        return $this->belongsToMany('Columbia\User', 'user_voucher')->using('Columbia\UserVoucher')->withPivot('created_at');
     }
 }

@@ -19,4 +19,6 @@ use Illuminate\Http\Request;
 //     return $user::all();
 // });
 
+Route::post('/users/add/voucher/{id}', 'UserController@add_voucher');
+
 Route::resource('/users', 'UserController');
