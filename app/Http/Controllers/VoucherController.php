@@ -3,83 +3,62 @@
 namespace Columbia\Http\Controllers;
 
 use Columbia\Voucher;
+
 use Illuminate\Http\Request;
+
+use Columbia\Http\Resources\VoucherCollection;
+
+use Columbia\Http\Requests\StoreVoucherAPI;
+
+use Columbia\Http\Requests\AddUserAPI;
 
 class VoucherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return new VoucherCollection(Voucher::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreVoucherAPI $request)
+    {
+        $voucher = Voucher::create($request->all());
+    }
+
+    public function show($id)
+    {
+        $voucher = Voucher::where('id', $id)->get();
+
+        return new VoucherCollection($voucher);
+    }
+
+    public function edit($id)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Columbia\Voucher  $voucher
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Voucher $voucher)
+    public function update($id, StoreVoucherAPI $request)
     {
-        //
+        $voucher = Voucher::find($id);
+
+        $voucher->update($request->all());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Columbia\Voucher  $voucher
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Voucher $voucher)
+    public function destroy($id)
     {
-        //
+        $voucher = Voucher::find($id);
+
+        $voucher->delete();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Columbia\Voucher  $voucher
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Voucher $voucher)
+    public function add_user($id, AddUserAPI $request)
     {
-        //
-    }
+        $voucher = Voucher::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Columbia\Voucher  $voucher
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Voucher $voucher)
-    {
-        //
+        $voucher->users()->attach($request->user_id);
     }
 }

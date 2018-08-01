@@ -4,11 +4,13 @@ namespace Columbia\Http\Controllers;
 
 use Columbia\User;
 
-use Columbia\Voucher;
-
 use Illuminate\Http\Request;
 
 use Columbia\Http\Resources\UserCollection;
+
+use Columbia\Http\Requests\StoreUserAPI;
+
+use Columbia\Http\Requests\AddVoucherAPI;
 
 class UserController extends Controller
 {
@@ -22,7 +24,7 @@ class UserController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(StoreUserAPI $request)
     {
         $user = User::create($request->all());
     }
@@ -39,7 +41,7 @@ class UserController extends Controller
         //
     }
 
-    public function update($id, Request $request)
+    public function update($id, StoreUserAPI $request)
     {
         $user = User::find($id);
 
@@ -53,7 +55,7 @@ class UserController extends Controller
         $user->delete();
     }
 
-    public function add_voucher($id, Request $request)
+    public function add_voucher($id, AddVoucherAPI $request)
     {
         $user = User::find($id);
 

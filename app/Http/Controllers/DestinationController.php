@@ -5,81 +5,52 @@ namespace Columbia\Http\Controllers;
 use Columbia\Destination;
 use Illuminate\Http\Request;
 
+//
+
+//use Columbia\Htt\Resources\DestinationCollection;
+
+use Columbia\Http\Requests\StoreDestinationAPI;
+
 class DestinationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return Destination::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreDestinationAPI $request)
     {
-        //
+        $destination = Destination::create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Columbia\Destination  $destination
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Destination $destination)
+    public function show($id)
     {
-        //
+        $destination = Destination::where('id', $id)->get();
+
+        return $destination;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Columbia\Destination  $destination
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Destination $destination)
+    public function edit($id)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Columbia\Destination  $destination
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Destination $destination)
+    public function update($id, StoreDestinationAPI $request)
     {
-        //
+        $destination = Destination::find($id);
+
+        $destination->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Columbia\Destination  $destination
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Destination $destination)
+    public function destroy($id)
     {
-        //
+        $destination = Destination::find($id);
+
+        $destination->delete();
     }
 }
