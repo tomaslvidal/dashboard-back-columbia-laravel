@@ -26,7 +26,7 @@ class StoreVoucherAPI extends FormRequest
         return [
             'name' => 'string|max:30',
             'description' => 'string|max:191',
-            // 'fileName' => 'file',
+            'fileName' => 'file',
         ];
     }
 }
