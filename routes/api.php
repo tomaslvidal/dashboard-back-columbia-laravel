@@ -19,6 +19,12 @@ use Illuminate\Http\Request;
 //     return $user::all();
 // });
 
-Route::post('/users/add/voucher/{id}', 'UserController@add_voucher');
+Route::post('/users/{id}/add/voucher', 'UserController@add_voucher');
 
-Route::resource('/users', 'UserController');
+Route::post('/vouchers/{id}/add/user', 'VoucherController@add_user');
+
+Route::resources([
+    'users' => 'UserController',
+    'destinations' => 'DestinationController',
+    'vouchers' => 'VoucherController',
+]);
