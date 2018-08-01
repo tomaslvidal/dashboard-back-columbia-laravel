@@ -14,6 +14,16 @@ class VoucherCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $vouchers = collect([]);
+
+        foreach ($this->collection as $voucher){
+            $users = $voucher->users()->get();
+
+            $voucher->users = $users;
+
+            $vouchers->push($voucher);
+        }
+
+        return $vouchers;
     }
 }
