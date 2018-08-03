@@ -11,6 +11,12 @@
 |
 */
 
+header('Access-Control-Allow-Methods: HEAD,GET,POST,PUT,OPTIONS,PATCH,DELETE');
+
+// header('Access-Control-Allow-Headers: *');
+
+header('Access-Control-Allow-Origin: *');
+
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
