@@ -52,6 +52,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        $user->timestamps = false;
+
         $user->delete();
     }
 
@@ -60,5 +62,14 @@ class UserController extends Controller
         $user = User::find($id);
 
         $user->vouchers()->attach($request->voucher_id);
+    }
+
+    public function restoring($id)
+    {
+        $user = User::withTrashed()->find($id);
+
+        $user->timestamps = false;
+
+        $user->restore();
     }
 }
