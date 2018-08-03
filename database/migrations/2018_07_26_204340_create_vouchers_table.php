@@ -17,7 +17,7 @@ class CreateVouchersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->string('fileName');
+            $table->string('fileName')->nullable();;
             $table->timestamps();
             $table->softDeletes();  
         });
