@@ -29,12 +29,22 @@ class StoreUserAPI extends FormRequest
      */
     public function rules()
     {
-        return [
+        $return = array(
             'password' => 'string|max:30',
             'name' => 'string|max:30',
             'last_name' => 'string|max:30',
-            'email' => 'email|required|unique:users,email,'.$this->id,
-            'telephone' => ['string', new Telephone],
-        ];
+            'email' => 'email|unique:users,email,'.$this->id,
+            'telephone' => ['string', 'nullable', new Telephone]
+        );
+
+        if($this->method()!="PUT" && $this->method()!="PATCH"){
+            foreach ($return as $key => $value) {
+                if($key!="telephone"){
+                    $return[$key] = $value."|required";
+                }
+            }
+        }
+
+        return $return;
     }
 }

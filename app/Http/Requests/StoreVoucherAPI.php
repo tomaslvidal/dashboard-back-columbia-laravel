@@ -4,6 +4,8 @@ namespace Columbia\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Columbia\Rules\fileExtension;
+
 class StoreVoucherAPI extends FormRequest
 {
     /**
@@ -23,10 +25,21 @@ class StoreVoucherAPI extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'string|max:30',
-            'description' => 'string|max:191',
-            'fileName' => 'file',
-        ];
+        $return = array(
+            'name' => 'string|required|max:30',
+            'description' => 'string|required|max:191',
+            'fileName' => 'size:3000',
+            'fileName' => ['file', new fileExtension],
+        );
+
+        if($this->method()!="PUT" && $this->method()!="PATCH"){
+            foreach ($return as $key => $value) {
+                if($key!="fileName"){
+                    $return[$key] = $value."|required";
+                }
+            }
+        }
+
+        return $return;
     }
 }

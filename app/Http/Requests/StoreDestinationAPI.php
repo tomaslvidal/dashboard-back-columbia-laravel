@@ -23,14 +23,24 @@ class StoreDestinationAPI extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' => 'string|max:60',
-            'subtitle' => 'string|max:60',
+        $return = array(
+            'title' => 'string|required|max:60',
+            'subtitle' => 'string|required|max:60',
             'description' => 'string|max:191',
-            'image1' => 'file|image',
-            'image2' => 'file|image',
-            'image3' => 'file|image',
-            'image4' => 'file|image',
-        ];
+            'image1' => 'file|image|size:3000',
+            'image2' => 'file|image|size:3000',
+            'image3' => 'file|image|size:3000',
+            'image4' => 'file|image|size:3000',
+        );
+
+        if($this->method()!="PUT" && $this->method()!="PATCH"){
+            foreach ($return as $key => $value) {
+                if($key!="description" && $key!="image1" && $key!="image2" && $key!="image3" && $key!="image4"){
+                    $return[$key] = $value."|required";
+                }
+            }
+        }
+
+        return $return;
     }
 }
