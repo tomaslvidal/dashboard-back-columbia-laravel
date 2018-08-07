@@ -47,6 +47,8 @@ class UniqueUserVoucher implements Rule
         }
         elseif($user_voucher>1){
             $this->reason = "¿?";
+
+            return false;
         }
         else{
             return true;
