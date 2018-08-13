@@ -76,21 +76,26 @@ class VoucherController extends Controller
         $voucher->save(); 
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $voucher = Voucher::find($id);
+        if($request->forceDelete!="true"){
+            $voucher = Voucher::find($id);
+            
+            $voucher->timestamps = false;
 
-        // for ($i=1; $i <= 5; $i++){
-        //     if(!empty($voucher['fileName'])) {
-        //         if(Storage::disk('local')->exists("vouchers/".$voucher['fileName'])){
-        //             Storage::disk('local')->delete("vouchers/".$voucher['fileName']);
-        //         }
-        //     }
-        // }
-        
-        $voucher->timestamps = false;
+            $voucher->delete();
+        }
+        else{
+            $voucher = Voucher::withTrashed()->find($id);
 
-        $voucher->delete();
+            if(!empty($voucher['fileName'])) {
+                if(Storage::disk('local')->exists("vouchers/".$voucher['fileName'])){
+                    Storage::disk('local')->delete("vouchers/".$voucher['fileName']);
+                }
+            }
+
+            $voucher->forceDelete();
+        }
     }
 
     public function add_user($id, AddUserAPI $request)

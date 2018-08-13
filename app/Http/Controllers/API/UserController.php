@@ -50,13 +50,20 @@ class UserController extends Controller
         $user->update($request->all());
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $user = User::find($id);
+        if($request->forceDelete!="true"){
+            $user = User::find($id);
 
-        $user->timestamps = false;
+            $user->timestamps = false;
 
-        $user->delete();
+            $user->delete();            
+        }
+        else{
+            $user = User::withTrashed()->find($id);
+
+            $user->forceDelete();
+        }
     }
 
     public function add_voucher($id, AddVoucherAPI $request)

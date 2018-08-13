@@ -77,21 +77,28 @@ class DestinationController extends Controller
         $destination->save();  
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $destination = Destination::find($id);
+        if($request->forceDelete!="true"){
+            $destination = Destination::find($id);
+            
+            $destination->timestamps = false;
 
-        // for ($i=1; $i <= 5; $i++){
-        //     if(!empty($destination['image'.$i])) {
-        //         if(Storage::disk('local')->exists("destinations/".$destination['image'.$i])){
-        //             Storage::disk('local')->delete("destinations/".$destination['image'.$i]);
-        //         }
-        //     }
-        // }
-        
-        $destination->timestamps = false;
+            $destination->delete();
+        }
+        else{
+            $destination = Destination::withTrashed()->find($id);
 
-        $destination->delete();
+            for ($i=1; $i <= 5; $i++){
+                if(!empty($destination['image'.$i])) {
+                    if(Storage::disk('local')->exists("destinations/".$destination['image'.$i])){
+                        Storage::disk('local')->delete("destinations/".$destination['image'.$i]);
+                    }
+                }
+            }
+
+            $destination->forceDelete();
+        }
     }
 
     public function restoring($id)
