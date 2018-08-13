@@ -11,6 +11,16 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.js('resources/assets/js/app.js', 'public/js/app.js')
    .sass('resources/assets/sass/app.scss', 'public/css')
-   .combine(['resources/assets/css/style.css'],'public/css/style.css');
+   .combine([
+   	'resources/assets/css/styles.css',
+   	'resources/assets/css/sb-admin.min.css',
+   	'resources/assets/css/responsive.css',
+   	'node_modules/bootstrap/dist/css/bootstrap.css',
+	'node_modules/bootstrap-vue/dist/bootstrap-vue.css',
+   	// 'resources/assets/css/datatables.min.css',
+   	'resources/assets/css/animate.css',
+   	// 'resources/assets/css/summernote-bs4.css',
+   	],'public/css/style.css');
+
