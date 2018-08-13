@@ -37,7 +37,7 @@
 export default {
   methods: {
     activeModal(){
-      this.$store.dispatch('changeStateLogin');
+      this.$store.dispatch('Modals/changeStateLogin');
     }
   }
 }

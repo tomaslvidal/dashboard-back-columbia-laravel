@@ -6,6 +6,7 @@
 */
 
 const Modals = {
+	namespaced: true,
 	state: {
 		login: false
 	},

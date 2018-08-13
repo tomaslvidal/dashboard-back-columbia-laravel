@@ -22,7 +22,7 @@
 			</div>
 		</div>
 
-		<b-modal ref="myModalRef" id="myModal" title="¿Listo para salir?" ok-title="Cerrar Sesión" cancel-title="Cancelar">
+		<b-modal ref="myModalRef" @hide="hideModal" v-model="showModal" id="myModal" title="¿Listo para salir?" ok-title="Cerrar Sesión" cancel-title="Cancelar">
 			Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.
 		</b-modal>
 	</div>
@@ -36,6 +36,21 @@ export default{
 		body.className += ' fixed-nav sticky-footer bg-dark';
 
 		body.setAttribute('id', 'page-top');
-	}
+	},
+ 	computed: {
+		showModal: {
+			get: function(){
+    			return this.$store.state.Modals.login
+			},
+			set: function(){
+				// this.$store.dispatch('Modals/changeStateLogin');
+			}
+  		}
+  	},
+  	methods:{
+  		hideModal(){
+  			this.$store.dispatch('Modals/changeStateLogin');
+  		}
+  	}
 }
 </script>
