@@ -8,16 +8,16 @@
 const Modals = {
 	namespaced: true,
 	state: {
-		login: false
+		logout: false
 	},
 	mutations:{
-		changeStateLogin: (state, payload) => {
-			state.login = !state.login;
+		StateLogout: (state, payload) => {
+			state.logout = !state.logout;
 		}
 	},
 	actions:{
-		changeStateLogin(context, payload){
-			context.commit('changeStateLogin')
+		StateLogout(context, payload){
+			context.commit('StateLogout')
 		}
 	}
 }

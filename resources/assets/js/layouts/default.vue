@@ -1,5 +1,5 @@
 <template>
-	<div class="loader">
+	<div class="columbia">
 		<nav-component></nav-component>
 
 		<div class="content-wrapper">
@@ -22,7 +22,7 @@
 			</div>
 		</div>
 
-		<b-modal ref="myModalRef" @hide="hideModal" v-model="showModal" id="myModal" title="¿Listo para salir?" ok-title="Cerrar Sesión" cancel-title="Cancelar">
+		<b-modal ref="myModalRef" @hide="toggleModal" :visible="showModal" id="myModal" title="¿Listo para salir?" ok-title="Cerrar Sesión" cancel-title="Cancelar">
 			Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.
 		</b-modal>
 	</div>
@@ -38,18 +38,13 @@ export default{
 		body.setAttribute('id', 'page-top');
 	},
  	computed: {
-		showModal: {
-			get: function(){
-    			return this.$store.state.Modals.login
-			},
-			set: function(){
-				// this.$store.dispatch('Modals/changeStateLogin');
-			}
+		showModal(){
+			return this.$store.state.Modals.logout
   		}
   	},
   	methods:{
-  		hideModal(){
-  			this.$store.dispatch('Modals/changeStateLogin');
+  		toggleModal(){
+  			this.$store.dispatch('Modals/StateLogout');
   		}
   	}
 }
