@@ -1,9 +1,10 @@
 @extends('template.layout')
 @section('title', 'Inicio')
 @section('content')
-  <example-component></example-component>
+<router-view></router-view>
 @endsection
 @section('script')
     <script>
+    	// Vue.config.devtools = true
     </script>
 @endsection
