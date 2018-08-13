@@ -1,6 +1,6 @@
 <?php
 
-namespace Columbia\Http\Controllers;
+namespace Columbia\Http\Controllers\API;
 
 use Columbia\User;
 
@@ -11,6 +11,8 @@ use Columbia\Http\Resources\UserCollection;
 use Columbia\Http\Requests\StoreUserAPI;
 
 use Columbia\Http\Requests\AddVoucherAPI;
+
+use Columbia\Http\Controllers\Controller;
 
 class UserController extends Controller
 {

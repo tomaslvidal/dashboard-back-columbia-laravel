@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('{path}', function () {
+//     return view('home');
+// })->where('path', '(.*)');
 
-Route::get('/test', function () {
-    return view('home');
-});
+Route::get('/{vue_capture?}', function () { return view('home'); })->where('vue_capture', '[\/\w\.-]*');

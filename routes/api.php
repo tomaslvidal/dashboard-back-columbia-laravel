@@ -19,7 +19,7 @@ Route::post('/destinations/{id}/restoring', 'DestinationController@restoring');
 //
 
 Route::resources([
-    'users' => 'UserController',
-    'destinations' => 'DestinationController',
-    'vouchers' => 'VoucherController',
+    'users' => 'API\UserController',
+    'destinations' => 'API\DestinationController',
+    'vouchers' => 'API\VoucherController',
 ]);

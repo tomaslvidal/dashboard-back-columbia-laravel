@@ -1,9 +1,12 @@
 <?php
 
-namespace Columbia\Http\Controllers;
+namespace Columbia\Http\Controllers\API;
 
 use Columbia\UserVoucher;
+
 use Illuminate\Http\Request;
+
+use Columbia\Http\Controllers\Controller;
 
 class UserVoucherController extends Controller
 {

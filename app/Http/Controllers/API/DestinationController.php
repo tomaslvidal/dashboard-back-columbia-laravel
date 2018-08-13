@@ -1,6 +1,6 @@
 <?php
 
-namespace Columbia\Http\Controllers;
+namespace Columbia\Http\Controllers\API;
 
 use Columbia\Destination;
 
@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 use Columbia\Http\Requests\StoreDestinationAPI;
+
+use Columbia\Http\Controllers\Controller;
 
 class DestinationController extends Controller
 {

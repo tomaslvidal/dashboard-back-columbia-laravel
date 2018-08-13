@@ -1,6 +1,6 @@
 <?php
 
-namespace Columbia\Http\Controllers;
+namespace Columbia\Http\Controllers\API;
 
 use Columbia\Voucher;
 
@@ -13,6 +13,8 @@ use Columbia\Http\Requests\StoreVoucherAPI;
 use Columbia\Http\Requests\AddUserAPI;
 
 use Illuminate\Support\Facades\Storage;
+
+use Columbia\Http\Controllers\Controller;
 
 class VoucherController extends Controller
 {
