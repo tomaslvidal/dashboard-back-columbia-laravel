@@ -13,3 +13,9 @@ yarn-error.log
 
 initOnlyLaravel
 initServer
+
+public/mix-manifest\.json
+
+package-lock\.json
+
+resources/views/template/layout2\.blade\.php
