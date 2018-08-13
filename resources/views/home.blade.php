@@ -5,6 +5,6 @@
 @endsection
 @section('script')
     <script>
-    	// Vue.config.devtools = true
+    	Vue.config.devtools = true
     </script>
 @endsection
