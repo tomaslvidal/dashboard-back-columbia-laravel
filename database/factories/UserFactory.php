@@ -15,9 +15,13 @@ use Faker\Generator as Faker;
 
 $factory->define(Columbia\User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'password' => $faker->password, // secret
+        'name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'email' => $faker->unique()->freeEmail,
+        'telephone' => $faker->e164PhoneNumber,
+        'created_at' => $faker->dateTimeThisYear($max = '2018-07-01 00:00:00', $timezone = 'America/Argentina/Buenos_Aires'),
+        'updated_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = 'America/Argentina/Buenos_Aires'),
         'remember_token' => str_random(10),
     ];
 });

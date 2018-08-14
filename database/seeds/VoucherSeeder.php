@@ -1,9 +1,10 @@
 <?php
+
 use Illuminate\Database\Seeder;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DatabaseSeeder extends Seeder
+class VoucherSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,13 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        factory('Columbia\User', 85)->create();
-
-        factory('Columbia\Destination', 13)->create();
-
-        factory('Columbia\Voucher', 27)->create();
-
-        factory('Columbia\UserVoucher', 25)->create();
+        factory('Columbia\Voucher', 50)->create();
 
         Model::reguard();
     }
