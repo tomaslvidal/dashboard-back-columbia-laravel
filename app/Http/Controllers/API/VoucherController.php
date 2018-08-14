@@ -30,14 +30,14 @@ class VoucherController extends Controller
 
     public function store(StoreVoucherAPI $request)
     {
-        $voucher = new Voucher($request->except('fileName'));
+        $voucher = new Voucher($request->except('file_name'));
 
-        if(null !== $request->file('fileName')){
-            $storagePath = Storage::disk('local')->put('vouchers', $request->file('fileName'));
+        if(null !== $request->file('file_name')){
+            $storagePath = Storage::disk('local')->put('vouchers', $request->file('file_name'));
 
             $storageName = basename($storagePath);
 
-            $voucher['fileName'] = $storageName;
+            $voucher['file_name'] = $storageName;
         }
 
         $voucher->save();
@@ -59,18 +59,18 @@ class VoucherController extends Controller
     {
         $voucher = Voucher::find($id);
 
-        $voucher->fill($request->except('fileName'));
+        $voucher->fill($request->except('file_name'));
 
-        if(null !== $request->file('fileName')){
-            if(Storage::disk('local')->exists("vouchers/".$voucher['fileName'])){
-                Storage::disk('local')->delete("vouchers/".$voucher['fileName']);
+        if(null !== $request->file('file_name')){
+            if(Storage::disk('local')->exists("vouchers/".$voucher['file_name'])){
+                Storage::disk('local')->delete("vouchers/".$voucher['file_name']);
             }
 
-            $storagePath = Storage::disk('local')->put('vouchers', $request->file('fileName'));
+            $storagePath = Storage::disk('local')->put('vouchers', $request->file('file_name'));
 
             $storageName = basename($storagePath);
 
-            $voucher['fileName'] = $storageName;
+            $voucher['file_name'] = $storageName;
         }
 
         $voucher->save(); 
@@ -88,9 +88,9 @@ class VoucherController extends Controller
         else{
             $voucher = Voucher::withTrashed()->find($id);
 
-            if(!empty($voucher['fileName'])) {
-                if(Storage::disk('local')->exists("vouchers/".$voucher['fileName'])){
-                    Storage::disk('local')->delete("vouchers/".$voucher['fileName']);
+            if(!empty($voucher['file_name'])) {
+                if(Storage::disk('local')->exists("vouchers/".$voucher['file_name'])){
+                    Storage::disk('local')->delete("vouchers/".$voucher['file_name']);
                 }
             }
 

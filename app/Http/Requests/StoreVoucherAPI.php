@@ -28,13 +28,13 @@ class StoreVoucherAPI extends FormRequest
         $return = array(
             'name' => 'string|required|max:30',
             'description' => 'string|required|max:191',
-            'fileName' => 'size:3000',
-            'fileName' => ['file', new fileExtension],
+            'file_name' => 'size:3000',
+            'file_name' => ['file', new fileExtension],
         );
 
         if($this->method()!="PUT" && $this->method()!="PATCH"){
             foreach ($return as $key => $value) {
-                if($key!="fileName"){
+                if($key!="file_name"){
                     $return[$key] = $value."|required";
                 }
             }
