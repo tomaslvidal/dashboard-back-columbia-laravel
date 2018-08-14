@@ -9,7 +9,7 @@ class UserVoucher extends Pivot
 	
     // protected $touches = ['users', 'vouchers'];
 
-    // protected $timestamps = false;
+    public $timestamps = false;
 
     // protected $guarded = [];
 
