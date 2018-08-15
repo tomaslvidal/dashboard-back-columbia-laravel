@@ -24,8 +24,8 @@ class StoreDestinationAPI extends FormRequest
     public function rules()
     {
         $return = array(
-            'title' => 'string|required|max:60',
-            'subtitle' => 'string|required|max:60',
+            'title' => 'string|max:60',
+            'subtitle' => 'string|max:60',
             'description' => 'string|max:191',
             'image1' => 'file|image|size:3000',
             'image2' => 'file|image|size:3000',

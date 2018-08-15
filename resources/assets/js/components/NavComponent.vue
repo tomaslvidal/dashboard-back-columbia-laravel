@@ -13,7 +13,7 @@
           <b-nav-text>Usuarios</b-nav-text>
         </b-nav-item>
 
-        <b-nav-item>
+        <b-nav-item to="/destinations">
           <i class="fa fa-window-maximize"></i>
           
           <b-nav-text>Destinos</b-nav-text>

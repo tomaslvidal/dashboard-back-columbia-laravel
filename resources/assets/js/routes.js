@@ -4,6 +4,8 @@ import Router from "vue-router";
 
 import Users from './views/Users.vue';
 
+import Destinations from './views/Destinations.vue';
+
 import Vouchers from './views/Vouchers.vue';
 
 import NotFound from './views/NotFound.vue';
@@ -27,6 +29,11 @@ export default new Router({
       path: "/users",
       name: "users",
       component: Users
+    },
+    {
+      path: "/destinations",
+      name: "destinations",
+      component: Destinations
     },
     {
       path: "*",

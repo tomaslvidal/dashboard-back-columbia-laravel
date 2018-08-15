@@ -1,6 +1,15 @@
 <template>
   <div>
     Vouchers
-    <router-link to="/users"><a>Users</a></router-link>
   </div>
 </template>
+
+<script>
+export default {
+	created(){
+		if(this.$store.state.Vouchers.request_made==false){
+			this.$store.dispatch('Vouchers/FETCH_VOUCHERS');
+		}
+	}
+}
+</script>
