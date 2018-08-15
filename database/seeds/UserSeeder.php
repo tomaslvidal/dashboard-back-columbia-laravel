@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         Model::unguard();
 
-        factory('Columbia\User', 50)->create();
+        factory('Columbia\User', 350)->create();
 
         Model::reguard();
     }
