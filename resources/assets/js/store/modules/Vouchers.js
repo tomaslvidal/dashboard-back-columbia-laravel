@@ -8,7 +8,7 @@ const Vouchers = {
 	},
 	mutations:{
 		SET_ITEMS(state, payload){
-			state.vouchers = payload;
+			state.items = payload;
 
 			state.request_made = true;
 		}
