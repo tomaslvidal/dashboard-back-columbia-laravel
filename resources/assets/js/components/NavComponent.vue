@@ -4,22 +4,22 @@
 
     <b-navbar-brand href="#">Columbia</b-navbar-brand>
 
-    <b-collapse is-nav id="nav_collapse">
+    <b-collapse :visible="visible" is-nav id="nav_collapse">
       <!-- Right aligned nav items -->
       <b-nav vertical class="navbar-nav navbar-sidenav">
-        <b-nav-item to="/users">
+        <b-nav-item @click="hideNavCollapse" to="/users">
           <i class="fa fa-window-maximize"></i>
           
           <b-nav-text>Usuarios</b-nav-text>
         </b-nav-item>
 
-        <b-nav-item>
+        <b-nav-item @click="hideNavCollapse" to="/destinations">
           <i class="fa fa-window-maximize"></i>
           
           <b-nav-text>Destinos</b-nav-text>
         </b-nav-item>
 
-        <b-nav-item to="/vouchers">
+        <b-nav-item @click="hideNavCollapse" to="/vouchers">
           <i class="fa fa-window-maximize"></i>
           
           <b-nav-text>Vouchers</b-nav-text>
@@ -35,9 +35,45 @@
 
 <script>
 export default {
+  created(){
+    this.watchWidth();
+
+    window.addEventListener('resize', ()=>{
+      this.watchWidth();
+    });
+
+    this.$root.$on('bv::toggle::collapse', () => {
+      if(this.permission==true){
+        this.$store.dispatch('Modals/StateNavCollapse');
+      }
+    });
+  },
+  data(){
+    return{
+      permission: false
+    }
+  },
   methods: {
     activeModal(){
       this.$store.dispatch('Modals/StateLogout');
+    },
+    hideNavCollapse(){
+      if(this.permission==true){
+        this.$store.dispatch('Modals/StateNavCollapse')
+      }
+    },
+    watchWidth(){
+      if(window.innerWidth<992){
+        this.permission = true;
+      }
+      else{
+        this.permission = false;
+      }
+    }
+  },
+  computed: {
+    visible(){
+      return this.$store.state.Modals.nav_collapse;
     }
   }
 }

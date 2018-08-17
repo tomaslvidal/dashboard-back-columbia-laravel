@@ -5,13 +5,14 @@
 <script>
 export default {
 	created(){
-		this.$store.dispatch('Vouchers/FETCH_ITEMS');
+		this.$store.dispatch('Destinations/FETCH_ITEMS');
 	},
 	data(){
 		return{
 			fields_: [
 				{ key: 'id', label: 'ID', sortable: true},
-				{ key: 'name', label: 'Nombre', 'class': 'text-center' },
+				{ key: 'title', label: 'Titulo', 'class': 'text-center' },
+				{ key: 'subtitle', label: 'Subtitulo' },
 				{ key: 'description', label: 'Descripción' },
 				{ key: 'created_at', sortable: true, label: 'Fecha de creación' },
 				{ key: 'actions', label: '' }
@@ -20,7 +21,7 @@ export default {
 	},
 	computed:{
 		items(){
-			return this.$store.state.Vouchers.items;
+			return this.$store.state.Destinations.items;
 		}
 	}
 }

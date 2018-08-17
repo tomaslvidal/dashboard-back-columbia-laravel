@@ -22,9 +22,7 @@
 			</div>
 		</div>
 
-		<b-modal ref="myModalRef" @hide="toggleModal" :visible="showModal" id="myModal" title="¿Listo para salir?" ok-title="Cerrar Sesión" cancel-title="Cancelar">
-			Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.
-		</b-modal>
+		<modal-logout/>
 	</div>
 </template>
 
@@ -36,16 +34,6 @@ export default{
 		body.className += ' fixed-nav sticky-footer bg-dark';
 
 		body.setAttribute('id', 'page-top');
-	},
- 	computed: {
-		showModal(){
-			return this.$store.state.Modals.logout
-  		}
-  	},
-  	methods:{
-  		toggleModal(){
-  			this.$store.dispatch('Modals/StateLogout');
-  		}
-  	}
+	}
 }
 </script>

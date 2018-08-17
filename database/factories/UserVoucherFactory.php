@@ -1,6 +1,4 @@
 <?php
-use Carbon\Carbon;
-
 $factory->define(Columbia\UserVoucher::class, function (Faker\Generator $faker){
 	$atributtes = array(
 		'state' => false,
@@ -27,7 +25,7 @@ $factory->define(Columbia\UserVoucher::class, function (Faker\Generator $faker){
 	return [
 		'user_id' => $atributtes['user_id'],
 		'voucher_id' => $atributtes['voucher_id'],
-		'created_at' => Carbon::now()
+		'created_at' => Carbon\Carbon::now()
 	];
 });
 
