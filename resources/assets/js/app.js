@@ -24,8 +24,6 @@ Vue.component('error404-layout', Error404);
 
 Vue.component('table-component', require('./components/TableComponent.vue'));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
 Vue.component('modal-logout', require('./components/ModalLogoutComponent.vue'));
 
 Vue.component('nav-component', require('./components/NavComponent.vue'));

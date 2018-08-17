@@ -3,20 +3,20 @@ import api from '../../gateways/api'
 const Users = {
 	namespaced: true,
 	state: {
-		users: {},
+		items: {},
 		request_made: false
 	},
 	mutations:{
-		SET_USERS(state, payload){
-			state.users = payload;
+		SET_ITEMS(state, payload){
+			state.items = payload;
 
 			state.request_made = true;
 		}
 
 	},
 	actions:{
-		async FETCH_USERS(context, payload){
-    		context.commit('SET_USERS', await api.get('users', payload));
+		async FETCH_ITEMS(context, payload){
+    		context.commit('SET_ITEMS', await api.get('users', payload));
 		}
 	}
 }
