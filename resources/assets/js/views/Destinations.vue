@@ -1,5 +1,5 @@
 <template>
-	<table-component :items="items" :fields="fields_"/>
+	<table-component :items="items" :fields="fields"/>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
 	},
 	data(){
 		return{
-			fields_: [
+			fields: [
 				{ key: 'id', label: 'ID', sortable: true},
 				{ key: 'title', label: 'Titulo', 'class': 'text-center' },
 				{ key: 'subtitle', label: 'Subtitulo' },

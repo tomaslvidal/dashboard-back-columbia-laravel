@@ -52633,28 +52633,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  beforeCreate: function beforeCreate() {
-    var body = document.querySelector('body');
+	beforeCreate: function beforeCreate() {
+		var body = document.querySelector('body');
 
-    body.className += ' fixed-nav sticky-footer bg-dark';
+		body.className += ' fixed-nav sticky-footer bg-dark';
 
-    body.setAttribute('id', 'page-top');
-  },
-
-  computed: {
-    showModal: function showModal() {
-      return this.$store.state.Modals.logout;
-    }
-  },
-  methods: {
-    toggleModal: function toggleModal() {
-      this.$store.dispatch('Modals/StateLogout');
-    }
-  }
+		body.setAttribute('id', 'page-top');
+	}
 });
 
 /***/ }),
@@ -52688,25 +52675,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "b-modal",
-        {
-          ref: "myModalRef",
-          attrs: {
-            visible: _vm.showModal,
-            id: "myModal",
-            title: "¿Listo para salir?",
-            "ok-title": "Cerrar Sesión",
-            "cancel-title": "Cancelar"
-          },
-          on: { hide: _vm.toggleModal }
-        },
-        [
-          _vm._v(
-            '\n\t\tSeleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.\n\t'
-          )
-        ]
-      )
+      _c("modal-logout")
     ],
     1
   )
@@ -52834,55 +52803,30 @@ if (false) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-
   mode: "history",
-
   routes: [{
-
     path: "/",
-
     name: "home",
-
     component: {
-
       template: '<div></div>' // load sync home
-
     } }, {
-
     path: "/vouchers",
-
     name: "vouchers",
-
     component: __WEBPACK_IMPORTED_MODULE_4__views_Vouchers_vue___default.a
-
   }, {
-
     path: "/users",
-
     name: "users",
-
     component: __WEBPACK_IMPORTED_MODULE_2__views_Users_vue___default.a
-
   }, {
-
     path: "/destinations",
-
     name: "destinations",
-
     component: __WEBPACK_IMPORTED_MODULE_3__views_Destinations_vue___default.a
-
   }, {
-
     path: "*",
-
     name: "404",
-
     meta: { layout: "error404" },
-
     component: __WEBPACK_IMPORTED_MODULE_5__views_NotFound_vue___default.a // load sync home
-
   }]
-
 }));
 
 /***/ }),
@@ -53309,7 +53253,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	data: function data() {
 		return {
-			fields_: [{ key: 'id', label: 'ID', sortable: true }, { key: 'title', label: 'Titulo', 'class': 'text-center' }, { key: 'subtitle', label: 'Subtitulo' }, { key: 'description', label: 'Descripción' }, { key: 'created_at', sortable: true, label: 'Fecha de creación' }, { key: 'actions', label: '' }]
+			fields: [{ key: 'id', label: 'ID', sortable: true }, { key: 'title', label: 'Titulo', 'class': 'text-center' }, { key: 'subtitle', label: 'Subtitulo' }, { key: 'description', label: 'Descripción' }, { key: 'created_at', sortable: true, label: 'Fecha de creación' }, { key: 'actions', label: '' }]
 		};
 	},
 
@@ -53329,7 +53273,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("table-component", {
-    attrs: { items: _vm.items, fields: _vm.fields_ }
+    attrs: { items: _vm.items, fields: _vm.fields }
   })
 }
 var staticRenderFns = []
@@ -53406,7 +53350,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	data: function data() {
 		return {
-			fields_: [{ key: 'id', label: 'ID', sortable: true }, { key: 'name', label: 'Nombre', 'class': 'text-center' }, { key: 'description', label: 'Descripción' }, { key: 'created_at', sortable: true, label: 'Fecha de creación' }, { key: 'actions', label: '' }]
+			fields: [{ key: 'id', label: 'ID', sortable: true }, { key: 'name', label: 'Nombre', 'class': 'text-center' }, { key: 'description', label: 'Descripción' }, { key: 'created_at', sortable: true, label: 'Fecha de creación' }, { key: 'actions', label: '' }]
 		};
 	},
 
@@ -53426,7 +53370,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("table-component", {
-    attrs: { items: _vm.items, fields: _vm.fields_ }
+    attrs: { items: _vm.items, fields: _vm.fields }
   })
 }
 var staticRenderFns = []
@@ -53533,19 +53477,12 @@ if (false) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-
 	modules: {
-
 		Modals: __WEBPACK_IMPORTED_MODULE_2__modules_Modals__["a" /* default */],
-
 		Users: __WEBPACK_IMPORTED_MODULE_3__modules_Users__["a" /* default */],
-
 		Vouchers: __WEBPACK_IMPORTED_MODULE_4__modules_Vouchers__["a" /* default */],
-
 		Destinations: __WEBPACK_IMPORTED_MODULE_5__modules_Destinations__["a" /* default */]
-
 	}
-
 }));
 
 /***/ }),
@@ -54499,50 +54436,34 @@ var index_esm = {
 
 "use strict";
 //ACTIONS:
-
-/*
-	* context.state
-	* context.commit('mutation')
-	* context.rootState
+/*
+	* context.state
+	* context.commit('mutation')
+	* context.rootState
 */
 
 var Modals = {
-
 	namespaced: true,
-
 	state: {
-
 		logout: false,
-
 		nav_collapse: false
-
 	},
-
 	mutations: {
-
 		StateLogout: function StateLogout(state, payload) {
-
 			state.logout = !state.logout;
 		},
-
 		StateNavCollapse: function StateNavCollapse(state, payload) {
-
 			state.nav_collapse = !state.nav_collapse;
 		}
-
 	},
-
 	actions: {
 		StateLogout: function StateLogout(context, payload) {
-
 			context.commit('StateLogout');
 		},
 		StateNavCollapse: function StateNavCollapse(context, payload) {
-
 			context.commit('StateNavCollapse');
 		}
 	}
-
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Modals);
@@ -54562,28 +54483,20 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 var Users = {
-
 	namespaced: true,
-
 	state: {
-
-		items: {},
-
+		users: {},
 		request_made: false
-
 	},
-
 	mutations: {
-		SET_ITEMS: function SET_ITEMS(state, payload) {
-
-			state.items = payload;
+		SET_USERS: function SET_USERS(state, payload) {
+			state.users = payload;
 
 			state.request_made = true;
 		}
 	},
-
 	actions: {
-		FETCH_ITEMS: function () {
+		FETCH_USERS: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(context, payload) {
 				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
 					while (1) {
@@ -54596,7 +54509,7 @@ var Users = {
 							case 3:
 								_context.t1 = _context.sent;
 
-								_context.t0.commit.call(_context.t0, 'SET_ITEMS', _context.t1);
+								_context.t0.commit.call(_context.t0, 'SET_USERS', _context.t1);
 
 							case 5:
 							case 'end':
@@ -54606,14 +54519,13 @@ var Users = {
 				}, _callee, this);
 			}));
 
-			function FETCH_ITEMS(_x, _x2) {
+			function FETCH_USERS(_x, _x2) {
 				return _ref.apply(this, arguments);
 			}
 
-			return FETCH_ITEMS;
+			return FETCH_USERS;
 		}()
 	}
-
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Users);
@@ -55407,28 +55319,20 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 var Vouchers = {
-
 	namespaced: true,
-
 	state: {
-
-		items: {},
-
+		vouchers: {},
 		request_made: false
-
 	},
-
 	mutations: {
-		SET_ITEMS: function SET_ITEMS(state, payload) {
-
-			state.items = payload;
+		SET_VOUCHERS: function SET_VOUCHERS(state, payload) {
+			state.vouchers = payload;
 
 			state.request_made = true;
 		}
 	},
-
 	actions: {
-		FETCH_ITEMS: function () {
+		FETCH_VOUCHERS: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(context, payload) {
 				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
 					while (1) {
@@ -55441,7 +55345,7 @@ var Vouchers = {
 							case 3:
 								_context.t1 = _context.sent;
 
-								_context.t0.commit.call(_context.t0, 'SET_ITEMS', _context.t1);
+								_context.t0.commit.call(_context.t0, 'SET_VOUCHERS', _context.t1);
 
 							case 5:
 							case 'end':
@@ -55451,14 +55355,13 @@ var Vouchers = {
 				}, _callee, this);
 			}));
 
-			function FETCH_ITEMS(_x, _x2) {
+			function FETCH_VOUCHERS(_x, _x2) {
 				return _ref.apply(this, arguments);
 			}
 
-			return FETCH_ITEMS;
+			return FETCH_VOUCHERS;
 		}()
 	}
-
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Vouchers);
@@ -55475,52 +55378,40 @@ var Vouchers = {
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
 
 
 var Destinations = {
-
 	namespaced: true,
-
 	state: {
-
-		items: {},
-
+		destinations: {},
 		request_made: false
-
 	},
-
 	mutations: {
-		SET_ITEMS: function SET_ITEMS(state, payload) {
-
-			state.items = payload;
+		SET_DESTINATIONS: function SET_DESTINATIONS(state, payload) {
+			state.destinations = payload;
 
 			state.request_made = true;
 		},
-		SET_ITEM: function SET_ITEM(state, payload) {
-
-			// let items = state.items.find(item => item.id ==)
-
+		SET_DESTINATION: function SET_DESTINATION(state, payload) {
+			// let items = state.destinations.find(item => item.id ==)
 		},
-		UPDATE_ITEM: function UPDATE_ITEM(state, payload) {
-
+		UPDATE_DESTINATION: function UPDATE_DESTINATION(state, payload) {
 			if (state.request_made == true) {
-
-				var index = state.items.findIndex(function (item) {
+				var index = state.destinations.findIndex(function (item) {
 					return item.id == payload.id;
 				});
 
 				var keys = Object.keys(payload.data);
 
 				for (var i = 0; i < keys.length; i++) {
-
-					state.items[index][keys[i]] = payload.data[keys[i]];
+					state.destinations[index][keys[i]] = payload.data[keys[i]];
 				}
 			}
 		}
 	},
-
 	actions: {
-		FETCH_ITEMS: function () {
+		FETCH_DESTINATIONS: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(context, payload) {
 				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
 					while (1) {
@@ -55533,7 +55424,7 @@ var Destinations = {
 							case 3:
 								_context.t1 = _context.sent;
 
-								_context.t0.commit.call(_context.t0, 'SET_ITEMS', _context.t1);
+								_context.t0.commit.call(_context.t0, 'SET_DESTINATIONS', _context.t1);
 
 							case 5:
 							case 'end':
@@ -55543,13 +55434,13 @@ var Destinations = {
 				}, _callee, this);
 			}));
 
-			function FETCH_ITEMS(_x, _x2) {
+			function FETCH_DESTINATIONS(_x, _x2) {
 				return _ref.apply(this, arguments);
 			}
 
-			return FETCH_ITEMS;
+			return FETCH_DESTINATIONS;
 		}(),
-		UPDATE_ITEM: function () {
+		UPDATE_DESTINATION: function () {
 			var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(context, payload) {
 				var item;
 				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
@@ -55563,7 +55454,7 @@ var Destinations = {
 								item = _context2.sent;
 
 
-								context.commit('UPDATE_ITEM', payload);
+								context.commit('UPDATE_DESTINATION', payload);
 
 							case 4:
 							case 'end':
@@ -55573,14 +55464,13 @@ var Destinations = {
 				}, _callee2, this);
 			}));
 
-			function UPDATE_ITEM(_x3, _x4) {
+			function UPDATE_DESTINATION(_x3, _x4) {
 				return _ref2.apply(this, arguments);
 			}
 
-			return UPDATE_ITEM;
+			return UPDATE_DESTINATION;
 		}()
 	}
-
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Destinations);
@@ -56483,226 +56373,13 @@ if (false) {
 
 /***/ }),
 /* 252 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var disposed = false
-var normalizeComponent = __webpack_require__(7)
-/* script */
-var __vue_script__ = __webpack_require__(253)
-/* template */
-var __vue_template__ = __webpack_require__(254)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\ExampleComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0ca92eac", Component.options)
-  } else {
-    hotAPI.reload("data-v-0ca92eac", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'c:\\xampp\\htdocs\\resources\\assets\\js\\components\\ExampleComponent.vue'");
 
 /***/ }),
-/* 253 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false
-    };
-  },
-
-  methods: {
-    countDownChanged: function countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown;
-    },
-    showAlert: function showAlert() {
-      this.dismissCountDown = this.dismissSecs;
-    }
-  }
-});
-
-/***/ }),
-/* 254 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("b-alert", { attrs: { show: "" } }, [_vm._v("Default Alert")]),
-      _vm._v(" "),
-      _c("b-alert", { attrs: { variant: "success", show: "" } }, [
-        _vm._v("Success Alert")
-      ]),
-      _vm._v(" "),
-      _c(
-        "b-alert",
-        {
-          attrs: {
-            variant: "danger",
-            dismissible: "",
-            show: _vm.showDismissibleAlert
-          },
-          on: {
-            dismissed: function($event) {
-              _vm.showDismissibleAlert = false
-            }
-          }
-        },
-        [_vm._v("\n    Dismissible Alert!\n  ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "b-alert",
-        {
-          attrs: {
-            show: _vm.dismissCountDown,
-            dismissible: "",
-            variant: "warning"
-          },
-          on: {
-            dismissed: function($event) {
-              _vm.dismissCountDown = 0
-            },
-            "dismiss-count-down": _vm.countDownChanged
-          }
-        },
-        [
-          _c("p", [
-            _vm._v(
-              "This alert will dismiss after " +
-                _vm._s(_vm.dismissCountDown) +
-                " seconds..."
-            )
-          ]),
-          _vm._v(" "),
-          _c("b-progress", {
-            attrs: {
-              variant: "warning",
-              max: _vm.dismissSecs,
-              value: _vm.dismissCountDown,
-              height: "4px"
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "b-btn",
-        {
-          staticClass: "m-1",
-          attrs: { variant: "info" },
-          on: { click: _vm.showAlert }
-        },
-        [_vm._v("\n    Show alert with count-down timer\n  ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "b-btn",
-        {
-          staticClass: "m-1",
-          attrs: { variant: "info" },
-          on: {
-            click: function($event) {
-              _vm.showDismissibleAlert = true
-            }
-          }
-        },
-        [
-          _vm._v(
-            "\n    Show dismissible alert (" +
-              _vm._s(_vm.showDismissibleAlert ? "visible" : "hidden") +
-              ")\n  "
-          )
-        ]
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0ca92eac", module.exports)
-  }
-}
-
-/***/ }),
+/* 253 */,
+/* 254 */,
 /* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
