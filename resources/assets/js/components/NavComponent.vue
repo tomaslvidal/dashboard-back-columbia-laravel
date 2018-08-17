@@ -2,7 +2,7 @@
   <b-navbar id="mainNav" toggleable="lg" type="dark" variant="dark" fixed="top">
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-    <b-navbar-brand href="#">Columbia</b-navbar-brand>
+    <b-navbar-brand href="#"><router-link to="/">Columbia</router-link></b-navbar-brand>
 
     <b-collapse :visible="visible" is-nav id="nav_collapse">
       <!-- Right aligned nav items -->

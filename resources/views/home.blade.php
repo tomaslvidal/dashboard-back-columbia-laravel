@@ -4,7 +4,7 @@
 <router-view></router-view>
 @endsection
 @section('script')
-    <script>
-    	Vue.config.devtools = true
-    </script>
+	<script>
+		Vue.config.devtools = true
+	</script>
 @endsection

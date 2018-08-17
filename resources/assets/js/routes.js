@@ -20,7 +20,7 @@ export default new Router({
       name: "home",
       component: {
         template: '<div></div>'
-      } // load sync home
+      }
     },
     {
       path: "/vouchers",
@@ -41,7 +41,7 @@ export default new Router({
       path: "*",
       name: "404",
       meta: { layout: "error404"},
-      component: NotFound // load sync home
+      component: NotFound
     }
   ]
 });

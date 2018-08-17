@@ -5,7 +5,9 @@
 <script>
 export default {
 	created(){
-		this.$store.dispatch('Vouchers/FETCH_ITEMS');
+		if(this.$store.state.Vouchers.request_made==false){
+			this.$store.dispatch('Vouchers/FETCH_ITEMS');
+		}
 	},
 	data(){
 		return{

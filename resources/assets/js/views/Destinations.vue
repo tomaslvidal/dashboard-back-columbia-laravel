@@ -5,7 +5,9 @@
 <script>
 export default {
 	created(){
-		this.$store.dispatch('Destinations/FETCH_ITEMS');
+		if(this.$store.state.Destinations.request_made==false){
+			this.$store.dispatch('Destinations/FETCH_ITEMS');
+		}
 	},
 	data(){
 		return{
