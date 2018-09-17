@@ -19,4 +19,14 @@ class Destination extends Model
     // protected $timestamps = false;
 
     protected $guarded = [];
+
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = ucfirst($value);
+    }
+
+    public function setSubtitleAttribute($value)
+    {
+        $this->attributes['subtitle'] = ucfirst($value);
+    }
 }

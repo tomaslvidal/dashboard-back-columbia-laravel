@@ -22,4 +22,9 @@ class Voucher extends Model
     {
         return $this->belongsToMany('Columbia\User')->using('Columbia\UserVoucher')->withPivot('created_at');
     }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucfirst($value);
+    }
 }
