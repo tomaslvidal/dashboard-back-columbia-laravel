@@ -4,22 +4,25 @@ use Columbia\User;
 
 use Illuminate\Http\Request;
 
-//Add Pivot
-Route::post('/users/{id}/add/voucher', 'API\UserController@add_voucher');
 
-Route::post('/vouchers/{id}/add/user', 'API\VoucherController@add_user');
-//
+// Route::group(['middleware' => '?'], function () {
+	//Add Pivot
+	Route::post('/users/{id}/add/voucher', 'API\UserController@add_voucher');
 
-//Restoring
-Route::post('/users/{id}/restoring', 'API\UserController@restoring');
+	Route::post('/vouchers/{id}/add/user', 'API\VoucherController@add_user');
+	//
 
-Route::post('/vouchers/{id}/restoring', 'API\VoucherController@restoring');
+	//Restoring
+	Route::post('/users/{id}/restoring', 'API\UserController@restoring');
 
-Route::post('/destinations/{id}/restoring', 'API\DestinationController@restoring');
-//
+	Route::post('/vouchers/{id}/restoring', 'API\VoucherController@restoring');
 
-Route::resources([
-    'users' => 'API\UserController',
-    'destinations' => 'API\DestinationController',
-    'vouchers' => 'API\VoucherController',
-]);
+	Route::post('/destinations/{id}/restoring', 'API\DestinationController@restoring');
+	//
+
+	Route::resources([
+	    'users' => 'API\UserController',
+	    'destinations' => 'API\DestinationController',
+	    'vouchers' => 'API\VoucherController',
+	]);
+// });
