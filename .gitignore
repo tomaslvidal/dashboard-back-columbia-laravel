@@ -21,3 +21,5 @@ package-lock\.json
 resources/views/template/layout2\.blade\.php
 
 public/css/app\.css
+
+composer\.lock
