@@ -94,16 +94,27 @@
       </div>
     </b-row>
 
-    <b-modal id="modalInfo" @hide="resetModal" :title="modalInfo.title" ok-only>
-      <pre>{{ modalInfo.content }}</pre>
-    </b-modal>
+    <slot name="html-modal" :reset="reset" :item="this.item.data">
+
+    </slot>
 
   </b-container>
 </template>
 
 <script>
+
 export default {
-  props:['items', 'fields'],
+  props:['items', 'fields', 'hide_footer'],
+  created(){
+    this.$root.$on('bv::modal::hide', (e) => {
+      if(e.trigger!=undefined){
+        
+        if(e.trigger == 'backdrop' && this.$store.state.Modals.modal_edit_save_state==false){
+          this.reset();
+        }
+      }
+    }); 
+  },
   data(){
     return {
       fields_: this.fields,
@@ -114,7 +125,7 @@ export default {
       sortDesc: false,
       sortDirection: 'asc',
       filter: null,
-      modalInfo: { title: '', content: '' },
+      item: { index: '', data: '', oldData: '' },
       striped: false,
       bordered: false,
       outlined: false,
@@ -153,17 +164,31 @@ export default {
   },
   methods: {
     info (item, index, button) {
-      this.modalInfo.title = `Row index: ${index}`
-      this.modalInfo.content = JSON.stringify(item, null, 2)
+      this.item.index = index;
+
+      this.item.oldData = JSON.parse(JSON.stringify(item));
+
+      this.item.data = item;
+
       this.$root.$emit('bv::show::modal', 'modalInfo', button)
     },
-    resetModal () {
-      this.modalInfo.title = ''
-      this.modalInfo.content = ''
-    },
     onFiltered (filteredItems) {
-      this.totalRows = filteredItems.length
-      this.currentPage = 1
+      this.totalRows = filteredItems.length;
+
+      this.currentPage = 1;
+    },
+    reset(e){
+      e!= undefined ? e.preventDefault() : '';
+      
+      if(this.item.oldData!=undefined && this.item.data!=undefined){
+        let keys = Object.keys(this.item.oldData);
+
+        for (let i = 0; i < Object.keys(this.item.oldData).length; i++) {
+          this.item.data[keys[i]] = this.item.oldData[keys[i]];
+        }
+
+        this.$store.dispatch('Users/UPDATE_ITEM', JSON.parse(JSON.stringify(this.item.data)));
+      }
     }
   }
 }
