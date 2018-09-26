@@ -10,6 +10,10 @@ import Vouchers from './modules/Vouchers';
 
 import Destinations from './modules/Destinations';
 
+import Accounts from './modules/Accounts';
+
+import Breadcrumb from './modules/Breadcrumb';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -17,6 +21,8 @@ export default new Vuex.Store({
 		Modals,
 		Users,
 		Vouchers,
-		Destinations
+		Destinations,
+		Accounts,
+		Breadcrumb
 	}
 });
