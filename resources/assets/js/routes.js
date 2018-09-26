@@ -8,6 +8,8 @@ import Destinations from './views/Destinations.vue';
 
 import Vouchers from './views/Vouchers.vue';
 
+import Login from './views/Login.vue';
+
 import NotFound from './views/NotFound.vue';
 
 Vue.use(Router);
@@ -36,6 +38,12 @@ export default new Router({
       path: "/destinations",
       name: "destinations",
       component: Destinations
+    },
+    {
+      path: "/login",
+      name: "login",
+      meta: { layout: "login"},
+      component: Login
     },
     {
       path: "*",

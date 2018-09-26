@@ -10,6 +10,8 @@ import Default from './layouts/Default.vue';
 
 import Error404 from './layouts/Error404.vue';
 
+import LoginLayout from './layouts/Login.vue';
+
 import router from './routes';
 
 import store from './store';
@@ -21,6 +23,8 @@ Vue.use(BootstrapVue);
 Vue.component('default-layout', Default);
 
 Vue.component('error404-layout', Error404);
+
+Vue.component('login-layout', LoginLayout);
 
 Vue.component('table-component', require('./components/TableComponent.vue'));
 
