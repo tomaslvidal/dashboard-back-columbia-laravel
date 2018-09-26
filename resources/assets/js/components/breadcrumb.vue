@@ -4,13 +4,10 @@
 
 <script>
 export default {
-  data () {
-    return {
-      items: [{
-        text: 'Inicio',
-        href: '#'
-      }]
-    }
-  }
+	computed:{
+		items(){
+			return this.$store.state.Breadcrumb.items;
+		}
+	}
 }
 </script>
