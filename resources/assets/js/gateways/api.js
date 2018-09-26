@@ -31,8 +31,8 @@ export default{
   create(model, data){
     return this.execute('post', `/${model}`, data)
   },
-  update(model, id, data){
-    return this.execute('put', `/${model}/${id}`, data)
+  update(model, data){
+    return this.execute('put', `/${model}/${data.id}`, data)
   },
   delete(model, id){
     return this.execute('delete', `/${model}/${id}`)
