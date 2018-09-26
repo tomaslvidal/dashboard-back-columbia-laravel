@@ -19,9 +19,11 @@
 
         <link href="{{ asset('css/style.css?v='.filemtime(public_path('css/style.css')) ) }}" rel="stylesheet">
 
-        <script>
-        window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
-        </script>
+        <?php
+        /*<script>
+            window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
+        </script>*/
+        ?>
 
         @yield('style')
     </head>
