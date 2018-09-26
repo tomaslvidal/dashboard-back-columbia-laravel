@@ -8,6 +8,17 @@ export default {
 		if(this.$store.state.Destinations.request_made==false){
 			this.$store.dispatch('Destinations/FETCH_ITEMS');
 		}
+
+		this.$store.dispatch('Breadcrumb/SET_ITEMS', [{
+			text: 'Inicio',
+			href: '/'
+		}, {
+			text: 'Destinos',
+			href: '#'
+		}, {
+			text: 'Lista',
+			active: true
+		}]);
 	},
 	data(){
 		return{

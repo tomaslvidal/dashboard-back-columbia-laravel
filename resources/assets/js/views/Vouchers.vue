@@ -8,6 +8,17 @@ export default {
 		if(this.$store.state.Vouchers.request_made==false){
 			this.$store.dispatch('Vouchers/FETCH_ITEMS');
 		}
+
+		this.$store.dispatch('Breadcrumb/SET_ITEMS', [{
+			text: 'Inicio',
+			href: '/'
+		}, {
+			text: 'Vouchers',
+			href: '#'
+		}, {
+			text: 'Lista',
+			active: true
+		}]);
 	},
 	data(){
 		return{
