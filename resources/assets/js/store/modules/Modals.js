@@ -9,7 +9,8 @@ const Modals = {
 	namespaced: true,
 	state: {
 		logout: false,
-		nav_collapse: false
+		nav_collapse: false,
+		modal_edit_save_state: false,
 	},
 	mutations:{
 		StateLogout: (state, payload) => {
@@ -17,6 +18,9 @@ const Modals = {
 		},
 		StateNavCollapse: (state, payload) => {
 			state.nav_collapse = !state.nav_collapse;
+		},
+		StateModalEditSave: (state, payload) => {
+			state.modal_edit_save_state = !state.modal_edit_save_state;
 		}
 	},
 	actions:{
@@ -25,6 +29,9 @@ const Modals = {
 		},
 		StateNavCollapse(context, payload){
 			context.commit('StateNavCollapse')
+		},
+		StateModalEditSave: (context, payload) => {
+			context.commit('StateModalEditSave')
 		}
 	}
 }
