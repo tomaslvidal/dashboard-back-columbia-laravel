@@ -10,14 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('{path}', function () {
-//     return view('home');
-// })->where('path', '(.*)');
 
-Route::get('/login', function () {
-    return view('home');
-})->name('login')->where('vue_capture', '[\/\w\.-]*');
+Route::get('/{vue_capture?}', function () { return view('home'); })->where('vue_capture', '[\/\w\.-]*');
 
-// Route::group(['middleware' => 'auth:api'], function () {
-	Route::get('/{vue_capture?}', function () { return view('home'); })->where('vue_capture', '[\/\w\.-]*');
-// });
+Route::get('/validate-token', function () {
+	return ['data' => 'Token is valid'];
+})->middleware('auth:api');
