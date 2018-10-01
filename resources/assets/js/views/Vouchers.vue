@@ -11,7 +11,7 @@ export default {
 
 		this.$store.dispatch('Breadcrumb/SET_ITEMS', [{
 			text: 'Inicio',
-			href: '/'
+			href: '/home'
 		}, {
 			text: 'Vouchers',
 			href: '#'
