@@ -4,10 +4,13 @@ window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-let token = document.head.querySelector('meta[name="csrf-token"]');
+if(localStorage.getItem('user-token')!=undefined && axios.defaults.headers.common['Authorization']==undefined){
+	axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('user-token');
+}
 
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
+if(document.head.querySelector('meta[name="csrf-token"]')){
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').content;
+}
+else{
     console.error('CSRF token is needed');
 }
