@@ -1,22 +1,28 @@
 <template>
     <div class="container">
-        <div class="row">
-            <div class="col-12 div-general">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-md-offset-2">
+                <!-- <h2>Ingreso</h2> -->
+
                 <form @submit.prevent="login(user)">
-                    <div class="text-left">
+                    <div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control form-control-sm" id="email" placeholder="Escribe tu email" v-model="user.email">
+                            <input type="email" class="form-control" id="email" placeholder="Escribe tu email" v-model="user.email">
                         </div>
 
                         <div class="form-group">
                             <label for="password">Contraseña</label>
-                            <input type="password" class="form-control form-control-sm" id="password" placeholder="Escribe tu contraseña" v-model="user.password">
+                            <input type="password" class="form-control" id="password" placeholder="Escribe tu contraseña" v-model="user.password">
                         </div>
                     </div>
 
                     <div class="text-center">
-                        <button class="btn btn-sm btn-primary">Ingresar</button>
+                        <button class="btn btn-primary">Ingresar</button>
+
+                        <router-link class="btn btn-default" :to="{ name: 'index' }">
+                            Inicio
+                        </router-link>
                     </div>
                 </form>
             </div>

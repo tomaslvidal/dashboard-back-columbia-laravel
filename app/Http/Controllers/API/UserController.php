@@ -29,6 +29,11 @@ class UserController extends Controller
     public function store(StoreUserAPI $request)
     {
         $user = User::create($request->all());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Register success.',
+        ]);
     }
 
     public function show($id)
