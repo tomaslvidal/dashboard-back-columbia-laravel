@@ -14,6 +14,8 @@ use Columbia\Http\Requests\AddUserAPI;
 
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Input;
+
 use Columbia\Http\Controllers\Controller;
 
 class VoucherController extends Controller
@@ -62,8 +64,10 @@ class VoucherController extends Controller
         $voucher->fill($request->except('file_name'));
 
         if(null !== $request->file('file_name')){
-            if(Storage::disk('local')->exists("vouchers/".$voucher['file_name'])){
-                Storage::disk('local')->delete("vouchers/".$voucher['file_name']);
+            if($voucher['file_name']!=""){
+                if(Storage::disk('local')->exists("vouchers/".$voucher['file_name'])){
+                    Storage::disk('local')->delete("vouchers/".$voucher['file_name']);
+                }
             }
 
             $storagePath = Storage::disk('local')->put('vouchers', $request->file('file_name'));
@@ -71,6 +75,10 @@ class VoucherController extends Controller
             $storageName = basename($storagePath);
 
             $voucher['file_name'] = $storageName;
+
+            // $voucher['file_name'] = Storage::url('vouchers/'.$storageName);
+
+            // return Storage::download('vouchers/'.$storageName);
         }
 
         $voucher->save(); 

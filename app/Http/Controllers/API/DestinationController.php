@@ -62,8 +62,10 @@ class DestinationController extends Controller
 
         for ($i=1; $i <= 5; $i++){
             if(null !== $request->file('image'.$i)){
-                if(Storage::disk('local')->exists("destinations/".$destination['image'.$i])){
-                    Storage::disk('local')->delete("destinations/".$destination['image'.$i]);
+                if($destination['image'.$i]!=""){
+                    if(Storage::disk('local')->exists("destinations/".$destination['image'.$i])){
+                        Storage::disk('local')->delete("destinations/".$destination['image'.$i]);
+                    }
                 }
 
                 $storagePath = Storage::disk('local')->put('destinations', $request->file('image'.$i));
