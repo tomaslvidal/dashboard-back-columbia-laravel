@@ -27,10 +27,10 @@ class StoreDestinationAPI extends FormRequest
             'title' => 'string|max:60',
             'subtitle' => 'string|max:60',
             'description' => 'string|max:191',
-            'image1' => 'file|image|size:3000',
-            'image2' => 'file|image|size:3000',
-            'image3' => 'file|image|size:3000',
-            'image4' => 'file|image|size:3000',
+            'image1' => 'file|image|max:2000',
+            'image2' => 'file|image|max:2000',
+            'image3' => 'file|image|max:2000',
+            'image4' => 'file|image|max:2000',
         );
 
         if($this->method()!="PUT" && $this->method()!="PATCH"){
