@@ -25,11 +25,16 @@ class fileExtension implements Rule
      */
     public function passes($attribute, $value)
     {
-        if($value->getClientOriginalExtension()=="exe" || $value->getClientOriginalExtension()=="bat"){
-            return false;
+        if(method_exists($value,'getClientOriginalExtension')){
+            if($value->getClientOriginalExtension()=="exe" || $value->getClientOriginalExtension()=="bat"){
+                return false;
+            }
+            else{
+                return true;
+            }
         }
         else{
-            return true;
+            return false;
         }
     }
 
