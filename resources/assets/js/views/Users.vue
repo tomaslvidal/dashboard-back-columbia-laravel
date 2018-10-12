@@ -99,9 +99,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-.probando{
-	color: red;
-}
-</style>

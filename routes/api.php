@@ -5,7 +5,7 @@ use Columbia\User;
 use Illuminate\Http\Request;
 
 
-Route::group(['middleware' => 'auth:api'], function () {
+// Route::group(['middleware' => 'auth:api'], function () {
 	//Add Pivot
 	Route::post('/users/{id}/add/voucher', 'API\UserController@add_voucher');
 
@@ -25,4 +25,4 @@ Route::group(['middleware' => 'auth:api'], function () {
 	    'destinations' => 'API\DestinationController',
 	    'vouchers' => 'API\VoucherController',
 	]);
-});
+// });

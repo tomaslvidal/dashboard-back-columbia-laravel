@@ -68,12 +68,11 @@
                :no-provider-sorting="no_provider_sorting"
       >
         <template slot="actions" slot-scope="row">
-          <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
-          <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
-            Info modal
+          <b-button variant="primary" size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
+            Editar
           </b-button>
-          <b-button size="sm" @click.stop="row.toggleDetails">
-            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+          <b-button variant="danger" size="sm" @click.stop="row.toggleDetails">
+            Borrar
           </b-button>
         </template>
         <template slot="row-details" slot-scope="row">
@@ -163,7 +162,7 @@ export default {
     }
   },
   methods: {
-    info (item, index, button) {
+    info(item, index, button){
       this.item.index = index;
 
       this.item.oldData = JSON.parse(JSON.stringify(item));

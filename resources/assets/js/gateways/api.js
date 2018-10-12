@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import axios from 'axios'
+import Vue from 'vue';
+
+import axios from 'axios';
 
 const client = axios.create({
   baseURL: '/api',
@@ -22,19 +23,19 @@ export default{
   },
   get(model ,id){
   	if(id!=undefined){
-    	return this.execute('get', `/${model}/${id}`)
+    	return this.execute('get', `/${model}/${id}`);
   	}
   	else{
-    	return this.execute('get', `/${model}`)
+    	return this.execute('get', `/${model}`);
   	}
   },
   create(model, data){
-    return this.execute('post', `/${model}`, data)
+    return this.execute('post', `/${model}`, data);
   },
   update(model, data){
-    return this.execute('put', `/${model}/${data.id}`, data)
+    return this.execute('put', `/${model}/${data.id}`, data);
   },
   delete(model, id){
-    return this.execute('delete', `/${model}/${id}`)
+    return this.execute('delete', `/${model}/${id}`);
   }
 }
