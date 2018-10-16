@@ -6,12 +6,6 @@ import VueRouter from 'vue-router';
 
 import Template from './Template.vue';
 
-import Default from './layouts/Default.vue';
-
-import Error404 from './layouts/Error404.vue';
-
-import EntryLayout from './layouts/Entry.vue';
-
 import router from './routes';
 
 import store from './store';
@@ -20,13 +14,17 @@ window.Vue = require('vue');
 
 Vue.use(BootstrapVue);
 
-Vue.component('default-layout', Default);
+Vue.component('default-layout', require('./layouts/Default.vue'));
 
-Vue.component('error404-layout', Error404);
+Vue.component('error404-layout', require('./layouts/Error404.vue'));
 
-Vue.component('entry-layout', EntryLayout);
+Vue.component('entry-layout', require('./layouts/Entry.vue'));
 
 Vue.component('table-component', require('./components/TableComponent.vue'));
+
+Vue.component('table-component', require('./components/TableComponent.vue'));
+
+Vue.component('alert-utilities', require('./components/utilities/AlertComponent.vue'));
 
 Vue.component('modal-logout', require('./components/ModalLogoutComponent.vue'));
 

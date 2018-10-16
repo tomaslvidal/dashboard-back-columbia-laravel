@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-<!--     <div class="d-flex justify-content-center">
-      <router-link :to="{ name: 'index' }"><img src="/img/logo.png" style="height: 200px; margin-left: -15px;"></router-link>
-    </div> -->
-
     <router-view></router-view>
   </div>
 </template>

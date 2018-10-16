@@ -1,5 +1,5 @@
 <template>
-	<div class="columbia">
+	<div class="columbia">		
 		<nav-component></nav-component>
 
 		<div class="content-wrapper">
