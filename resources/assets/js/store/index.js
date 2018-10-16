@@ -4,6 +4,8 @@ import Vuex from 'vuex';
 
 import Modals from './modules/Modals';
 
+import Alerts from './modules/Alerts';
+
 import Users from './modules/Users';
 
 import Vouchers from './modules/Vouchers';
@@ -19,6 +21,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	modules: {
 		Modals,
+		Alerts,
 		Users,
 		Vouchers,
 		Destinations,
