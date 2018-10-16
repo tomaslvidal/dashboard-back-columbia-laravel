@@ -1,7 +1,21 @@
 <template>
 	<table-component :items="items" :fields="fields" :hide_footer="hide_footer">
-		<div slot="html-modal" slot-scope="{ item, reset }">
-			<b-modal id="modalInfo" :visible="visible" :hide-footer="hide_footer" :title="`Persona: ${item.name} ${item.last_name}`" ok-title="Guardar" cancelVariant="danger" cancel-title="Reset" @ok="okModal($event, item)" @cancel="reset">
+		<div slot="html-modal" slot-scope="{item, reset}">
+			<b-modal ref="modal" id="modalInfo" :visible="visible" :hide-footer="hide_footer" :title="`Persona: ${item.name} ${item.last_name}`" ok-title="Guardar" cancelVariant="danger" cancel-title="Reset" @shown="asd" @hidden="setReset" @ok="okModal($event, item)" @cancel="reset">
+				<div slot="modal-header" class="modal_ flex-column">
+					<div class="d-flex flex-grow-1 flex-column alert-styles">
+						<alert-utilities v-if="$store.state.Alerts.save_user" text-update="Usuario actualizado">
+							{{'Actualizando usuario.'}}
+						</alert-utilities>
+					</div>
+
+					<div class="d-flex flex-grow-1">
+						<h5 class="modal-title">{{'Persona: '+item.name+" "+item.last_name}}</h5>
+
+						<button type="button" @click="closeModal(reset)" aria-label="Close" class="close">×</button>
+					</div>
+				</div>
+
 				<form>
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
@@ -75,12 +89,12 @@ export default {
 				{ key: 'email', label: 'Email' },
 				{ key: 'telephone', label: 'Telefono' },
 				{ key: 'created_at', sortable: true, label: 'Fecha de creación' },
-				{ key: 'updated_at', sortable: true, label: 'Fecha de actualización' },
 				{ key: 'actions', label: '' }
 			],
 			hide_footer: false,
 			visible: false,
-			item: {}
+			item: {},
+			show_alert: true,
 		}
 	},
 	computed:{
@@ -95,7 +109,34 @@ export default {
 			this.$store.dispatch('Users/UPDATE_ITEM', JSON.parse(JSON.stringify(item)));
 
         	this.$store.dispatch('Modals/StateModalEditSave');
+		},
+		closeModal(reset){
+			reset();
+
+			this.$refs.modal.hide();
+		},
+		setReset(){
+			this.$store.dispatch('Alerts/save_user_false');
+		},
+		asd(){
+
 		}
 	}
 }
 </script>
+
+<style>
+	.modal_{
+		display: flex;
+		flex: 1;
+	}
+
+	.alert-styles{
+		margin-left: -16px;
+		margin-right: -16px;
+		margin-top: -6px;
+		height: 45px;
+		display: flex;
+		justify-content: center;
+	}
+</style>

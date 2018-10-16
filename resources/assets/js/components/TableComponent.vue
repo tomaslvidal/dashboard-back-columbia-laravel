@@ -1,11 +1,11 @@
 <template>
   <b-container fluid>
-    <!-- User Interface controls -->
     <b-row>
       <b-col md="6" class="my-1">
         <b-form-group horizontal label="Buscar" class="mb-0">
           <b-input-group>
             <b-form-input v-model="filter" placeholder="" />
+
             <b-input-group-append>
               <b-btn :disabled="!filter" @click="filter = ''">Limpiar</b-btn>
             </b-input-group-append>
@@ -15,10 +15,11 @@
       <b-col md="6" class="my-1">
         <b-form-group horizontal label="Ordenar por" class="mb-0">
           <b-input-group>
-            <b-form-select v-model="sortBy" :options="sortOptions">
-            </b-form-select>
+            <b-form-select v-model="sortBy" :options="sortOptions" />
+
             <b-form-select :disabled="!sortBy" v-model="sortDesc" slot="append">
               <option :value="false">Asc</option>
+
               <option :value="true">Desc</option>
             </b-form-select>
           </b-input-group>
@@ -29,6 +30,7 @@
           <b-input-group>
             <b-form-select v-model="sortDirection" slot="append">
               <option value="asc">Asc</option>
+
               <option value="desc">Desc</option>
             </b-form-select>
           </b-input-group>
@@ -42,35 +44,35 @@
     </b-row>
 
     <div class="table-responsive">
-    <!-- Main table element -->
       <b-table v-if="_items.length>0" show-empty
-               :stacked="stacked"
-               :responsive="responsive"
-               :items="_items"
-               :fields="fields_"
-               :current-page="currentPage"
-               :per-page="perPage"
-               :filter="filter"
-               :sort-by.sync="sortBy"
-               :sort-desc.sync="sortDesc"
-               :sort-direction="sortDirection"
-               @filtered="onFiltered"
-               :striped="striped"
-               :bordered="bordered"
-               :outlined="outlined"
-               :small="small"
-               :hover="hover"
-               :dark="dark"
-               :fixed="fixed"
-               :foot-clone="footClone"
-               :empty-filtered-text="empty_filtered_text"
-               :empty-text="empty_text"
-               :no-provider-sorting="no_provider_sorting"
+        :stacked="stacked"
+        :responsive="responsive"
+        :items="_items"
+        :fields="fields_"
+        :current-page="currentPage"
+        :per-page="perPage"
+        :filter="filter"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :sort-direction="sortDirection"
+        @filtered="onFiltered"
+        :striped="striped"
+        :bordered="bordered"
+        :outlined="outlined"
+        :small="small"
+        :hover="hover"
+        :dark="dark"
+        :fixed="fixed"
+        :foot-clone="footClone"
+        :empty-filtered-text="empty_filtered_text"
+        :empty-text="empty_text"
+        :no-provider-sorting="no_provider_sorting"
       >
         <template slot="actions" slot-scope="row">
           <b-button variant="primary" size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
             Editar
           </b-button>
+
           <b-button variant="danger" size="sm" @click.stop="row.toggleDetails">
             Borrar
           </b-button>
@@ -103,13 +105,13 @@
 <script>
 
 export default {
-  props:['items', 'fields', 'hide_footer'],
+  props: ['items', 'fields'],
   created(){
     this.$root.$on('bv::modal::hide', (e) => {
       if(e.trigger!=undefined){
         
         if(e.trigger == 'backdrop' && this.$store.state.Modals.modal_edit_save_state==false){
-          this.reset();
+          this.reset(undefined, true);
         }
       }
     }); 
@@ -176,7 +178,7 @@ export default {
 
       this.currentPage = 1;
     },
-    reset(e){
+    reset(e, ONLY_INTERN_UPDATE_ITEM){
       e!= undefined ? e.preventDefault() : '';
       
       if(this.item.oldData!=undefined && this.item.data!=undefined){
@@ -186,7 +188,12 @@ export default {
           this.item.data[keys[i]] = this.item.oldData[keys[i]];
         }
 
-        this.$store.dispatch('Users/UPDATE_ITEM', JSON.parse(JSON.stringify(this.item.data)));
+        if(ONLY_INTERN_UPDATE_ITEM==true){
+          this.$store.dispatch('Users/ONLY_INTERN_UPDATE_ITEM', JSON.parse(JSON.stringify(this.item.data)));
+        }
+        else{
+          this.$store.dispatch('Users/UPDATE_ITEM', JSON.parse(JSON.stringify(this.item.data)));
+        }
       }
     }
   }
