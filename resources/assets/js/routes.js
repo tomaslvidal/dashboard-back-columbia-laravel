@@ -2,20 +2,6 @@ import Vue from "vue";
 
 import Router from "vue-router";
 
-import Index from './views/Index.vue';
-
-import Users from './views/Users.vue';
-
-import Destinations from './views/Destinations.vue';
-
-import Vouchers from './views/Vouchers.vue';
-
-import Login from './views/Login.vue';
-
-import Register from './views/Register.vue';
-
-import NotFound from './views/NotFound.vue';
-
 import store from './store';
 
 Vue.use(Router);
@@ -67,51 +53,94 @@ export default new Router({
       path: '/',
       name: 'index',
       meta: { layout: "entry"},
-      component: Login
+      component: require('./views/Login.vue')
     },
     {
       path: "/home",
       name: "home",
       component: {
-        template: '<div></div>'
+        template: '<div></div>',
+        created(){
+          store.dispatch('Breadcrumb/SET_ITEMS', [{
+            text: 'Inicio',
+            to: {name: 'home'},
+            active: true
+          }]);
+        }
       },
       beforeEnter: Authenticated
     },
     {
       path: "/vouchers",
       name: "vouchers",
-      component: Vouchers,
+      component: require('./views/Vouchers/index.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/vouchers/create',
+      name: "voucher_create",
+      component: require('./views/Vouchers/create.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/vouchers/:id',
+      name: "voucher_edit",
+      component: require('./views/Vouchers/edit.vue'),
       beforeEnter: Authenticated
     },
     {
       path: "/users",
       name: "users",
-      component: Users,
+      component: require('./views/Users/index.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/users/create',
+      name: "user_create",
+      component: require('./views/Users/create.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/users/:id',
+      name: "user_edit",
+      component: require('./views/Users/edit.vue'),
       beforeEnter: Authenticated
     },
     {
       path: "/destinations",
       name: "destinations",
-      component: Destinations,
+      component: require('./views/Destinations/index.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/destinations/create',
+      name: "destination_create",
+      component: require('./views/Destinations/create.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/destinations/:id',
+      name: "destination_edit",
+      component: require('./views/Destinations/edit.vue'),
       beforeEnter: Authenticated
     },
     {
       path: "/login",
       name: "login",
       meta: { layout: "entry"},
-      component: Login
+      component: require('./views/Login.vue')
     },
     {
       path: "/register",
       name: "register",
       meta: { layout: "entry"},
-      component: Login
+      component: require('./views/Register.vue')
     },
     {
       path: "*",
       name: "404",
       meta: { layout: "error404"},
-      component: NotFound
+      component: require('./views/NotFound.vue')
     }
   ]
 });
