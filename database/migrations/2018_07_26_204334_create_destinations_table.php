@@ -18,11 +18,11 @@ class CreateDestinationsTable extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->string('description');
-            $table->string('image1')->nullable();
-            $table->string('image2')->nullable();
-            $table->string('image3')->nullable();
-            $table->string('image4')->nullable();
-            $table->string('image5')->nullable();
+            $table->string('image1')->nullable()->default('');
+            $table->string('image2')->nullable()->default('');
+            $table->string('image3')->nullable()->default('');
+            $table->string('image4')->nullable()->default('');
+            $table->string('image5')->nullable()->default('');
             $table->timestamps();
             $table->softDeletes();
         });
