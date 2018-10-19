@@ -43,6 +43,12 @@ class VoucherController extends Controller
         }
 
         $voucher->save();
+
+        return response()->json([
+            'success' => true,
+            'id' => $voucher->id,
+            'message' => 'operation success.',
+        ]);
     }
 
     public function show($id)
@@ -103,6 +109,25 @@ class VoucherController extends Controller
             }
 
             $voucher->forceDelete();
+        }
+    }
+
+    public function delete_file($id)
+    {
+        $voucher = Voucher::withTrashed()->find($id);
+
+        if(!empty($voucher['file_name'])) {
+            if(Storage::disk('local')->exists("vouchers/".$voucher['file_name'])){
+                Storage::disk('local')->delete("vouchers/".$voucher['file_name']);
+
+                $voucher['file_name'] = '';
+
+            }
+            else{
+                $voucher['file_name'] = '';
+            }
+
+            $voucher->save(); 
         }
     }
 

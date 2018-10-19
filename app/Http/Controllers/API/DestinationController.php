@@ -39,7 +39,13 @@ class DestinationController extends Controller
             }
         }
     
-        $destination->save();   
+        $destination->save();
+
+        return response()->json([
+            'success' => true,
+            'id' => $destination->id,
+            'message' => 'operation success.',
+        ]);
     }
 
     public function show($id)
@@ -100,6 +106,27 @@ class DestinationController extends Controller
             }
 
             $destination->forceDelete();
+        }
+    }
+
+    public function delete_file($id, Request $request)
+    {
+        $destination = Destination::withTrashed()->find($id);
+
+        if($request->key!=null){
+            if(!empty($destination[$request->key])) {
+                if(Storage::disk('local')->exists("destinations/".$destination[$request->key])){
+                    Storage::disk('local')->delete("destinations/".$destination[$request->key]);
+
+                    $destination[$request->key] = '';
+
+                }
+                else{
+                    $destination[$request->key] = '';
+                }
+
+                $destination->save(); 
+            }
         }
     }
 
