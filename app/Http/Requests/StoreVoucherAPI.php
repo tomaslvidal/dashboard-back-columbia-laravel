@@ -28,7 +28,7 @@ class StoreVoucherAPI extends FormRequest
         $return = array(
             'name' => 'string|max:30',
             'description' => 'string|max:191',
-            'file_name' => ['file', 'max:2000', new fileExtension],
+            'file_name' => ['file', new fileExtension],
         );
 
         if($this->method()!="PUT" && $this->method()!="PATCH"){
