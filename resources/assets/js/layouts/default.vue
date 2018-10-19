@@ -6,9 +6,11 @@
 			<div class="container-fluid">
 				<breadcrumb></breadcrumb>
 
-				<div class="col-md-12">
-					<div class="row">
-						<slot/>
+				<div class="row separation">
+					<div class="col-12">
+						<b-container fluid>
+							<slot/>
+						</b-container>
 					</div>
 				</div>
 
@@ -37,3 +39,9 @@ export default{
 	}
 }
 </script>
+
+<style>
+	.row.separation{
+		margin-bottom: 20px;
+	}
+</style>
