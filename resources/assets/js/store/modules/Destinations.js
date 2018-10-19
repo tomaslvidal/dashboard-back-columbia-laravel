@@ -4,7 +4,8 @@ import api from '../../gateways/api'
 const Destinations = {
 	namespaced: true,
 	state: {
-		items: {},
+		items: [],
+		item: {},
 		request_made: false
 	},
 	mutations:{
@@ -13,19 +14,30 @@ const Destinations = {
 
 			state.request_made = true;
 		},
-		SET_ITEM(state, payload){
-			// let items = state.items.find(item => item.id ==)
-		},
 		UPDATE_ITEM(state, payload){
 			if(state.request_made==true){
 				let index = state.items.findIndex(item => item.id == payload.id);
 
-				let keys = Object.keys(payload.data);
+				let keys = Object.keys(payload);
 
 				for(var i = 0; i < keys.length; i++){
-					state.items[index][keys[i]] = payload.data[keys[i]];
+					state.items[index][keys[i]] = payload[keys[i]];
 				}
 			}
+		},
+		SET_ITEM(state, payload){
+			state.item = payload;
+		},
+		ADD_ITEM(state, payload){
+			state.items.push(payload);
+		},
+		REMOVE_ITEM(state, payload){
+			let index = state.items.findIndex(item => item.id == payload.id);
+
+			state.items.splice(index, 1);
+		},
+		CLEAR_ITEM(state){
+			state.item = {};
 		}
 	},
 	actions:{
@@ -33,9 +45,21 @@ const Destinations = {
     		context.commit('SET_ITEMS', await api.get('destinations', payload));
 		},
 		async UPDATE_ITEM(context, payload){
-			let item = await api.update('destinations', payload.id, payload.data);
-
     		context.commit('UPDATE_ITEM', payload);
+		},
+		async GET_ITEM(context, payload){
+			let item = await api.get('destinations', payload.id);
+
+			context.commit('SET_ITEM', item[0]);
+		},
+		async ADD_ITEM(context, payload){
+			context.commit('ADD_ITEM', payload);
+		},
+		async REMOVE_ITEM(context, payload){
+			context.commit('REMOVE_ITEM', payload);
+		},
+		async CLEAR_ITEM(context){
+			context.commit('CLEAR_ITEM');
 		}
 	}
 }

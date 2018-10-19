@@ -3,7 +3,8 @@ import api from '../../gateways/api'
 const Vouchers = {
 	namespaced: true,
 	state: {
-		items: {},
+		items: [],
+		item: {},
 		request_made: false
 	},
 	mutations:{
@@ -22,6 +23,20 @@ const Vouchers = {
 					state.items[index][keys[i]] = payload[keys[i]];
 				}
 			}
+		},
+		SET_ITEM(state, payload){
+			state.item = payload;
+		},
+		ADD_ITEM(state, payload){
+			state.items.push(payload);
+		},
+		REMOVE_ITEM(state, payload){
+			let index = state.items.findIndex(item => item.id == payload.id);
+
+			state.items.splice(index, 1);
+		},
+		CLEAR_ITEM(state){
+			state.item = {};
 		}
 	},
 	actions:{
@@ -29,9 +44,21 @@ const Vouchers = {
     		context.commit('SET_ITEMS', await api.get('vouchers', payload));
 		},
 		async UPDATE_ITEM(context, payload){
-			let item = await api.update('vouchers', payload);
-
 			context.commit('UPDATE_ITEM', payload);
+		},
+		async GET_ITEM(context, payload){
+			let item = await api.get('vouchers', payload.id);
+
+			context.commit('SET_ITEM', item[0]);
+		},
+		async ADD_ITEM(context, payload){
+			context.commit('ADD_ITEM', payload);
+		},
+		async REMOVE_ITEM(context, payload){
+			context.commit('REMOVE_ITEM', payload);
+		},
+		async CLEAR_ITEM(context){
+			context.commit('CLEAR_ITEM');
 		}
 	}
 }
