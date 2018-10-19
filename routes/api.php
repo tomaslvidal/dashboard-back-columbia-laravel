@@ -20,6 +20,12 @@ use Illuminate\Http\Request;
 	Route::post('/destinations/{id}/restoring', 'API\DestinationController@restoring');
 	//
 
+	//Delete file
+	Route::post('/vouchers/{id}/delete', 'API\VoucherController@delete_file');
+
+	Route::post('/destinations/{id}/delete', 'API\DestinationController@delete_file');
+	//
+
 	Route::resources([
 	    'users' => 'API\UserController',
 	    'destinations' => 'API\DestinationController',
