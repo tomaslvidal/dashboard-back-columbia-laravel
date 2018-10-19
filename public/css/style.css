@@ -4,7 +4,24 @@ tr > td:last-child{
 
 }
 
+.maxWidth{
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+.progress_{
+  margin-top: 8px;
+}
+
+.input-group-append{
+  margin-left: 3px;
+}
+
+.input-group-append button{
+  margin-left: 5px;
+  margin-right: 5px;
+}
 
 .datepicker-container{
 
