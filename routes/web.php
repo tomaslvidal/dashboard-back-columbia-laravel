@@ -20,9 +20,17 @@ use Illuminate\Support\Facades\Auth;
 // 	Auth::loginUsingId(2, true);
 // });
 
-// Route::get('/asd', function (){
-// 	return Storage::download('vouchers/'.'k26asCPH5Xof2Uu6xXlwa0WuaP0x5oHILCuEIbLL.jpeg');
-// });
+Route::get('/vouchers/download/{file_name}', function ($file_name){
+	return Storage::download('vouchers/'.$file_name);
+});
+
+Route::get('/users/download/{file_name}', function ($file_name){
+	return Storage::download('users/'.$file_name);
+});
+
+Route::get('/destinations/download/{file_name}', function ($file_name){
+	return Storage::download('destinations/'.$file_name);
+});
 
 Route::get('/{vue_capture?}', function () { return view('home'); })->where('vue_capture', '[\/\w\.-]*')->name('login');
 
