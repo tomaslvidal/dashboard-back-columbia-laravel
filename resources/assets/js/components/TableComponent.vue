@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <div>
     <b-row>
       <b-col md="6" class="my-1">
         <b-form-group horizontal label="Buscar" class="mb-0">
@@ -69,13 +69,15 @@
         :no-provider-sorting="no_provider_sorting"
       >
         <template slot="actions" slot-scope="row">
-          <b-button variant="primary" size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
-            Editar
-          </b-button>
+          <div class="d-flex flex-grow-1 justify-content-center align-items-center">
+            <b-button variant="primary" :to=" {name: to, params: {id: row.item.id }} " size="sm" class="mr-1">
+              Editar
+            </b-button>
 
-          <b-button variant="danger" size="sm" @click.stop="row.toggleDetails">
-            Borrar
-          </b-button>
+            <b-button variant="danger" @click="delete_item(row.item.id)" size="sm">
+              Borrar
+            </b-button>
+          </div>
         </template>
         <template slot="row-details" slot-scope="row">
           <b-card>
@@ -94,28 +96,13 @@
         </b-col>
       </div>
     </b-row>
-
-    <slot name="html-modal" :reset="reset" :item="this.item.data">
-
-    </slot>
-
-  </b-container>
+  </div>
 </template>
 
 <script>
 
 export default {
-  props: ['items', 'fields'],
-  created(){
-    this.$root.$on('bv::modal::hide', (e) => {
-      if(e.trigger!=undefined){
-        
-        if(e.trigger == 'backdrop' && this.$store.state.Modals.modal_edit_save_state==false){
-          this.reset(undefined, true);
-        }
-      }
-    }); 
-  },
+  props: ['items', 'fields', 'to', 'model'],
   data(){
     return {
       fields_: this.fields,
@@ -164,37 +151,23 @@ export default {
     }
   },
   methods: {
-    info(item, index, button){
-      this.item.index = index;
-
-      this.item.oldData = JSON.parse(JSON.stringify(item));
-
-      this.item.data = item;
-
-      this.$root.$emit('bv::show::modal', 'modalInfo', button)
-    },
     onFiltered (filteredItems) {
       this.totalRows = filteredItems.length;
 
       this.currentPage = 1;
     },
-    reset(e, ONLY_INTERN_UPDATE_ITEM){
-      e!= undefined ? e.preventDefault() : '';
-      
-      if(this.item.oldData!=undefined && this.item.data!=undefined){
-        let keys = Object.keys(this.item.oldData);
+    delete_item(id){
+      let confirm_ = confirm("¿Eliminar?");
 
-        for (let i = 0; i < Object.keys(this.item.oldData).length; i++) {
-          this.item.data[keys[i]] = this.item.oldData[keys[i]];
-        }
-
-        if(ONLY_INTERN_UPDATE_ITEM==true){
-          this.$store.dispatch('Users/ONLY_INTERN_UPDATE_ITEM', JSON.parse(JSON.stringify(this.item.data)));
-        }
-        else{
-          this.$store.dispatch('Users/UPDATE_ITEM', JSON.parse(JSON.stringify(this.item.data)));
-        }
+      if(confirm_){
+        axios.delete('/api/'+this.model+'/'+id)
+        .then( () => {
+          this.$store.dispatch(this.model[0].toUpperCase()+this.model.substring(1)+'/REMOVE_ITEM', {id: id});
+        });
       }
+    },
+    close_popover(id){
+      this.$root.$emit('bv::hide::popover', 'popoverButton-disable-'+id);
     }
   }
 }
