@@ -22,7 +22,7 @@
 
 			<!-- Contraseña -->
 			<b-form-group id="InputGroup4" label="Contraseña:" label-for="password">
-				<b-form-input id="password" type="password" v-model="item.password" placeholder="Escribir contraseña nueva" />
+				<b-form-input id="password" type="password" v-model="item.password" placeholder="Escribir contraseña" />
 			</b-form-group>
 
 			<!-- Telefono -->
