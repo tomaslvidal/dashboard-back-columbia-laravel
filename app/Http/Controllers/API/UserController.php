@@ -4,10 +4,6 @@ namespace Columbia\Http\Controllers\API;
 
 use Columbia\User;
 
-// auth()->guard('api')->user();
-
-// Auth::loginUsingId(2, true);
-
 use Illuminate\Http\Request;
 
 use Columbia\Http\Resources\UserCollection;

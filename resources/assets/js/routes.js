@@ -7,37 +7,28 @@ import store from './store';
 Vue.use(Router);
 
 const Authenticated = (to, from, next) => {
-  if(store.state.Accounts.isAuthenticated && localStorage.getItem('user-token')){
-    store.commit('Accounts/AUTHENTICATED_TRUE');
-
-    next();
-
-    return;
-  }
-  else if(localStorage.getItem('user-token')){
-    axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('user-token');
-
+  if(localStorage.getItem('user-token')){
     axios.get('/validate-token')
-      .then(response => {
-        response = response.data;
+    .then(response => {
+      response = response.data;
 
-        store.commit('Accounts/AUTHENTICATED_TRUE');
+      store.commit('Accounts/AUTHENTICATED_TRUE');
 
-        next();
+      next();
 
-        return;
-      })
-      .catch( () => {
-        delete axios.defaults.headers.common['Authorization'];
+      return;
+    })
+    .catch( () => {
+      delete axios.defaults.headers.common['Authorization'];
 
-        localStorage.removeItem('user-token');
+      localStorage.removeItem('user-token');
 
-        store.commit('Accounts/AUTHENTICATED_FALSE');
+      store.commit('Accounts/AUTHENTICATED_FALSE');
 
-        next('/login');
+      next('/login');
 
-        return;
-      });
+      return;
+    });
   }
   else{
     next('/login');

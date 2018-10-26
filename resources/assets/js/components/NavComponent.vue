@@ -4,7 +4,7 @@
 
     <!-- <b-navbar-brand href="#"></b-navbar-brand> -->
 
-    <router-link class="navbar-brand" to="/">Columbia</router-link>
+    <router-link class="navbar-brand" to="/home">Columbia</router-link>
 
     <b-collapse :visible="visible" is-nav id="nav_collapse">
       <!-- Right aligned nav items -->

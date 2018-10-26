@@ -36,47 +36,45 @@ const Accounts = {
     },
     actions:{
         async ENTER_ACCOUNT(context, user){
-                let data = {
-                    client_id: 2,
-                    client_secret: 'YdDDU3QNKu290Uf4qoat5FQcBiseLXrI4fJD33aw',
-                    grant_type: 'password',
-                    username: user.email,
-                    password: user.password,
-                };
+            let data = {
+                client_id: 2,
+                client_secret: 'YdDDU3QNKu290Uf4qoat5FQcBiseLXrI4fJD33aw',
+                grant_type: 'password',
+                username: user.email,
+                password: user.password,
+            };
 
-                axios.post('/oauth/token', data)
-                    .then(response => {
-                        let responseData = response.data;
-                        
-                        let now = Date.now();
+            axios.post('/oauth/token', data)
+            .then(response => {
+                let responseData = response.data; 
 
-                        responseData.expires_in = responseData.expires_in + now;
+                let now = Date.now();
 
-                        context.commit('UPDATE_TOKENS', responseData);
+                responseData.expires_in = responseData.expires_in + now;
 
-                        axios.defaults.headers.common['Authorization'] = 'Bearer '+context.state.tokens.access_token;
+                context.commit('UPDATE_TOKENS', responseData);
 
-                        localStorage.setItem('user-token', context.state.tokens.access_token);
+                axios.defaults.headers.common['Authorization'] = 'Bearer '+context.state.tokens.access_token;
 
-                        axios.get('/api/users/2')
-                            .then(response => {
-                                response = response.data[0];
+                localStorage.setItem('user-token', context.state.tokens.access_token);
 
-                                let data = {
-                                    "name" : response.name,
-                                    "last_name" : response.last_name,
-                                    "email" : response.email,
-                                    "id" : response.id
-                                }
+                router.push({ name: "home"});
+                // axios.get('/api/users/822')
+                // .then(response => {
+                //     response = response.data[0];
 
-                                context.commit('SET_USER', data);
+                //     let data = {
+                //         "name" : response.name,
+                //         "last_name" : response.last_name,
+                //         "email" : response.email,
+                //         "id" : response.id
+                //     }
 
-                                context.commit('AUTHENTICATED_TRUE');
+                //     context.commit('SET_USER', data);
 
-                                router.push({ name: "home"})
-                            });
-                        
-                    });
+                //     context.commit('AUTHENTICATED_TRUE');
+                // });
+            });
         }
     }
 }
