@@ -1,11 +1,13 @@
 <?php
-
 use Columbia\User;
 
 use Illuminate\Http\Request;
 
+Route::resource('destinations', 'API\DestinationController')->only([
+    'index', 'show'
+]);
 
-// Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'auth:api'], function () {
 	//Add Pivot
 	Route::post('/users/{id}/add/voucher', 'API\UserController@add_voucher');
 
@@ -26,9 +28,10 @@ use Illuminate\Http\Request;
 	Route::post('/destinations/{id}/delete', 'API\DestinationController@delete_file');
 	//
 
+	Route::resource('destinations', 'API\DestinationController')->except(['index', 'show']);
+
 	Route::resources([
 	    'users' => 'API\UserController',
-	    'destinations' => 'API\DestinationController',
 	    'vouchers' => 'API\VoucherController',
 	]);
-// });
+});
