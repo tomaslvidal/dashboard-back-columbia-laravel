@@ -16,8 +16,8 @@
 			</b-form-group>
 
 			<!-- Descripcion -->
-			<b-form-group id="InputGroup3" label="Descripcion:" label-for="description">
-				<b-form-input id="description" type="text" v-model="item.description" required placeholder="Escribir description" />
+			<b-form-group id="InputGroup3" label="Descripcionx:" label-for="description">
+				<ckeditor v-model="item.description" :config="config"></ckeditor>
 			</b-form-group>
 
 			<!-- Imagenes -->
@@ -62,7 +62,10 @@
 </template>
 
 <script>
+import Ckeditor from 'vue-ckeditor2';
+
 export default {
+	components: { Ckeditor },
 	created(){
 		this.$store.dispatch('Destinations/GET_ITEM', { "id" : this.$route.params.id});
 
@@ -80,11 +83,6 @@ export default {
 	destroyed(){
 		this.$store.dispatch('Destinations/CLEAR_ITEM');
 	},
-	data(){
-		return {
-			show: true
-		}
-	},
 	computed: {
 		item(){
 			return this.$store.state.Destinations.item;
@@ -92,6 +90,12 @@ export default {
 	},
 	data(){
 		return {
+			config: {
+				// toolbar: [
+				// 	['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript']
+				// ],
+				height: '500'
+			},
 			show: true,
 			progress: {
 				status: false,
@@ -176,16 +180,24 @@ export default {
 
 			axios.put('/api/destinations/'+this.$route.params.id, items, config)
 			.then(()=>{
-				this.progress.variant = "success";
+				setTimeout( () => {
+					this.progress.variant = "success";
 
-				this.progress.label = "Su registro fue guardado con éxito";
-				
-				this.$store.dispatch('Destinations/UPDATE_ITEM', items);
+					this.progress.label = "Su registro fue guardado con éxito";
+					
+					this.$store.dispatch('Destinations/UPDATE_ITEM', items);
+
+					setTimeout( () => {
+						this.$router.push({name: 'destinations'}); // this.$router.go(-1);
+					}, 1500);
+				}, 1000);
 			})
 			.catch(()=>{
-				this.progress.variant = 'danger';
+				setTimeout( () => {
+					this.progress.variant = 'danger';
 
-				this.progress.label = "El registro no pudo ser guardado"
+					this.progress.label = "El registro no pudo ser guardado";
+				}, 1000);
 			});
 		},
 		resetSaveProgress(){

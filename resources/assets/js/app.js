@@ -37,4 +37,4 @@ const app = new Vue({
     store,
     router,
     render: h => h(Template)
-})
+});
