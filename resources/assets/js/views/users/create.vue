@@ -89,7 +89,7 @@ export default {
 
 			this.progress.status = false;
 
-			this.$nextTick(() => { this.resetSaveProgress(); this.progress.status = true });
+			this.$nextTick( () => { this.resetSaveProgress(); this.progress.status = true });
 
 			const config = {
 				onUploadProgress: (progressEvent) => {
@@ -101,21 +101,25 @@ export default {
 				}
 			};
 
-			axios.post('/api/users', JSON.parse(JSON.stringify(this.item)), config)
-			.then((res)=>{
-				this.progress.variant = "success";
+				axios.post('/api/users', JSON.parse(JSON.stringify(this.item)), config)
+				.then((res)=>{
+					setTimeout( () => {
+						this.progress.variant = "success";
 
-				this.progress.label = "Su registro fue creado con éxito";
+						this.progress.label = "Su registro fue creado con éxito";
 
-				this.item.id = res.data.id;
+						this.item.id = res.data.id;
 
-				this.$store.dispatch('Users/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));
-			})
-			.catch(()=>{
-				this.progress.variant = 'danger';
+						this.$store.dispatch('Users/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));
+					}, 1000);
+				})
+				.catch(()=>{
+					setTimeout( () => {
+						this.progress.variant = 'danger';
 
-				this.progress.label = "El registro no pudo ser creado"
-			});
+						this.progress.label = "El registro no pudo ser creado"
+					}, 1000);
+				});
 		},
 		onReset(evt){
 			evt.preventDefault();

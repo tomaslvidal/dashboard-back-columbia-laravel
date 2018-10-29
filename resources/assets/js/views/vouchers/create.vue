@@ -116,18 +116,22 @@ export default {
 
 			axios.post('/api/vouchers', JSON.parse(JSON.stringify(items)), config)
 			.then((res)=>{
-				this.progress.variant = "success";
+				setTimeout( () => {
+					this.progress.variant = "success";
 
-				this.progress.label = "Su registro fue creado con éxito";
+					this.progress.label = "Su registro fue creado con éxito";
 
-				this.item.id = res.data.id; items.id = res.data.id;
+					this.item.id = res.data.id; items.id = res.data.id;
 
-				this.$store.dispatch('Vouchers/ADD_ITEM', JSON.parse(JSON.stringify(items)));
+					this.$store.dispatch('Vouchers/ADD_ITEM', JSON.parse(JSON.stringify(items)));
+				}, 1000);
 			})
 			.catch(()=>{
-				this.progress.variant = 'danger';
+				setTimeout( () => {
+					this.progress.variant = 'danger';
 
-				this.progress.label = "El registro no pudo ser creado"
+					this.progress.label = "El registro no pudo ser creado";
+				}, 1000);
 			});
 		},
 		resetSaveProgress(){

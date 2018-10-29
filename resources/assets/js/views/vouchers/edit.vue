@@ -120,16 +120,24 @@ export default {
 
 			axios.put('/api/vouchers/'+this.$route.params.id, items, config)
 			.then(()=>{
-				this.progress.variant = "success";
+				setTimeout( () => {
+					this.progress.variant = "success";
 
-				this.progress.label = "Su registro fue guardado con éxito"
-				
-				this.$store.dispatch('Vouchers/UPDATE_ITEM', items);
+					this.progress.label = "Su registro fue guardado con éxito"
+					
+					this.$store.dispatch('Vouchers/UPDATE_ITEM', items);
+
+					setTimeout( () => {
+						this.$router.push({name: 'vouchers'}); // this.$router.go(-1);
+					}, 1500);
+				}, 1000);
 			})
 			.catch(()=>{
-				this.progress.variant = 'danger';
+				setTimeout( () => {
+					this.progress.variant = 'danger';
 
-				this.progress.label = "El registro no pudo ser guardado"
+					this.progress.label = "El registro no pudo ser guardado";
+				}, 1000);
 			});
 		},
 		resetSaveProgress(){

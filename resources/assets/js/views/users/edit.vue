@@ -73,7 +73,7 @@ export default {
 				max: 99,
 				label: "0"
 			}
-		}
+		};
 	},
 	computed: {
 		item(){
@@ -105,22 +105,30 @@ export default {
 
 			axios.put('/api/users/'+this.$route.params.id, JSON.parse(JSON.stringify(this.item)), config)
 			.then(()=>{
-				this.progress.variant = "success";
+				setTimeout( () => {
+					this.progress.variant = "success";
 
-				this.progress.label = "Su registro fue guardado con éxito"
+					this.progress.label = "Su registro fue guardado con éxito";
 
-				this.$store.dispatch('Users/UPDATE_ITEM', JSON.parse(JSON.stringify(this.item)));
+					this.$store.dispatch('Users/UPDATE_ITEM', JSON.parse(JSON.stringify(this.item)));
+
+					setTimeout( () => {
+						this.$router.push({name: 'users'}); // this.$router.go(-1);
+					}, 1500);
+				}, 1000);
 			})
 			.catch(()=>{
-				this.progress.variant = 'danger';
+				setTimeout( () => {
+					this.progress.variant = 'danger';
 
-				this.progress.label = "El registro no pudo ser guardado"
+					this.progress.label = "El registro no pudo ser guardado";
+				}, 1000);
 			});
 		},
 		onReset(evt){
 			evt.preventDefault();
 
-			for (var i = 0; i < Object.keys(this.item).length; i++) {
+			for(var i = 0; i < Object.keys(this.item).length; i++){
 				this.item[Object.keys(this.item)[i]] = '';
 			}
 
