@@ -26,7 +26,7 @@ class StoreDestinationAPI extends FormRequest
         $return = array(
             'title' => 'string|max:60',
             'subtitle' => 'string|max:60',
-            'description' => 'string|max:191',
+            'description' => 'string',
             'image1' => 'file|image|max:2000',
             'image2' => 'file|image|max:2000',
             'image3' => 'file|image|max:2000',
