@@ -58,7 +58,7 @@ const Accounts = {
 
                 localStorage.setItem('user-token', context.state.tokens.access_token);
 
-                router.push({ name: "home"});
+                router.push({ name: "users"});
                 // axios.get('/api/users/822')
                 // .then(response => {
                 //     response = response.data[0];
@@ -77,6 +77,6 @@ const Accounts = {
             });
         }
     }
-}
+};
 
 export default Accounts;
