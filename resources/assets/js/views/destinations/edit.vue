@@ -16,7 +16,7 @@
 			</b-form-group>
 
 			<!-- Descripcion -->
-			<b-form-group id="InputGroup3" label="Descripcionx:" label-for="description">
+			<b-form-group id="InputGroup3" label="Descripcion:" label-for="description">
 				<ckeditor v-model="item.description" :config="config"></ckeditor>
 			</b-form-group>
 
@@ -91,10 +91,8 @@ export default {
 	data(){
 		return {
 			config: {
-				// toolbar: [
-				// 	['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript']
-				// ],
-				height: '500'
+				removeButtons : 'Save,Preview,Templates,Cut,Copy,Language,Format,Paste,PasteText,PasteFromWord,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Anchor,Blockquote,CreateDiv,HiddenField,BidiLtr,BidiRtl,Flash,Table,HorizontalRule,PageBreak,Styles,Font,About,ShowBlocks',
+				height: '420'
 			},
 			show: true,
 			progress: {
