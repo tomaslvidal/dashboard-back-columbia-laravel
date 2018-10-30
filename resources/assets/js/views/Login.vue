@@ -51,7 +51,7 @@
     }
 </script>
 
-<style>
+<style scoped>
 .text-left {
     justify-content: center;
     display: flex;
