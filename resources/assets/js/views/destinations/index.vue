@@ -26,7 +26,6 @@ export default {
 				{ key: 'id', label: 'ID', sortable: true, tdClass: 'maxWidth' },
 				{ key: 'title', label: 'Titulo', tdClass: 'maxWidth' },
 				{ key: 'subtitle', label: 'Subtitulo', tdClass: 'maxWidth' },
-				{ key: 'description', label: 'Descripción', tdClass: 'maxWidth' },
 				{ key: 'created_at', sortable: true, label: 'Fecha de creación', tdClass: 'maxWidth' },
 				{ key: 'actions', label: '', tdClass: 'maxWidth' }
 			]
