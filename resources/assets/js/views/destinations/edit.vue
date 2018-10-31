@@ -64,13 +64,8 @@
 <script>
 import Ckeditor from 'vue-ckeditor2';
 
-import JQuery from 'jquery';
-
 export default {
 	components: { Ckeditor },
-	beforeCreate(){
-		window.$ = JQuery;
-	},
 	created(){
 		this.$store.dispatch('Destinations/GET_ITEM', { "id" : this.$route.params.id});
 
@@ -87,8 +82,6 @@ export default {
 	},
 	destroyed(){
 		this.$store.dispatch('Destinations/CLEAR_ITEM');
-
-		delete window.$;
 	},
 	computed: {
 		item(){

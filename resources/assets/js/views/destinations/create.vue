@@ -17,14 +17,14 @@
 
 			<!-- Descripcion -->
 			<b-form-group id="InputGroup3" label="Descripcion:" label-for="description">
-				<b-form-input id="description" type="text" v-model="item.description" required placeholder="Escribir description" />
+				<ckeditor v-model="item.description" :config="config"></ckeditor>
 			</b-form-group>
 
 			<!-- Imagenes -->
 			<div v-if="item.id!=''" v-for="(item_for, key, index) in items">
 				<b-form-group :id="'InputGroup'+index" :label="'Imagen '+(index+1)+':'" :label-for="key">
 					<b-input-group>
-						<b-form-file v-model="item[key]" @change="onChange($event, key)"  :state="Boolean(item[key])" placeholder="Seleccionar archivo..." />
+						<b-form-file v-model="item[key]" @change="onChange($event, key)" :state="Boolean(item[key])" placeholder="Seleccionar archivo..." />
 
 						<b-input-group-append v-if="item[key]!=''">
 							<b-btn variant="outline-danger" @click="delete_file(key)" >Borrar</b-btn>
@@ -62,7 +62,10 @@
 </template>
 
 <script>
+import Ckeditor from 'vue-ckeditor2';
+
 export default {
+	components: { Ckeditor },
 	created(){
 		this.$store.dispatch('Breadcrumb/SET_ITEMS', [{
 			text: 'Inicio',
@@ -77,6 +80,13 @@ export default {
 	},
 	data(){
 		return {
+			config: {
+				removeButtons: 'Save,Preview,Templates,Cut,Copy,Language,Format,Paste,PasteText,PasteFromWord,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Anchor,Blockquote,CreateDiv,HiddenField,BidiLtr,BidiRtl,Flash,Table,HorizontalRule,PageBreak,Styles,Font,About,ShowBlocks',
+				removePlugins: 'image',
+				extraPlugins: 'imgur, image2',
+				imgurClientId: '023280cb8999d92',
+				height: '420'
+			},
 			show: true,
 			item: {
 				id: "",
