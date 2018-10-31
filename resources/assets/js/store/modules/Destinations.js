@@ -9,12 +9,12 @@ const Destinations = {
 		request_made: false
 	},
 	mutations:{
-		SET_ITEMS(state, payload){
-			state.items = payload;
+		async SET_ITEMS(state, payload){
+			state.items = await api.get('destinations', payload);
 
 			state.request_made = true;
 		},
-		UPDATE_ITEM(state, payload){
+		async UPDATE_ITEM(state, payload){
 			if(state.request_made==true){
 				let index = state.items.findIndex(item => item.id == payload.id);
 
@@ -25,40 +25,47 @@ const Destinations = {
 				}
 			}
 		},
-		SET_ITEM(state, payload){
-			state.item = payload;
+		async SET_ITEM(state, payload){
+			if(state.request_made==true){
+				let index = state.items.findIndex(item => item.id == payload.id);
+
+				state.item = state.items[index];
+			}
+			else{
+				let item = await api.get('destinations', payload.id);
+				
+				state.item = item[0];
+			}
 		},
-		ADD_ITEM(state, payload){
+		async ADD_ITEM(state, payload){
 			state.items.push(payload);
 		},
-		REMOVE_ITEM(state, payload){
+		async REMOVE_ITEM(state, payload){
 			let index = state.items.findIndex(item => item.id == payload.id);
 
 			state.items.splice(index, 1);
 		},
-		CLEAR_ITEM(state){
+		async CLEAR_ITEM(state){
 			state.item = {};
 		}
 	},
 	actions:{
-		async FETCH_ITEMS(context, payload){
-    		context.commit('SET_ITEMS', await api.get('destinations', payload));
+		FETCH_ITEMS(context, payload){
+    		context.commit('SET_ITEMS', payload);
 		},
-		async UPDATE_ITEM(context, payload){
+		UPDATE_ITEM(context, payload){
     		context.commit('UPDATE_ITEM', payload);
 		},
-		async GET_ITEM(context, payload){
-			let item = await api.get('destinations', payload.id);
-
-			context.commit('SET_ITEM', item[0]);
+		GET_ITEM(context, payload){
+			context.commit('SET_ITEM', payload);
 		},
-		async ADD_ITEM(context, payload){
+		ADD_ITEM(context, payload){
 			context.commit('ADD_ITEM', payload);
 		},
-		async REMOVE_ITEM(context, payload){
+		REMOVE_ITEM(context, payload){
 			context.commit('REMOVE_ITEM', payload);
 		},
-		async CLEAR_ITEM(context){
+		CLEAR_ITEM(context){
 			context.commit('CLEAR_ITEM');
 		}
 	}
