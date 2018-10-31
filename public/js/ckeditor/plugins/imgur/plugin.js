@@ -1,7 +1,7 @@
 ( function() {
     CKEDITOR.plugins.add( 'imgur',
         {
-            lang: ['zh', 'en'],
+            lang: ['es'],
             init: function( editor )
             {
                 ClientId = editor.config.imgurClientId;
@@ -21,7 +21,7 @@
 
                 editor.ui.addButton( 'Imgur',
                     {
-                        label : "Imgur",
+                        label : "Subir imagen",
                         toolbar : 'insert',
                         command : 'imgur',
                         icon : this.path + 'images/icon.png'
