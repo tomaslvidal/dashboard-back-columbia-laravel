@@ -40,8 +40,6 @@
 				</b-form-group>
 			</div>
 
-			<!-- <b-button type="reset" variant="danger">Limpiar</b-button> -->
-
 			<hr>
 
 			<b-progress v-if="progress.status" :max="progress.max" animated>

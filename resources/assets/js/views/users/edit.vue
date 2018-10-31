@@ -30,7 +30,6 @@
 				<b-form-input id="exampleInput1" type="tel" v-model="item.telephone" required placeholder="Escribir telefono" />
 			</b-form-group>
 
-			<!-- <b-button type="reset" variant="danger">Limpiar</b-button> -->
 			<hr>
 
 			<b-progress v-if="progress.status" :max="progress.max" animated>
