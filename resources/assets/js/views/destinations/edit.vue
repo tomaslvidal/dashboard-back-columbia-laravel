@@ -64,8 +64,13 @@
 <script>
 import Ckeditor from 'vue-ckeditor2';
 
+import JQuery from 'jquery';
+
 export default {
 	components: { Ckeditor },
+	beforeCreate(){
+		window.$ = JQuery;
+	},
 	created(){
 		this.$store.dispatch('Destinations/GET_ITEM', { "id" : this.$route.params.id});
 
@@ -82,6 +87,8 @@ export default {
 	},
 	destroyed(){
 		this.$store.dispatch('Destinations/CLEAR_ITEM');
+
+		delete window.$;
 	},
 	computed: {
 		item(){
@@ -92,6 +99,9 @@ export default {
 		return {
 			config: {
 				removeButtons: 'Save,Preview,Templates,Cut,Copy,Language,Format,Paste,PasteText,PasteFromWord,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Anchor,Blockquote,CreateDiv,HiddenField,BidiLtr,BidiRtl,Flash,Table,HorizontalRule,PageBreak,Styles,Font,About,ShowBlocks',
+				removePlugins: 'image',
+				extraPlugins: 'imgur, image2',
+				imgurClientId: '023280cb8999d92',
 				height: '420'
 			},
 			show: true,
