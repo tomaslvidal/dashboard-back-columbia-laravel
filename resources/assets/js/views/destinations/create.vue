@@ -48,7 +48,7 @@
 
 			<br v-if="progress.status">
 
-			<b-button type="submit" variant="primary">Crear</b-button>
+			<b-button type="submit" variant="primary" :disabled="disabledCreate">Crear</b-button>
 		</b-form>
 
 		<b-modal v-model="modal.show" :title="modal.title" :hide-footer="modal.hide_footer" :cancel-disabled="modal.cancel_disabled" :ok-disabled="modal.ok_disabled">
@@ -86,6 +86,7 @@ export default {
 				height: '420'
 			},
 			show: true,
+			disabledCreate: false,
 			item: {
 				id: "",
 				title: "",
@@ -180,6 +181,8 @@ export default {
 				this.progress.label = "Su registro fue creado con éxito";
 
 				this.item.id = res.data.id; items.id = res.data.id;
+
+				this.disabledCreate = true;
 
 				this.$store.dispatch('Destinations/ADD_ITEM', JSON.parse(JSON.stringify(items)));
 			})

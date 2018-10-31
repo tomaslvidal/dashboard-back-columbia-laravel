@@ -38,7 +38,7 @@
 
 			<br v-if="progress.status">
 
-			<b-button type="submit" variant="primary">Crear</b-button>
+			<b-button type="submit" variant="primary" :disabled="disabledCreate">Crear</b-button>
 		</b-form>
 	</div>
 </template>
@@ -60,6 +60,7 @@ export default {
 	data(){
 		return {
 			show: true,
+			disabledCreate: false,
 			progress: {
 				status: false,
 				value: 0,
@@ -108,6 +109,8 @@ export default {
 						this.progress.label = "Su registro fue creado con éxito";
 
 						this.item.id = res.data.id;
+
+						this.disabledCreate = true;
 
 						this.$store.dispatch('Users/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));
 					}, 1000);
