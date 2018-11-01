@@ -23,3 +23,5 @@ resources/views/template/layout2\.blade\.php
 public/css/app\.css
 
 composer\.lock
+
+public/js/app\.js
