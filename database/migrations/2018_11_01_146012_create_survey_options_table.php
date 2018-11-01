@@ -15,7 +15,11 @@ class CreateSurveyOptionsTable extends Migration
     {
         Schema::create('survey_options', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('value')->nullable();
+            $table->integer('field_id')->unsigned();
+            $table->foreign('field_id')->references('id')->on('survey_fields')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();   
         });
     }
 

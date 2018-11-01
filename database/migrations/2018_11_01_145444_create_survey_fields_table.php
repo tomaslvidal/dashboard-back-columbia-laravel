@@ -15,7 +15,12 @@ class CreateSurveyFieldsTable extends Migration
     {
         Schema::create('survey_fields', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name')->nullable();
+            $table->string('type')->nullable();
+            $table->integer('survey_id')->unsigned();
+            $table->foreign('survey_id')->references('id')->on('survey')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();  
         });
     }
 
