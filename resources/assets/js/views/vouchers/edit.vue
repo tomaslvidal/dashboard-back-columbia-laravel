@@ -21,11 +21,10 @@
 					<b-form-file v-model="file_name" @change="onChange($event)" :disabled="disabled" :state="Boolean(item.file_name)" placeholder="Seleccionar archivo..." />
 
 					<b-input-group-append v-if="item.file_name!=''">
-						<b-btn variant="outline-danger" @click="delete_file" >Borrar</b-btn>
+						<b-btn variant="outline-danger" @click="delete_file">Borrar</b-btn>
 
 						<b-btn variant="outline-success" target="_blank" :href="'/vouchers/download/'+item.file_name">Descargar</b-btn>
 					</b-input-group-append>
-
 				</b-input-group>
 				<div class="progress_" v-if="progress_status">
 					<b-progress :max="max" animated>
@@ -188,7 +187,7 @@ export default {
 			.then(res => {
 				this.variant = 'success';
 
-				this.label = "Archivo subido"
+				this.label = "Archivo subido";
 
 				this.disabled = false;
 
@@ -204,7 +203,7 @@ export default {
 
 				this.disabled = false;
 
-				this.label = "Hubo un error al subir el archivo"
+				this.label = "Hubo un error al subir el archivo";
 			});
 		},
 		delete_file(){

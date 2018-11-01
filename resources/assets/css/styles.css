@@ -23,6 +23,22 @@ tr > td:last-child{
   margin-right: 5px;
 }
 
+.input-group-append .btn-outline-danger{
+  background-color: white!important;
+}
+
+.input-group-append .btn-outline-danger:active{
+  background-color: #dc3545!important;
+}
+
+.input-group-append .btn-outline-danger:hover{
+  background-color: #dc3545!important;
+}
+
+label.custom-file-label{
+    white-space: nowrap;
+}
+
 .datepicker-container{
 
   z-index: 1200!important;
