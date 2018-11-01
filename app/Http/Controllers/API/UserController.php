@@ -33,7 +33,7 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'id' => $user->id,
-            'created_at' => $user->created_at,
+            'created_at' => $user->created_at->toDateTimeString(),
             'message' => 'Register success.',
         ]);
     }

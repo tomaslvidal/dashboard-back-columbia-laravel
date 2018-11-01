@@ -110,7 +110,7 @@ export default {
 
 						this.item.id = res.data.id;
 
-						this.item.created_at = res.data.created_at.date;
+						this.item.created_at = res.data.created_at;
 
 						this.disabledCreate = true;
 

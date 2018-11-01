@@ -47,7 +47,7 @@ class VoucherController extends Controller
         return response()->json([
             'success' => true,
             'id' => $voucher->id,
-            'created_at' => $voucher->created_at,
+            'created_at' => $voucher->created_at->toDateTimeString(),
             'message' => 'operation success.',
         ]);
     }
