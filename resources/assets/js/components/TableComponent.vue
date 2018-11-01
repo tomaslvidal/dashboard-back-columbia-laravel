@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="table-component">
     <b-row>
       <b-col md="6" class="my-1">
         <b-form-group horizontal label="Buscar" class="mb-0">
@@ -92,7 +92,7 @@
     <b-row v-if="_items.length>0">
       <div class="centerFullWidth">
         <b-col cols="12" class="my-1">
-          <b-pagination align="center" :total-rows="_items.length" :limit="limit" :per-page="perPage" v-model="currentPage" class="my-0" />
+          <b-pagination align="center" :total-rows="totalRows" :limit="limit" :per-page="perPage" v-model="currentPage" class="my-0" />
         </b-col>
       </div>
     </b-row>
@@ -122,6 +122,7 @@ export default {
       dark: false,
       fixed: false,
       footClone: true,
+      totalRows: null,
       stacked: false,
       responsive: false,
       empty_filtered_text: "No hay registros que coincidan con su solicitud",
