@@ -70,7 +70,7 @@
       >
         <template slot="actions" slot-scope="row">
           <div class="d-flex flex-grow-1 justify-content-center align-items-center">
-            <b-button variant="primary" :to=" {name: to, params: {id: row.item.id }} " size="sm" class="mr-1">
+            <b-button variant="primary" :to=" {name: to, params: {id: row.item.id.toString() }} " size="sm" class="mr-1">
               Editar
             </b-button>
 
