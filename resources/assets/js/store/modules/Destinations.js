@@ -1,5 +1,4 @@
-//
-import api from '../../gateways/api'
+import api from '../../gateways/api';
 
 const Destinations = {
 	namespaced: true,

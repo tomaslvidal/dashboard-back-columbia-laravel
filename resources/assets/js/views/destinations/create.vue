@@ -176,17 +176,19 @@ export default {
 
 			axios.post('/api/destinations', JSON.parse(JSON.stringify(items)), config)
 			.then((res)=>{
-				this.progress.variant = "success";
+				setTimeout( () => {
+					this.progress.variant = "success";
 
-				this.progress.label = "Su registro fue creado con éxito";
+					this.progress.label = "Su registro fue creado con éxito";
 
-				this.item.id = res.data.id; items.id = res.data.id;
+					this.item.id = res.data.id; items.id = res.data.id;
 
-				this.item.created_at = res.data.created_at.date;
+					this.item.created_at = res.data.created_at.date; items.created_at = res.data.created_at.date;
 
-				this.disabledCreate = true;
+					this.disabledCreate = true;
 
-				this.$store.dispatch('Destinations/ADD_ITEM', JSON.parse(JSON.stringify(items)));
+					this.$store.dispatch('Destinations/ADD_ITEM', JSON.parse(JSON.stringify(items)));
+				}, 1000);
 			})
 			.catch(()=>{
 				this.progress.variant = 'danger';
