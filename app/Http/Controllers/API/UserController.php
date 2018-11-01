@@ -33,6 +33,7 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'id' => $user->id,
+            'created_at' => $user->created_at,
             'message' => 'Register success.',
         ]);
     }

@@ -110,6 +110,8 @@ export default {
 
 						this.item.id = res.data.id;
 
+						this.item.created_at = res.data.created_at.date;
+
 						this.disabledCreate = true;
 
 						this.$store.dispatch('Users/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));

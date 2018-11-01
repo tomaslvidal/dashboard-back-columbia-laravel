@@ -122,6 +122,8 @@ export default {
 
 					this.item.id = res.data.id; items.id = res.data.id;
 
+					this.item.created_at = res.data.created_at.date;
+
 					this.disabledCreate = true;
 
 					this.$store.dispatch('Vouchers/ADD_ITEM', JSON.parse(JSON.stringify(items)));

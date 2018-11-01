@@ -44,6 +44,7 @@ class DestinationController extends Controller
         return response()->json([
             'success' => true,
             'id' => $destination->id,
+            'created_at' => $destination->created_at,
             'message' => 'operation success.',
         ]);
     }
