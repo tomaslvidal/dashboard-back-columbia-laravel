@@ -6,8 +6,6 @@ use Columbia\User;
 
 use Illuminate\Http\Request;
 
-use Columbia\Http\Resources\UserCollection;
-
 use Columbia\Http\Requests\StoreUserAPI;
 
 use Columbia\Http\Requests\AddVoucherAPI;
@@ -18,7 +16,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        return new UserCollection(User::all());
+        return User::with('vouchers')->get();
     }
 
     public function create()
@@ -40,9 +38,9 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::where('id', $id)->get();
+        $user = User::with('vouchers')->find($id);
 
-        return new UserCollection($user);
+        return $user;
     }
 
     public function edit($id)

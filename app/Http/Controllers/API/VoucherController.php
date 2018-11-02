@@ -6,8 +6,6 @@ use Columbia\Voucher;
 
 use Illuminate\Http\Request;
 
-use Columbia\Http\Resources\VoucherCollection;
-
 use Columbia\Http\Requests\StoreVoucherAPI;
 
 use Columbia\Http\Requests\AddUserAPI;
@@ -22,7 +20,7 @@ class VoucherController extends Controller
 {
     public function index()
     {
-        return new VoucherCollection(Voucher::all());
+        return Voucher::with('users')->get();
     }
 
     public function create()
@@ -54,9 +52,9 @@ class VoucherController extends Controller
 
     public function show($id)
     {
-        $voucher = Voucher::where('id', $id)->get();
+        $voucher = Voucher::with('users')->find($id);
 
-        return new VoucherCollection($voucher);
+        return $voucher;
     }
 
     public function edit($id)
@@ -82,10 +80,6 @@ class VoucherController extends Controller
             $storageName = basename($storagePath);
 
             $voucher['file_name'] = $storageName;
-
-            // $voucher['file_name'] = Storage::url('vouchers/'.$storageName);
-
-            // return Storage::download('vouchers/'.$storageName);
         }
 
         $voucher->save(); 
