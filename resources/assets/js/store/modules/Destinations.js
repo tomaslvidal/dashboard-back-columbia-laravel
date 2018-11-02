@@ -33,7 +33,7 @@ const Destinations = {
 			else{
 				let item = await api.get('destinations', payload.id);
 				
-				state.item = item[0];
+				state.item = item;
 			}
 		},
 		async ADD_ITEM(state, payload){

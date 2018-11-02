@@ -51,7 +51,7 @@ class DestinationController extends Controller
 
     public function show($id)
     {
-        $destination = Destination::where('id', $id)->get();
+        $destination = Destination::find($id);
 
         return $destination;
     }

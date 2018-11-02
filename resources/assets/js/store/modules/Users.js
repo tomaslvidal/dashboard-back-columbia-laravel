@@ -32,8 +32,8 @@ const Users = {
 			}
 			else{
 				let item = await api.get('users', payload.id);
-				
-				state.item = item[0];
+
+				state.item = item;
 			}
 		},
 		async ADD_ITEM(state, payload){

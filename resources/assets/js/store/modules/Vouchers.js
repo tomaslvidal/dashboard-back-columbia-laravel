@@ -33,7 +33,7 @@ const Vouchers = {
 			else{
 				let item = await api.get('vouchers', payload.id);
 				
-				state.item = item[0];
+				state.item = item;
 			}
 		},
 		async ADD_ITEM(state, payload){
