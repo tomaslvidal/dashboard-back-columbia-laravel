@@ -13,13 +13,6 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/auth', function (){
-// 	$FSDFSD = new Auth('session');
-
-// 	Auth::loginUsingId(2, true);
-// });
-
 Route::get('/vouchers/download/{file_name}', function ($file_name){
 	return Storage::download('vouchers/'.$file_name);
 });

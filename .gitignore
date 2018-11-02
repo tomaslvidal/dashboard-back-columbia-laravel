@@ -25,3 +25,5 @@ public/css/app\.css
 composer\.lock
 
 public/js/app\.js
+
+public/css/style\.css

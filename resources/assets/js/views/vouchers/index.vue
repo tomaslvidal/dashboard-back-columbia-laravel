@@ -11,10 +11,10 @@ export default {
 
 		this.$store.dispatch('Breadcrumb/SET_ITEMS', [{
 			text: 'Inicio',
-			href: '/home'
+			to: {name: 'home'}
 		}, {
 			text: 'Vouchers',
-			href: '#'
+			to: {name: 'vouchers'}
 		}, {
 			text: 'Lista',
 			active: true
