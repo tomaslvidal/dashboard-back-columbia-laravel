@@ -18,7 +18,7 @@ class SurveyOption extends Model
 
     protected $guarded = [];
 
-    public function field()
+    public function surveyField()
     {
         return $this->belongsTo('Columbia\SurveyField');
     }

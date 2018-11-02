@@ -10,7 +10,7 @@ class Survey extends Model
 {
 	use SoftDeletes;
 
-    protected $table = 'survey';
+    protected $table = 'surveys';
 
     protected $primaryKey = 'id';
 
@@ -18,7 +18,7 @@ class Survey extends Model
 
     protected $guarded = [];
 
-    public function comments()
+    public function surveyFields()
     {
         return $this->hasMany('Columbia\SurveyField');
     }

@@ -1,4 +1,5 @@
 <?php
+
 use Columbia\User;
 
 use Illuminate\Http\Request;
@@ -30,8 +31,13 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 	Route::resource('destinations', 'API\DestinationController')->except(['index', 'show']);
 
+	Route::resource('surveys/fields', 'API\SurveyFieldController');
+
+	Route::resource('surveys/options', 'API\SurveyOptionController');
+
 	Route::resources([
 	    'users' => 'API\UserController',
 	    'vouchers' => 'API\VoucherController',
+	    'surveys' => 'API\SurveyController',
 	]);
 });

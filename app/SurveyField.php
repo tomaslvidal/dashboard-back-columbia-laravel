@@ -23,13 +23,8 @@ class SurveyField extends Model
         return $this->belongsTo('Columbia\Survey');
     }
 
-    public function options()
+    public function surveyOptions()
     {
         return $this->hasMany('Columbia\SurveyOption');
     }
-
-    // public function setNameAttribute($value)
-    // {
-    //     $this->attributes['name'] = ucfirst($value);
-    // }
 }
