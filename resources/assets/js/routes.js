@@ -31,6 +31,21 @@ export default new Router({
       beforeEnter: Authenticated
     },
     {
+      path: "/home",
+      name: "home_",
+      component: {
+        template: '<div></div>',
+        created(){
+          store.dispatch('Breadcrumb/SET_ITEMS', [{
+            text: 'Inicio',
+            to: {name: 'home'},
+            active: true
+          }]);
+        }
+      },
+      beforeEnter: Authenticated
+    },
+    {
       path: "/vouchers",
       name: "vouchers",
       component: require('./views/Vouchers/index.vue'),
