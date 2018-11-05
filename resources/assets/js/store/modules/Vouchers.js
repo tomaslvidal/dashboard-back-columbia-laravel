@@ -28,7 +28,7 @@ const Vouchers = {
 			if(state.request_made==true){
 				let index = state.items.findIndex(item => item.id == payload.id);
 
-				state.item = state.items[index];
+				state.item = JSON.parse(JSON.stringify(state.items[index]));
 			}
 			else{
 				let item = await api.get('vouchers', payload.id);
