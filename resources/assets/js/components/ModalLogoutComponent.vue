@@ -16,13 +16,7 @@ export default{
   			this.$store.dispatch('Modals/StateLogout');
   		},
       okButton(){
-        delete axios.defaults.headers.common['Authorization'];
-
-        localStorage.removeItem('user-token');
-
-        this.$store.commit('Accounts/AUTHENTICATED_FALSE');
-
-        this.$router.push({name: 'index'});
+        window.location = "/logout"
       }
   	}
 }

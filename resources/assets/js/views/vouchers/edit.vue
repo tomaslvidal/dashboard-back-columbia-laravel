@@ -193,7 +193,7 @@ export default {
 
 				axios.get('/api/vouchers/'+this.$route.params.id)
 				.then(res => {
-					this.item.file_name = res.data[0].file_name;
+					this.item.file_name = res.data.file_name;
 
 					this.$store.dispatch('Vouchers/UPDATE_ITEM', {id: this.item.id, file_name: this.item.file_name});
 				});
