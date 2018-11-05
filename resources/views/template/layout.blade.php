@@ -9,11 +9,13 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }} | @yield('title') </title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
         <link href="{{ asset('css/app.css?v='.filemtime(public_path('css/app.css'))) }}" rel="stylesheet">
 
         <link href="{{ asset('css/style.css?v='.filemtime(public_path('css/style.css'))) }}" rel="stylesheet">
+
+        <link rel="shortcut icon" href="{{ asset('img/favicon.ico?v='.filemtime(public_path('img/favicon.ico'))) }}">
 
         @yield('style')
     </head>
@@ -26,10 +28,6 @@
         <script src="{{ asset('js/app.js?v='.filemtime(public_path('js/app.js'))) }}"></script>
 
         <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>
-
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-        <script defer src="{{ asset('js/ckeditor/ckeditor.js?v='.filemtime(public_path('js/ckeditor/ckeditor.js'))) }}"></script>
 
         @yield('script')
     </body>

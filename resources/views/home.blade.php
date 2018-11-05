@@ -1,6 +1,6 @@
 @extends('template.layout')
 
-@section('title', 'Inicio')
+{{-- @section('title', 'Inicio') --}}
 
 @section('content')
     <router-view></router-view>
