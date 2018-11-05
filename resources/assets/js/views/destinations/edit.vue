@@ -60,10 +60,47 @@
 </template>
 
 <script>
-import Ckeditor from 'vue-ckeditor2';
-
 export default {
-	components: { Ckeditor },
+	components: {
+		Ckeditor: () => {
+			return new Promise((resolve, reject) => {
+				if(!window.$){
+					let script = document.createElement('script');
+
+					let script2 = document.createElement('script');
+
+					script.onload = () => {
+						this.loadJQuery = true;
+						
+						if(this.loadCkeditor){
+							resolve(require('vue-ckeditor2'));
+						}
+					};
+
+					script2.onload = () => {
+						this.loadCkeditor = true;
+
+						if(this.loadJQuery){
+							resolve(require('vue-ckeditor2'));
+						}
+					};
+
+					script.async = true;
+
+					script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js';
+
+					script2.async = true;
+
+					script2.src = '/js/ckeditor/ckeditor.js';
+
+					document.head.appendChild(script); document.head.appendChild(script2); 
+				}
+				else{
+					resolve(require('vue-ckeditor2'));
+				}
+			});
+		}
+	},
 	created(){
 		this.$store.dispatch('Destinations/GET_ITEM', { "id" : this.$route.params.id});
 
@@ -78,7 +115,7 @@ export default {
 			active: true
 		}]);
 	},
-	destroyed(){
+	destroyed(){		
 		this.$store.dispatch('Destinations/CLEAR_ITEM');
 	},
 	computed: {
@@ -96,6 +133,8 @@ export default {
 				height: '420'
 			},
 			show: true,
+			loadJQuery: false,
+			loadCkeditor: false,
 			progress: {
 				status: false,
 				value: 0,
@@ -255,7 +294,7 @@ export default {
 
 				axios.get('/api/destinations/'+this.$route.params.id)
 				.then(res => {
-					this.item[name] = res.data[0][name];
+					this.item[name] = res.data[name];
 
 					this.$store.dispatch('Destinations/UPDATE_ITEM', {id: this.item.id, [name]: this.item[name]});
 				});
