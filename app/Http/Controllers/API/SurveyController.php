@@ -36,7 +36,7 @@ class SurveyController extends Controller
 
     public function show($id)
     {
-        $survey = Survey::with('surveyFields.surveyOptions')->find(1);
+        $survey = Survey::with('surveyFields.surveyOptions')->find($id);
 
         return $survey;
     }
