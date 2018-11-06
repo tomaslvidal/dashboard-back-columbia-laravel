@@ -130,10 +130,10 @@ export default {
 				subtitle: "",
 				description: "",
 				image1: "",
-				image2: "",
-				image3: "",
-				image4: "",
-				image5: ""
+				// image2: "",
+				// image3: "",
+				// image4: "",
+				// image5: ""
 			},
 			progress: {
 				status: false,
@@ -158,34 +158,34 @@ export default {
 					label: "0",
 					max: 99
 				},
-				image2: {
-					progress_status: false,
-					counter: 0,
-					variant: "primary",
-					label: "0",
-					max: 99
-				},
-				image3: {
-					progress_status: false,
-					counter: 0,
-					variant: "primary",
-					label: "0",
-					max: 99
-				},
-				image4: {
-					progress_status: false,
-					counter: 0,
-					variant: "primary",
-					label: "0",
-					max: 99
-				},
-				image5: {
-					progress_status: false,
-					counter: 0,
-					variant: "primary",
-					label: "0",
-					max: 99
-				}
+				// image2: {
+				// 	progress_status: false,
+				// 	counter: 0,
+				// 	variant: "primary",
+				// 	label: "0",
+				// 	max: 99
+				// },
+				// image3: {
+				// 	progress_status: false,
+				// 	counter: 0,
+				// 	variant: "primary",
+				// 	label: "0",
+				// 	max: 99
+				// },
+				// image4: {
+				// 	progress_status: false,
+				// 	counter: 0,
+				// 	variant: "primary",
+				// 	label: "0",
+				// 	max: 99
+				// },
+				// image5: {
+				// 	progress_status: false,
+				// 	counter: 0,
+				// 	variant: "primary",
+				// 	label: "0",
+				// 	max: 99
+				// }
 			}
 		}
 	},

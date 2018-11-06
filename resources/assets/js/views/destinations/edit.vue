@@ -159,38 +159,38 @@ export default {
 					max: 99,
 					disabled: false
 				},
-				image2: {
-					progress_status: false,
-					counter: 0,
-					variant: "primary",
-					label: "0",
-					max: 99,
-					disabled: false
-				},
-				image3: {
-					progress_status: false,
-					counter: 0,
-					variant: "primary",
-					label: "0",
-					max: 99,
-					disabled: false
-				},
-				image4: {
-					progress_status: false,
-					counter: 0,
-					variant: "primary",
-					label: "0",
-					max: 99,
-					disabled: false
-				},
-				image5: {
-					progress_status: false,
-					counter: 0,
-					variant: "primary",
-					label: "0",
-					max: 99,
-					disabled: false
-				}
+				// image2: {
+				// 	progress_status: false,
+				// 	counter: 0,
+				// 	variant: "primary",
+				// 	label: "0",
+				// 	max: 99,
+				// 	disabled: false
+				// },
+				// image3: {
+				// 	progress_status: false,
+				// 	counter: 0,
+				// 	variant: "primary",
+				// 	label: "0",
+				// 	max: 99,
+				// 	disabled: false
+				// },
+				// image4: {
+				// 	progress_status: false,
+				// 	counter: 0,
+				// 	variant: "primary",
+				// 	label: "0",
+				// 	max: 99,
+				// 	disabled: false
+				// },
+				// image5: {
+				// 	progress_status: false,
+				// 	counter: 0,
+				// 	variant: "primary",
+				// 	label: "0",
+				// 	max: 99,
+				// 	disabled: false
+				// }
 			}
 		}
 	},
