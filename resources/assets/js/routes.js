@@ -48,55 +48,73 @@ export default new Router({
     {
       path: "/vouchers",
       name: "vouchers",
-      component: require('./views/Vouchers/index.vue'),
+      component: require('./views/vouchers/index.vue'),
       beforeEnter: Authenticated
     },
     {
       path: '/vouchers/create',
       name: "voucher_create",
-      component: require('./views/Vouchers/create.vue'),
+      component: require('./views/vouchers/create.vue'),
       beforeEnter: Authenticated
     },
     {
       path: '/vouchers/:id',
       name: "voucher_edit",
-      component: require('./views/Vouchers/edit.vue'),
+      component: require('./views/vouchers/edit.vue'),
       beforeEnter: Authenticated
     },
     {
       path: "/users",
       name: "users",
-      component: require('./views/Users/index.vue'),
+      component: require('./views/users/index.vue'),
       beforeEnter: Authenticated
     },
     {
       path: '/users/create',
       name: "user_create",
-      component: require('./views/Users/create.vue'),
+      component: require('./views/users/create.vue'),
       beforeEnter: Authenticated
     },
     {
       path: '/users/:id',
       name: "user_edit",
-      component: require('./views/Users/edit.vue'),
+      component: require('./views/users/edit.vue'),
       beforeEnter: Authenticated
     },
     {
       path: "/destinations",
       name: "destinations",
-      component: require('./views/Destinations/index.vue'),
+      component: require('./views/destinations/index.vue'),
       beforeEnter: Authenticated
     },
     {
       path: '/destinations/create',
       name: "destination_create",
-      component: require('./views/Destinations/create.vue'),
+      component: require('./views/destinations/create.vue'),
       beforeEnter: Authenticated
     },
     {
       path: '/destinations/:id',
       name: "destination_edit",
-      component: require('./views/Destinations/edit.vue'),
+      component: require('./views/destinations/edit.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/surveys',
+      name: "surveys",
+      component: require('./views/surveys/index.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/surveys/create',
+      name: "survey_create",
+      component: require('./views/surveys/create.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/surveys/:id',
+      name: "survey_edit",
+      component: require('./views/surveys/edit.vue'),
       beforeEnter: Authenticated
     },
     {

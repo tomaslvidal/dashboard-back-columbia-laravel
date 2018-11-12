@@ -12,8 +12,6 @@ use Columbia\Http\Requests\AddUserAPI;
 
 use Illuminate\Support\Facades\Storage;
 
-use Illuminate\Support\Facades\Input;
-
 use Columbia\Http\Controllers\Controller;
 
 class VoucherController extends Controller

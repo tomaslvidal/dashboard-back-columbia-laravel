@@ -1,7 +1,5 @@
 <?php
 
-use Columbia\User;
-
 use Illuminate\Http\Request;
 
 Route::resource('destinations', 'API\DestinationController')->only([

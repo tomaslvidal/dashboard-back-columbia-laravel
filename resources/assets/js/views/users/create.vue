@@ -101,29 +101,29 @@ export default {
 				}
 			};
 
-				axios.post('/api/users', JSON.parse(JSON.stringify(this.item)), config)
-				.then((res)=>{
-					setTimeout( () => {
-						this.progress.variant = "success";
+			axios.post('/api/users', JSON.parse(JSON.stringify(this.item)), config)
+			.then((res)=>{
+				setTimeout( () => {
+					this.progress.variant = "success";
 
-						this.progress.label = "Su registro fue creado con éxito";
+					this.progress.label = "Su registro fue creado con éxito";
 
-						this.item.id = res.data.id;
+					this.item.id = res.data.id;
 
-						this.item.created_at = res.data.created_at;
+					this.item.created_at = res.data.created_at;
 
-						this.disabledCreate = true;
+					this.disabledCreate = true;
 
-						this.$store.dispatch('Users/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));
-					}, 1000);
-				})
-				.catch(()=>{
-					setTimeout( () => {
-						this.progress.variant = 'danger';
+					this.$store.dispatch('Users/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));
+				}, 1000);
+			})
+			.catch(()=>{
+				setTimeout( () => {
+					this.progress.variant = 'danger';
 
-						this.progress.label = "El registro no pudo ser creado"
-					}, 1000);
-				});
+					this.progress.label = "El registro no pudo ser creado"
+				}, 1000);
+			});
 		},
 		onReset(evt){
 			evt.preventDefault();
