@@ -19,8 +19,6 @@ class CreateSurveyFieldsTable extends Migration
             $table->string('type')->nullable();
             $table->integer('survey_id')->unsigned();
             $table->foreign('survey_id')->references('id')->on('surveys')->onDelete('cascade');
-            $table->timestamps();
-            $table->softDeletes();  
         });
     }
 
