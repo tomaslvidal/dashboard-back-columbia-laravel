@@ -4,6 +4,10 @@ tr > td:last-child{
 
 }
 
+.nav-item > .nav-link.active > svg {
+    color: #fff!important;
+}
+
 .maxWidth{
   max-width: 150px;
   overflow: hidden;
