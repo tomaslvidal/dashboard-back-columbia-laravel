@@ -92,6 +92,15 @@ export default {
 					}
 				}
 			}
+		},
+		'item.type': function (newVal){
+			newVal = Number(newVal);
+
+			if(newVal==3){
+				this.model.numberAnswers = null;
+				
+				this.$set(this.item, 'survey_options', []);
+			}
 		}
 	},
 }
