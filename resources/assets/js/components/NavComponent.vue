@@ -51,6 +51,21 @@
             </b-nav-item>
           </b-collapse>
         </b-nav-item>
+
+        <b-nav-item v-b-toggle.collapse4 @click="hideNavCollapse" href="#">
+          <i class="fa fa-window-maximize"></i>
+          
+          <b-nav-text>Encuestas</b-nav-text>
+
+          <b-collapse id="collapse4" accordion="my-accordion" class="mt-2">
+            <b-nav-item @click="hideNavCollapse" :to="{ name: 'surveys' }">
+              <b-nav-text>Listado</b-nav-text>
+            </b-nav-item>
+            <b-nav-item @click="hideNavCollapse" :to="{ name: 'survey_create' }">
+              <b-nav-text>Agregar</b-nav-text>
+            </b-nav-item>
+          </b-collapse>
+        </b-nav-item>
       </b-nav>
 
       <b-navbar-nav class="ml-auto">
