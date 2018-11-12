@@ -8,6 +8,8 @@ import Alerts from './modules/Alerts';
 
 import Users from './modules/Users';
 
+import Surveys from './modules/Surveys';
+
 import Vouchers from './modules/Vouchers';
 
 import Destinations from './modules/Destinations';
@@ -22,6 +24,7 @@ export default new Vuex.Store({
 	modules: {
 		Modals,
 		Alerts,
+		Surveys,
 		Users,
 		Vouchers,
 		Destinations,
