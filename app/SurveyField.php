@@ -4,17 +4,13 @@ namespace Columbia;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 class SurveyField extends Model
 {
-	use SoftDeletes;
-
     protected $table = 'survey_fields';
 
-    protected $primaryKey = 'id';
+    public $timestamps = false;
 
-    protected $dates = ['deleted_at'];
+    protected $primaryKey = 'id';
 
     protected $guarded = [];
 
