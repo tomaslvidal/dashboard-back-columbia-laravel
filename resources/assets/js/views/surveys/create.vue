@@ -150,8 +150,6 @@ export default {
 		onSubmit(evt){
 			evt.preventDefault();
 
-			console.log(this.item);
-
 			this.progress.status = false;
 
 			this.$nextTick( () => { this.resetSaveProgress(); this.progress.status = true });
@@ -180,6 +178,10 @@ export default {
 					this.disabledCreate = true;
 
 					this.$store.dispatch('Surveys/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));
+
+					setTimeout( () => {
+						this.$router.push({name: 'surveys'}); // this.$router.go(-1);
+					}, 1500);
 				}, 1000);
 			})
 			.catch(()=>{
