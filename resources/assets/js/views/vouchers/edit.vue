@@ -1,6 +1,6 @@
 <template>
 	<div v-if="Object.keys(item).length>0">
-		<h4>Voucher{{item.id!='' ? ' '+item.id : ''}}: {{item.name}}</h4>
+		<h4>Voucher{{item.id ? ' '+item.id : ''}}: {{item.name}}</h4>
 
 		<hr>
 
@@ -15,6 +15,34 @@
 				<b-form-input id="description" type="text" v-model="item.description" required placeholder="Escribir descripcion" />
 			</b-form-group>
 
+			<!-- Agregar Usuarios -->
+			<b-form-group id="InputGroup3" label="Usuarios:" label-for="add_users">
+				<treeselect
+					:multiple="treeselect.multiple"
+					:options="items"
+					:value-consists-of="treeselect.valueConsistsOf"
+					:alwaysOpen="treeselect.alwaysOpen"
+					:clearOnSelect="treeselect.clearOnSelect"
+					:closeOnSelect="treeselect.closeOnSelect"
+					:appendToBody="treeselect.appendToBody"
+					:openDirection="treeselect.openDirection"
+					:noChildrenText="treeselect.noChildrenText"
+					:noOptionsText="treeselect.noOptionsText"
+					:noResultsText="treeselect.noResultsText"
+					:placeholder="treeselect.placeholder"
+					:retryText="treeselect.retryText"
+					:retryTitle="treeselect.retryTitle"
+					:searchPromptText="treeselect.searchPromptText"
+					:loadingText="treeselect.loadingText"
+					:clearValueText="treeselect.clearValueText"
+					:clearAllText="treeselect.clearAllText"
+					:matchKeys="treeselect.matchKeys"
+					v-model="item.users"
+					:normalizer="treeselect.normalizer"
+					:valueFormat="treeselect.valueFormat"
+				/>
+			</b-form-group>
+
 			<!-- Archivo -->
 			<b-form-group id="InputGroup3" label="Archivo:" label-for="file_name">
 				<b-input-group>
@@ -26,6 +54,7 @@
 						<b-btn variant="outline-success" target="_blank" :href="'/vouchers/download/'+item.file_name">Descargar</b-btn>
 					</b-input-group-append>
 				</b-input-group>
+
 				<div class="progress_" v-if="progress_status">
 					<b-progress :max="max" animated>
 						<b-progress-bar :label="label" :variant="variant" :value="counter" />
@@ -47,8 +76,14 @@
 </template>
 
 <script>
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+
 export default {
 	created(){
+		if(this.$store.state.Users.request_made==false){
+			this.$store.dispatch('Users/FETCH_ITEMS');
+		}
+
 		this.$store.dispatch('Vouchers/GET_ITEM', { "id" : this.$route.params.id });
 
 		this.$store.dispatch('Breadcrumb/SET_ITEMS', [
@@ -65,6 +100,18 @@ export default {
 			active: true
 		}
 		]);
+	},
+	computed: {
+		items(){
+			return [{
+				id: 'users',
+				name: 'Usuarios',
+				children: this.$store.state.Users.items,
+			}];
+		},
+		item(){
+			return this.$store.state.Vouchers.item;
+		}
 	},
 	destroyed(){
 		this.$store.dispatch('Vouchers/CLEAR_ITEM');
@@ -85,12 +132,34 @@ export default {
 				max: 99,
 				label: "0"
 			},
+			treeselect: {
+				noChildrenText: "No hay sub-opciones.",
+				noOptionsText: "No hay opciones disponibles.",
+				noResultsText: "No se encontraron resultados...",
+				placeholder:"Asignar Usuarios...",
+				retryText:"¿Procesar de nuevo?",
+				retryTitle:"Haga clic para volver a intentar",
+				searchPromptText:"Escribe para buscar...",
+				loadingText:"Cargando...",
+				clearValueText:"Limpiar valor",
+				clearAllText:"Limpiar todo",
+				multiple: true,
+				alwaysOpen: false,
+				clearOnSelect: true,
+				closeOnSelect: false,
+				appendToBody: false,
+				openDirection: 'top',
+				matchKeys: ['name'],
+				// value: [],
+				valueConsistsOf: 'LEAF_PRIORITY',
+				valueFormat: 'object',
+				normalizer(node) {
+				  return {
+				    label: node.last_name ? node.name+" "+node.last_name : node.name,
+				  }
+				},
+			},
 			disabled: false
-		}
-	},
-	computed: {
-		item(){
-			return this.$store.state.Vouchers.item;
 		}
 	},
 	methods: {
@@ -103,7 +172,7 @@ export default {
 
 			let items = JSON.parse(JSON.stringify(this.item));
 
-			['file_name', 'users'].forEach(e => delete items[e]);
+			['file_name'].forEach(e => delete items[e]);
 
 			const config = {
 				onUploadProgress: (progressEvent) => {

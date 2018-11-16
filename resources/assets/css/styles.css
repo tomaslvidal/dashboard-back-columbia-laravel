@@ -4,8 +4,12 @@ tr > td:last-child{
 
 }
 
+.vue-treeselect__placeholder {
+  color: #6c757d!important;
+}
+
 .nav-item > .nav-link.active > svg {
-    color: #fff!important;
+  color: #fff!important;
 }
 
 .maxWidth{

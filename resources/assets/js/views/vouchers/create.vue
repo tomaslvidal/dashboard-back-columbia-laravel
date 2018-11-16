@@ -34,6 +34,34 @@
 				</div>
 			</b-form-group>
 
+			<!-- Agregar Usuarios -->
+			<b-form-group id="InputGroup3" label="Usuarios:" label-for="add_users">
+				<treeselect
+					:multiple="treeselect.multiple"
+					:options="items"
+					:value-consists-of="treeselect.valueConsistsOf"
+					:alwaysOpen="treeselect.alwaysOpen"
+					:clearOnSelect="treeselect.clearOnSelect"
+					:closeOnSelect="treeselect.closeOnSelect"
+					:appendToBody="treeselect.appendToBody"
+					:openDirection="treeselect.openDirection"
+					:noChildrenText="treeselect.noChildrenText"
+					:noOptionsText="treeselect.noOptionsText"
+					:noResultsText="treeselect.noResultsText"
+					:placeholder="treeselect.placeholder"
+					:retryText="treeselect.retryText"
+					:retryTitle="treeselect.retryTitle"
+					:searchPromptText="treeselect.searchPromptText"
+					:loadingText="treeselect.loadingText"
+					:clearValueText="treeselect.clearValueText"
+					:clearAllText="treeselect.clearAllText"
+					:matchKeys="treeselect.matchKeys"
+					v-model="treeselect.value"
+					:normalizer="treeselect.normalizer"
+					:valueFormat="treeselect.valueFormat"
+				/>
+			</b-form-group>
+
 			<hr>
 
 			<b-progress v-if="progress.status" :max="progress.max" animated>
@@ -48,8 +76,14 @@
 </template>
 
 <script>
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+
 export default {
 	created(){
+		if(this.$store.state.Users.request_made==false){
+			this.$store.dispatch('Users/FETCH_ITEMS');
+		}
+
 		this.$store.dispatch('Breadcrumb/SET_ITEMS', [
 		{
 			text: 'Inicio',
@@ -64,6 +98,15 @@ export default {
 			active: true
 		}
 		]);
+	},
+	computed:{
+		items(){
+			return [{
+				id: 'users',
+				name: 'Usuarios',
+				children: this.$store.state.Users.items,
+			}];
+		}
 	},
 	data(){
 		return {
@@ -88,7 +131,34 @@ export default {
 				description: "",
 				file_name: ""
 			},
-			disabled: false
+			disabled: false,
+			treeselect: {
+				noChildrenText: "No hay sub-opciones.",
+				noOptionsText: "No hay opciones disponibles.",
+				noResultsText: "No se encontraron resultados...",
+				placeholder:"Asignar Usuarios...",
+				retryText:"¿Procesar de nuevo?",
+				retryTitle:"Haga clic para volver a intentar",
+				searchPromptText:"Escribe para buscar...",
+				loadingText:"Cargando...",
+				clearValueText:"Limpiar valor",
+				clearAllText:"Limpiar todo",
+				multiple: true,
+				alwaysOpen: false,
+				clearOnSelect: true,
+				closeOnSelect: false,
+				appendToBody: false,
+				openDirection: 'top',
+				matchKeys: ['name'],
+				value: [],
+				valueConsistsOf: 'LEAF_PRIORITY',
+				valueFormat: 'object',
+				normalizer(node) {
+				  return {
+				    label: node.last_name ? node.name+" "+node.last_name : node.name,
+				  }
+				},
+			}
 		}
 	},
 	methods: {
@@ -99,9 +169,9 @@ export default {
 
 			this.$nextTick(() => { this.resetSaveProgress(); this.progress.status = true });
 
-			let items = JSON.parse(JSON.stringify(this.item));
+			this.item.users = this.treeselect.value;
 
-			['file_name', 'users', 'id', 'created_at'].forEach(e => delete items[e]);
+			let items = JSON.parse(JSON.stringify(this.item));
 
 			const config = {
 				onUploadProgress: (progressEvent) => {
@@ -112,6 +182,8 @@ export default {
 					this.progress.value = percentCompleted;
 				}
 			};
+
+			['file_name', 'id', 'created_at'].forEach(e => delete items[e]);
 
 			axios.post('/api/vouchers', JSON.parse(JSON.stringify(items)), config)
 			.then((res)=>{
