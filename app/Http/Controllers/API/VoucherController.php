@@ -28,7 +28,7 @@ class VoucherController extends Controller
 
     public function store(StoreVoucherAPI $request)
     {
-        $voucher = new Voucher($request->except('file_name'));
+        $voucher = new Voucher($request->except(['file_name', 'users']));
 
         if(null !== $request->file('file_name')){
             $storagePath = Storage::disk('local')->put('vouchers', $request->file('file_name'));
@@ -39,6 +39,14 @@ class VoucherController extends Controller
         }
 
         $voucher->save();
+
+        if(isset($request->users)){
+            for ($i=0; $i < count($request->users); $i++) { 
+                if(isset($request->users[$i]['id'])){
+                    $voucher->users()->attach($request->users[$i]['id']);
+                }
+            }
+        }
 
         return response()->json([
             'success' => true,
@@ -64,7 +72,7 @@ class VoucherController extends Controller
     {
         $voucher = Voucher::find($id);
 
-        $voucher->fill($request->except('file_name'));
+        $voucher->fill($request->except(['file_name', 'users']));
 
         if(null !== $request->file('file_name')){
             if($voucher['file_name']!=""){
@@ -80,7 +88,17 @@ class VoucherController extends Controller
             $voucher['file_name'] = $storageName;
         }
 
-        $voucher->save(); 
+        $voucher->update();
+
+        if(isset($request->users)){
+            $voucher->users()->detach();
+
+            for ($i=0; $i < count($request->users); $i++) { 
+                if(isset($request->users[$i]['id'])){
+                    $voucher->users()->attach($request->users[$i]['id']);
+                }
+            }
+        }
     }
 
     public function destroy($id, Request $request)

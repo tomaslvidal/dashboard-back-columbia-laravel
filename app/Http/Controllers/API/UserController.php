@@ -28,9 +28,11 @@ class UserController extends Controller
     {
         $user = User::create($request->except('vouchers'));
 
-        for ($i=0; $i < count($request->vouchers); $i++) { 
-            if(isset($request->vouchers[$i]['id'])){
-                $user->vouchers()->attach($request->vouchers[$i]['id']);
+        if(isset($request->vouchers)){
+            for ($i=0; $i < count($request->vouchers); $i++) { 
+                if(isset($request->vouchers[$i]['id'])){
+                    $user->vouchers()->attach($request->vouchers[$i]['id']);
+                }
             }
         }
 
@@ -60,11 +62,13 @@ class UserController extends Controller
 
         $user->update($request->except('vouchers'));
 
-        $user->vouchers()->detach();
+        if(isset($request->vouchers)){
+            $user->vouchers()->detach();
 
-        for ($i=0; $i < count($request->vouchers); $i++) { 
-            if(isset($request->vouchers[$i]['id'])){
-                $user->vouchers()->attach($request->vouchers[$i]['id']);
+            for ($i=0; $i < count($request->vouchers); $i++) { 
+                if(isset($request->vouchers[$i]['id'])){
+                    $user->vouchers()->attach($request->vouchers[$i]['id']);
+                }
             }
         }
     }
