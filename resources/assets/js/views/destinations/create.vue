@@ -1,6 +1,6 @@
 <template>
 	<div v-if="Object.keys(item).length>0">
-		<h4>Destino{{item.id!='' ? ' '+item.id : ''}}: {{item.title}}</h4>
+		<h4>Destino{{item.id ? ' '+item.id : ''}}: {{item.title}}</h4>
 
 		<hr>
 
@@ -210,6 +210,8 @@ export default {
 					this.progress.value = percentCompleted;
 				}
 			};
+
+			['id', 'created_at'].forEach(e => delete items[e]);
 
 			axios.post('/api/destinations', JSON.parse(JSON.stringify(items)), config)
 			.then((res)=>{

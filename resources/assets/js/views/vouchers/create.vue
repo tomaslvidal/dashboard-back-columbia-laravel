@@ -1,6 +1,6 @@
 <template>
 	<div v-if="Object.keys(item).length>0">
-		<h4>Voucher{{item.id!='' ? ' '+item.id : ''}}: {{item.name}}</h4>
+		<h4>Voucher{{item.id ? ' '+item.id : ''}}: {{item.name}}</h4>
 
 		<hr>
 
@@ -101,7 +101,7 @@ export default {
 
 			let items = JSON.parse(JSON.stringify(this.item));
 
-			['file_name', 'users'].forEach(e => delete items[e]);
+			['file_name', 'users', 'id', 'created_at'].forEach(e => delete items[e]);
 
 			const config = {
 				onUploadProgress: (progressEvent) => {
