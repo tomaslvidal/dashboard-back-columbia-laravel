@@ -26,7 +26,13 @@ class UserController extends Controller
 
     public function store(StoreUserAPI $request)
     {
-        $user = User::create($request->all());
+        $user = User::create($request->except('vouchers'));
+
+        for ($i=0; $i < count($request->vouchers); $i++) { 
+            if(isset($request->vouchers[$i]['id'])){
+                $user->vouchers()->attach($request->vouchers[$i]['id']);
+            }
+        }
 
         return response()->json([
             'success' => true,
@@ -52,7 +58,15 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $user->update($request->all());
+        $user->update($request->except('vouchers'));
+
+        $user->vouchers()->detach();
+
+        for ($i=0; $i < count($request->vouchers); $i++) { 
+            if(isset($request->vouchers[$i]['id'])){
+                $user->vouchers()->attach($request->vouchers[$i]['id']);
+            }
+        }
     }
 
     public function destroy($id, Request $request)

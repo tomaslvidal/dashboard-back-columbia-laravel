@@ -1,6 +1,6 @@
 <template>
 	<div v-if="Object.keys(item).length>0">
-		<h4>Usuario{{item.id!='' ? ' '+item.id : ''}}: {{item.name+" "+item.last_name}}</h4>
+		<h4>Usuario{{item.id ? ' '+item.id : ''}}: {{item.name+" "+item.last_name}}</h4>
 
 		<hr>
 
@@ -27,7 +27,35 @@
 
 			<!-- Telefono -->
 			<b-form-group id="InputGroup5" label="Telefono:" label-for="telephone">
-				<b-form-input id="exampleInput1" type="tel" v-model="item.telephone" required placeholder="Escribir telefono" />
+				<b-form-input id="telephone" type="tel" v-model="item.telephone" required placeholder="Escribir telefono" />
+			</b-form-group>
+
+			<!-- Agregar Vouchers -->
+			<b-form-group id="InputGroup6" label="Vouchers:" label-for="add_vouchers">
+				<treeselect
+					:multiple="treeselect.multiple"
+					:options="items"
+					:value-consists-of="treeselect.valueConsistsOf"
+					:alwaysOpen="treeselect.alwaysOpen"
+					:clearOnSelect="treeselect.clearOnSelect"
+					:closeOnSelect="treeselect.closeOnSelect"
+					:appendToBody="treeselect.appendToBody"
+					:openDirection="treeselect.openDirection"
+					:noChildrenText="treeselect.noChildrenText"
+					:noOptionsText="treeselect.noOptionsText"
+					:noResultsText="treeselect.noResultsText"
+					:placeholder="treeselect.placeholder"
+					:retryText="treeselect.retryText"
+					:retryTitle="treeselect.retryTitle"
+					:searchPromptText="treeselect.searchPromptText"
+					:loadingText="treeselect.loadingText"
+					:clearValueText="treeselect.clearValueText"
+					:clearAllText="treeselect.clearAllText"
+					:matchKeys="treeselect.matchKeys"
+					v-model="treeselect.value"
+					:normalizer="treeselect.normalizer"
+					:valueFormat="treeselect.valueFormat"
+				/>
 			</b-form-group>
 
 			<hr>
@@ -44,8 +72,14 @@
 </template>
 
 <script>
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+
 export default {
 	created(){
+		if(this.$store.state.Vouchers.request_made==false){
+			this.$store.dispatch('Vouchers/FETCH_ITEMS');
+		}
+
 		this.$store.dispatch('Breadcrumb/SET_ITEMS', [{
 			text: 'Inicio',
 			to: {name: 'home'}
@@ -56,6 +90,15 @@ export default {
 			text: 'Crear',
 			active: true
 		}]);
+	},
+	computed:{
+		items(){
+			return [{
+				id: 'vouchers',
+				name: 'Vouchers',
+				children: this.$store.state.Vouchers.items,
+			}];
+		}
 	},
 	data(){
 		return {
@@ -75,6 +118,33 @@ export default {
 				email: "",
 				password: "",
 				telephone: ""
+			},
+			treeselect: {
+				noChildrenText: "No hay sub-opciones.",
+				noOptionsText: "No hay opciones disponibles.",
+				noResultsText: "No se encontraron resultados...",
+				placeholder:"Asignar Vouchers...",
+				retryText:"¿Procesar de nuevo?",
+				retryTitle:"Haga clic para volver a intentar",
+				searchPromptText:"Escribe para buscar...",
+				loadingText:"Cargando...",
+				clearValueText:"Limpiar valor",
+				clearAllText:"Limpiar todo",
+				multiple: true,
+				alwaysOpen: false,
+				clearOnSelect: true,
+				closeOnSelect: false,
+				appendToBody: false,
+				openDirection: 'top',
+				matchKeys: ['name'],
+				value: [],
+				valueConsistsOf: 'LEAF_PRIORITY',
+				valueFormat: 'object',
+				normalizer(node) {
+				  return {
+				    label: node.name,
+				  }
+				},
 			}
 		}
 	},
@@ -91,6 +161,8 @@ export default {
 
 			this.$nextTick( () => { this.resetSaveProgress(); this.progress.status = true });
 
+			this.item.vouchers = this.treeselect.value;
+
 			const config = {
 				onUploadProgress: (progressEvent) => {
 					let percentCompleted = Math.round((progressEvent.loaded * 99) / progressEvent.total);
@@ -100,6 +172,8 @@ export default {
 					this.progress.value = percentCompleted;
 				}
 			};
+
+			['id', 'created_at'].forEach(e => delete this.item[e]);
 
 			axios.post('/api/users', JSON.parse(JSON.stringify(this.item)), config)
 			.then((res)=>{

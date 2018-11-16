@@ -14,6 +14,8 @@ window.Vue = require('vue');
 
 Vue.use(BootstrapVue);
 
+Vue.component('treeselect', require('@riophae/vue-treeselect').Treeselect);
+
 Vue.component('default-layout', require('./layouts/Default.vue'));
 
 Vue.component('error404-layout', require('./layouts/Error404.vue'));
