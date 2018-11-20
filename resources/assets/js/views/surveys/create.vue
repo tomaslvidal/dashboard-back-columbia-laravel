@@ -164,7 +164,7 @@ export default {
 				}
 			};
 
-			['id', 'created_at'].forEach(e => delete items[e]);
+			['id', 'created_at'].forEach(e => delete this.item[e]);
 
 			axios.post('/api/surveys', JSON.parse(JSON.stringify(this.item)), config)
 			.then((res)=>{

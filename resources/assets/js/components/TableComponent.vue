@@ -107,8 +107,8 @@ export default {
     return {
       fields_: this.fields,
       currentPage: 1,
-      perPage: 25,
-      pageOptions: [10, 15, 20, 25, 50, 100, 250, 500],
+      perPage: 50,
+      pageOptions: [10, 15, 20, 25, 50, 100, 250],
       sortBy: 'id',
       sortDesc: false,
       sortDirection: 'asc',
