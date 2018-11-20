@@ -25,16 +25,16 @@ const Vouchers = {
 			}
 		},
 		async SET_ITEM(state, payload){
-			if(state.request_made==true){
-				let index = state.items.findIndex(item => item.id == payload.id);
+			// if(state.request_made==true){
+			// 	let index = state.items.findIndex(item => item.id == payload.id);
 
-				state.item = JSON.parse(JSON.stringify(state.items[index]));
-			}
-			else{
+			// 	state.item = JSON.parse(JSON.stringify(state.items[index]));
+			// }
+			// else{
 				let item = await api.get('vouchers', payload.id);
 				
 				state.item = item;
-			}
+			// }
 		},
 		async ADD_ITEM(state, payload){
 			state.items.push(payload);
