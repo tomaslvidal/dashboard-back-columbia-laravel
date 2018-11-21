@@ -23,6 +23,11 @@ class Survey extends Model
         return $this->hasMany('Columbia\SurveyField');
     }
 
+    public function surveyMades()
+    {
+        return $this->hasMany('Columbia\SurveyField');
+    }
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst($value);

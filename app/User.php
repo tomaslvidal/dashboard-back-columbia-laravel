@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->belongsToMany('Columbia\Voucher')->using('Columbia\UserVoucher')->withPivot('created_at');
     }
 
+    public function surveysMade()
+    {
+        return $this->hasMany('Columbia\SurveyMade');
+    }
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst($value);
