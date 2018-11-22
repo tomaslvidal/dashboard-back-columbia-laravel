@@ -136,6 +136,23 @@ export default new Router({
       beforeEnter: Authenticated
     },
     {
+      path: '/surveysmade',
+      name: "surveys_made",
+      props: {
+        model: 'Survey'
+      },
+      component: require('./views/surveys/made/index.vue'),
+      beforeEnter: Authenticated
+    },
+    {
+      path: '/surveysmade/:id',
+      name: "surveys_made_see",
+      props: {
+        model: 'Survey'
+      },
+      component: require('./views/surveys/made/see.vue'),
+    },
+    {
       path: '/surveys/create',
       name: "survey_create",
       props: {

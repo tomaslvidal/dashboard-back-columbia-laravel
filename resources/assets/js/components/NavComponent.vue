@@ -72,12 +72,17 @@
             <b-nav-item @click="hideNavCollapse" :to="{ name: 'surveys' }">
               <i class="fas fa-list-ol"></i>
 
-              <b-nav-text>Listado</b-nav-text>
+              <b-nav-text>Listado </b-nav-text>
             </b-nav-item>
             <b-nav-item @click="hideNavCollapse" :to="{ name: 'survey_create' }">
               <i class="fas fa-plus-circle"></i>
 
               <b-nav-text>Agregar</b-nav-text>
+            </b-nav-item>
+            <b-nav-item @click="hideNavCollapse" :to="{ name: 'surveys_made' }">
+              <i class="fas fa-poll-h"></i>
+
+              <b-nav-text>Encuestas realizadas </b-nav-text>
             </b-nav-item>
           </b-collapse>
         </b-nav-item>

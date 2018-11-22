@@ -37,5 +37,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 	    'users' => 'API\UserController',
 	    'vouchers' => 'API\VoucherController',
 	    'surveys' => 'API\SurveyController',
+	    'surveysmade' => 'API\SurveyMadeController'
 	]);
 });

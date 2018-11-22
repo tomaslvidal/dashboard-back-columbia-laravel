@@ -69,7 +69,7 @@
         :no-provider-sorting="no_provider_sorting"
       >
         <template slot="actions" slot-scope="row">
-          <div class="d-flex flex-grow-1 justify-content-center align-items-center">
+          <div v-if="!state_actions" class="d-flex flex-grow-1 justify-content-center align-items-center">
             <b-button variant="primary" :to=" {name: to, params: {id: row.item.id.toString() }} " size="sm" class="mr-1">
               Editar
             </b-button>
@@ -78,13 +78,12 @@
               Borrar
             </b-button>
           </div>
-        </template>
-        <template slot="row-details" slot-scope="row">
-          <b-card>
-            <ul>
-              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value}}</li>
-            </ul>
-          </b-card>
+
+          <div v-if="state_actions">
+            <slot name="actions" :row="row" :delete_item="delete_item">
+
+            </slot>
+          </div>
         </template>
       </b-table>
     </div>
@@ -102,7 +101,7 @@
 <script>
 
 export default {
-  props: ['items', 'fields', 'to', 'model'],
+  props: ['items', 'fields', 'to', 'model', 'state_actions'],
   data(){
     return {
       fields_: this.fields,
