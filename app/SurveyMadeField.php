@@ -4,15 +4,15 @@ namespace Columbia;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SurveyMadeAnswer extends Model
+class SurveyMadeField extends Model
 {
-	protected $table = 'survey_made_answers';
+	protected $table = 'survey_made_fields';
 
 	protected $primaryKey = 'id';
 
 	protected $guarded = [];
 
-	protected $hidden = ['survey_made_id', 'survey_field_id', 'survey_option_id'];
+	protected $hidden = ['survey_made_id', 'survey_field_id'];
 
     public function surveyMade()
     {
@@ -24,8 +24,8 @@ class SurveyMadeAnswer extends Model
         return $this->belongsTo('Columbia\SurveyField');
     }
 
-    public function surveyOption()
+    public function surveyMadeOptions()
     {
-        return $this->belongsTo('Columbia\SurveyOption');
+        return $this->hasMany('Columbia\SurveyMadeOption');
     }
 }

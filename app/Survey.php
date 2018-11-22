@@ -23,9 +23,9 @@ class Survey extends Model
         return $this->hasMany('Columbia\SurveyField');
     }
 
-    public function surveyMades()
+    public function surveysMade()
     {
-        return $this->hasMany('Columbia\SurveyField');
+        return $this->hasMany('Columbia\SurveyMade');
     }
 
     public function setNameAttribute($value)

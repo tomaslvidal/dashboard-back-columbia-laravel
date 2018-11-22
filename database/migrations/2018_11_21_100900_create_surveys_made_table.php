@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSurveyMadesTable extends Migration
+class CreateSurveysMadeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSurveyMadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('survey_mades', function (Blueprint $table) {
+        Schema::create('surveys_made', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('survey_id')->unsigned();
-            $table->foreign('survey_id')->references('id')->on('surveys');
+            $table->foreign('survey_id')->references('id')->on('surveys')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->unique(['survey_id', 'user_id']);
@@ -32,6 +32,6 @@ class CreateSurveyMadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('survey_mades');
+        Schema::dropIfExists('surveys_made');
     }
 }

@@ -1,6 +1,6 @@
 <template>
 	<div v-if="Object.keys(item).length>0">
-		<h4>Encuesta{{item.id!='' ? ' '+item.id : ''}}</h4>
+		<h4>Encuesta{{item.id!='' ? ' '+item.id+": "+item.name : ''}}</h4>
 
 		<hr>
 
