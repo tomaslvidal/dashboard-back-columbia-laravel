@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSurveyMadeAnswersTable extends Migration
+class CreateSurveyMadeFieldsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateSurveyMadeAnswersTable extends Migration
      */
     public function up()
     {
-        Schema::create('survey_made_answers', function (Blueprint $table) {
+        Schema::create('survey_made_fields', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('survey_made_id')->unsigned();
-            $table->foreign('survey_made_id')->references('id')->on('survey_mades')->onDelete('cascade');
+            $table->foreign('survey_made_id')->references('id')->on('surveys_made')->onDelete('cascade');
             $table->integer('survey_field_id')->unsigned();
             $table->foreign('survey_field_id')->references('id')->on('survey_fields');
-            $table->integer('survey_option_id')->unsigned()->nullable();
-            $table->foreign('survey_option_id')->references('id')->on('survey_options')->onDelete('cascade');
-            $table->string('survey_text');
+            $table->unique(['survey_made_id', 'survey_field_id']);
         });
     }
 
@@ -32,6 +30,6 @@ class CreateSurveyMadeAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('survey_made_answers');
+        Schema::dropIfExists('survey_made_fields');
     }
 }
