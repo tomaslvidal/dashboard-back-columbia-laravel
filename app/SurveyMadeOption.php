@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SurveyMadeOption extends Model
 {
+    public $timestamps = false;
+    
 	protected $table = 'survey_made_options';
 
 	protected $primaryKey = 'id';

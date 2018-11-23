@@ -19,7 +19,7 @@ class CreateSurveyMadeOptionsTable extends Migration
             $table->foreign('survey_made_field_id')->references('id')->on('survey_made_fields')->onDelete('cascade');
             $table->integer('survey_option_id')->unsigned()->nullable();
             $table->foreign('survey_option_id')->references('id')->on('survey_options');
-            $table->string('free_response');
+            $table->string('free_response')->nullable();
             $table->unique(['survey_made_field_id', 'survey_option_id']);
         });
     }
