@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 	Route::resource('destinations', 'API\DestinationController')->except(['index', 'show']);
 
+	Route::get('surveys/user', 'API\SurveyController@for_user');
+
 	Route::resource('surveys/fields', 'API\SurveyFieldController');
 
 	Route::resource('surveys/options', 'API\SurveyOptionController');
