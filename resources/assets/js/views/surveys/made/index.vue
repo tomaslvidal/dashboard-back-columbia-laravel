@@ -36,8 +36,9 @@ export default {
 		return{
 			fields: [
 				{ key: 'id', label: 'ID', sortable: true, tdClass: 'maxWidth' },
-				{ key: 'survey.name', label: 'Nombre de la encuesta', 'class': 'text-center', tdClass: 'maxWidth' },
-				{ key: 'user.email', label: 'Usuario', 'class': 'text-center', tdClass: 'maxWidth' },
+				{ key: 'survey.id', label: 'ID Encuesta', sortable: true, tdClass: 'maxWidth' },
+				{ key: 'survey.name', label: 'Nombre de encuesta', 'class': 'text-center', tdClass: 'maxWidth' },
+				{ key: 'user.email', label: 'Usuario', sortable: true, 'class': 'text-center', tdClass: 'maxWidth' },
 				{ key: 'created_at', sortable: true, label: 'Fecha de creación', tdClass: 'maxWidth' },
 				{ key: 'actions', label: '', tdClass: 'maxWidth' }
 			],

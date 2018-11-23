@@ -12,7 +12,7 @@
 					</b-col>
 
 					<b-col cols="12" sm="9" md="10" xl="10">
-						<b-form-input readonly type="text" :value="item.user.name+' '+item.user.last_name" id="name"></b-form-input>
+						<b-form-input readonly type="text" :value="item.user.name+' '+item.user.last_name" id="user_name"></b-form-input>
 					</b-col>
 				</b-row>
 
@@ -22,7 +22,27 @@
 					</b-col>
 
 					<b-col cols="12" sm="9" md="10" xl="10">
-						<b-form-input readonly type="text" :value="item.user.email" id="name"></b-form-input>
+						<b-form-input readonly type="text" :value="item.user.email" id="user_email"></b-form-input>
+					</b-col>
+				</b-row>
+
+				<b-row class="select-number-questions mb-3">
+					<b-col cols="12" sm="3" md="2" xl="2">
+						<label class="mr-sm-2" for="name">Telefono</label>
+					</b-col>
+
+					<b-col cols="12" sm="9" md="10" xl="10">
+						<b-form-input readonly type="text" :value="item.user.telephone" id="user_telephone"></b-form-input>
+					</b-col>
+				</b-row>
+
+				<b-row class="select-number-questions">
+					<b-col cols="12" sm="3" md="2" xl="2">
+						<label class="mr-sm-2" for="name">Fecha del registro</label>
+					</b-col>
+
+					<b-col cols="12" sm="9" md="10" xl="10">
+						<b-form-input readonly type="text" :value="item.created_at" id="created_at"></b-form-input>
 					</b-col>
 				</b-row>
 
@@ -48,7 +68,7 @@
 									</b-col>
 
 									<b-col cols="12" sm="6" md="8" xl="8">
-										<b-form-input readonly type="text" :value="lists.typesQuestions[item.survey_made_fields[index_question-1].survey_field.type-1].text" :id="'questions-'+index_question"></b-form-input>
+										<b-form-input readonly type="text" :value="lists.typesQuestions[item.survey_made_fields[index_question-1].survey_field.type-1].text" :id="'type_questions-'+index_question"></b-form-input>
 									</b-col>
 								</b-row>
 							</b-col>
