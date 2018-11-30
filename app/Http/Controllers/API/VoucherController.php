@@ -21,6 +21,12 @@ class VoucherController extends Controller
         return Voucher::with('users')->get();
     }
 
+    public function for_user(){
+        return Voucher::whereHas('users', function ($query) {
+            $query->where('user_id', '=', auth()->guard('api')->user()->id);
+        })->get();
+    }
+
     public function create()
     {
         //
