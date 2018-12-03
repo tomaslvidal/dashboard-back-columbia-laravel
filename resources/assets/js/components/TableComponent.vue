@@ -85,6 +85,8 @@
             </slot>
           </div>
         </template>
+
+        <template slot="state" slot-scope="row">{{row.item.state == 1 ? 'True' : 'False'}}</template>
       </b-table>
     </div>
 

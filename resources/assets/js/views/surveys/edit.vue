@@ -16,6 +16,27 @@
 					</b-col>
 				</b-row>
 
+				<b-row class="select-state mb-3">
+					<b-col cols="12" sm="3" md="2" xl="2">
+						<label class="mr-sm-2" for="state">Estado</label>
+					</b-col>
+
+					<b-col cols="12" sm="9" md="10" xl="10">
+						<b-form-select required v-model="item.state" id="state" :options="[
+							{
+								value: '1',
+								text: 'True'
+							},
+							{
+								value: '0',
+								text: 'False'
+							}
+						]">
+							<option slot="first" :value="null">Elegir...</option>
+						</b-form-select>
+					</b-col>
+				</b-row>
+
 				<b-row class="select-number-questions">
 					<b-col cols="12" sm="3" md="2" xl="2">
 						<label class="mr-sm-2" for="numberQuestions">Cantidad de preguntas</label>
@@ -138,7 +159,7 @@ export default {
 			},
 			disabledCreate: false,
 			model: {
-				numberQuestions: null
+				numberQuestions: null,
 			},
 			lists: {
 				typesQuestions: [
