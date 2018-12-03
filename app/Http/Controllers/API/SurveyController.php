@@ -22,7 +22,7 @@ class SurveyController extends Controller
     }
 
     public function for_user(){
-        return Survey::whereDoesntHave('surveysMade', function ($query) {
+        return Survey::where('state', '=', '1')->whereDoesntHave('surveysMade', function ($query) {
             $query->where('user_id', '=', auth()->guard('api')->user()->id);
         })->with('surveyFields.surveyOptions')->get();
     }
