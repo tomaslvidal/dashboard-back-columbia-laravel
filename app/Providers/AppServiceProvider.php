@@ -8,6 +8,8 @@ use Illuminate\Http\Resources\Json\Resource;
 
 use Illuminate\Support\Facades\Schema;
 
+use Laravel\Passport\Passport;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -18,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Resource::withoutWrapping();
+
+        Passport::withoutCookieSerialization();
 
         Schema::defaultStringLength(191);
     }
