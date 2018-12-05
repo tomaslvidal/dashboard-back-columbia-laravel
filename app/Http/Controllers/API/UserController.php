@@ -6,6 +6,8 @@ use Columbia\User;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Mail;
+
 use Columbia\Http\Requests\StoreUserAPI;
 
 use Columbia\Http\Requests\AddVoucherAPI;
@@ -24,9 +26,17 @@ class UserController extends Controller
         //
     }
 
+    public function verify($code){
+        
+    }
+
     public function store(StoreUserAPI $request)
     {
-        $user = User::create($request->except('vouchers'));
+        $user = new User($request->except(['vouchers', 'password']));
+
+        $user->password = bcrypt($request->password);
+
+        $user->save();
 
         if(isset($request->vouchers)){
             for ($i=0; $i < count($request->vouchers); $i++) { 
@@ -60,7 +70,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $user->update($request->except('vouchers'));
+        $user->password = bcrypt($request->password);
+
+        $user->update($request->except(['vouchers', 'password']));
 
         if(isset($request->vouchers)){
             $user->vouchers()->detach();

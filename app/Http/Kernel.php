@@ -54,6 +54,8 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Columbia\Http\Middleware\RedirectIfAuthenticated::class,

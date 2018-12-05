@@ -3,13 +3,9 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-
-Route::post('login', 'Auth\LoginController@login');
-
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::post('logout', 'Auth\LoginController@logout');
+Auth::routes(['verify' => true, 'register' => false]);
 
 // Route::group(['middleware' => 'auth:api'], function () {
 	Route::get('/vouchers_m/download/{file_name}', function ($file_name){
@@ -25,7 +21,7 @@ Route::post('logout', 'Auth\LoginController@logout');
 	});
 // });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
 	Route::get('/vouchers/download/{file_name}', function ($file_name){
 		return Storage::download('vouchers/'.$file_name);
 	});

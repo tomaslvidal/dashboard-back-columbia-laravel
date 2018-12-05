@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Laravel\Passport\HasApiTokens;
 
 // use Columbia\Events\UserDeleting;
@@ -14,7 +16,7 @@ use Laravel\Passport\HasApiTokens;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, Notifiable, SoftDeletes;
 
@@ -57,8 +59,8 @@ class User extends Authenticatable
         $this->attributes['last_name'] = ucfirst($value);
     }
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['password'] = bcrypt($value);
+    // }
 }

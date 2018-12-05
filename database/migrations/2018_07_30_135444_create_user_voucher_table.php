@@ -17,7 +17,7 @@ class CreateUserVoucherTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('voucher_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('voucher_id')->references('id')->on('vouchers')->onDelete('cascade');
             $table->dateTime('created_at')->nullable();
             $table->unique(['user_id', 'voucher_id']);

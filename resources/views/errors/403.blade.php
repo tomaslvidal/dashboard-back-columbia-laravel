@@ -8,4 +8,4 @@
 </div>
 @endsection
 
-@section('message', __($exception->getMessage() ?: 'Sorry, you are forbidden from accessing this page.'))
+@section('message', __($exception->getMessage() ?: 'Lo sentimos, está prohibido acceder a esta página.'))
