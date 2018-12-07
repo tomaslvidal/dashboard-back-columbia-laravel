@@ -14,6 +14,8 @@ use Columbia\Http\Requests\AddVoucherAPI;
 
 use Columbia\Http\Controllers\Controller;
 
+use Columbia\Http\Controllers\Auth\ForgotPasswordController;
+
 class UserController extends Controller
 {
     public function index()
@@ -26,10 +28,6 @@ class UserController extends Controller
         //
     }
 
-    public function verify($code){
-        
-    }
-
     public function store(StoreUserAPI $request)
     {
         $user = new User($request->except(['vouchers', 'password']));
@@ -37,6 +35,10 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
 
         $user->save();
+
+        $change_password = new ForgotPasswordController();
+
+        $change_password->sendEmail($request);
 
         if(isset($request->vouchers)){
             for ($i=0; $i < count($request->vouchers); $i++) { 

@@ -161,6 +161,7 @@ return [
         Columbia\Providers\EventServiceProvider::class,
         Columbia\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Columbia\Providers\PasswordResetServiceProvider::class
     ],
 
     /*
