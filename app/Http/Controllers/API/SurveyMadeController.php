@@ -2,6 +2,8 @@
 
 namespace Columbia\Http\Controllers\API;
 
+use Columbia\User;
+
 use Columbia\Survey;
 
 use Columbia\SurveyField;
@@ -17,6 +19,10 @@ use Columbia\SurveyMadeOption;
 use Illuminate\Http\Request;
 
 use Columbia\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Mail;
+
+use Columbia\Mail\SurveyMade as EmailSurvey;
 
 class SurveyMadeController extends Controller
 {
@@ -72,6 +78,9 @@ class SurveyMadeController extends Controller
                 }
             }
         }
+
+        Mail::to(User::find(auth()->guard('api')->user()->id))
+            ->send(new EmailSurvey());
 
         return response()->json([
             'success' => true,
