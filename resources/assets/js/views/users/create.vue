@@ -189,6 +189,10 @@ export default {
 					this.disabledCreate = true;
 
 					this.$store.dispatch('Users/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));
+
+					setTimeout( () => {
+						this.$router.push({name: 'users'}); // this.$router.go(-1);
+					}, 1500);
 				}, 1000);
 			})
 			.catch(()=>{

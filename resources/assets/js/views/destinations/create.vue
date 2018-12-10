@@ -227,6 +227,10 @@ export default {
 					this.disabledCreate = true;
 
 					this.$store.dispatch('Destinations/ADD_ITEM', JSON.parse(JSON.stringify(items)));
+
+					setTimeout( () => {
+						this.$router.push({name: 'destinations'}); // this.$router.go(-1);
+					}, 1500);
 				}, 1000);
 			})
 			.catch(()=>{

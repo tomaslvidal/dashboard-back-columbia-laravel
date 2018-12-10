@@ -199,6 +199,10 @@ export default {
 					this.disabledCreate = true;
 
 					this.$store.dispatch('Vouchers/ADD_ITEM', JSON.parse(JSON.stringify(items)));
+
+					setTimeout( () => {
+						this.$router.push({name: 'vouchers'}); // this.$router.go(-1);
+					}, 1500);
 				}, 1000);
 			})
 			.catch(()=>{
