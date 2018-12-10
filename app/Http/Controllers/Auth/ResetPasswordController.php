@@ -2,6 +2,9 @@
 
 namespace Columbia\Http\Controllers\Auth;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\PasswordReset;
 use Columbia\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
@@ -25,7 +28,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'https://www.columbiaviajes.com.ar/';
 
     /**
      * Create a new controller instance.
@@ -35,5 +38,16 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    protected function resetPassword($user, $password)
+    {
+        $user->password = Hash::make($password);
+
+        $user->setRememberToken(Str::random(60));
+
+        $user->save();
+
+        event(new PasswordReset($user));
     }
 }
