@@ -16,6 +16,10 @@ use Columbia\Http\Controllers\Auth\Passwords\Contracts\PasswordBroker as Passwor
 
 use Illuminate\Auth\Passwords\TokenRepositoryInterface;
 
+use Illuminate\Support\Facades\Mail;
+
+use Columbia\Mail\WelcomeUser;
+
 class PasswordBroker implements PasswordBrokerContract
 {
     /**
@@ -73,9 +77,8 @@ class PasswordBroker implements PasswordBrokerContract
         // user with a link to reset their password. We will then redirect back to
         // the current URI having nothing set in the session to indicate errors.
 
-        $user->sendPasswordResetNotification(
-            $this->tokens->create($user)
-        );
+        Mail::to($user)
+            ->send(new WelcomeUser($user , $this->tokens->create($user)));
 
         return static::RESET_LINK_SENT;
     }

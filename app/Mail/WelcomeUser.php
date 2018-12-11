@@ -16,9 +16,15 @@ class WelcomeUser extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $user;
+
+    public $token;
+
+    public function __construct($user, $token)
     {
-        //
+        $this->user = $user;
+
+        $this->token = $token;
     }
 
     /**
@@ -28,6 +34,6 @@ class WelcomeUser extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.welcome_user');
+        return $this->view('mail.welcome_user')->subject('Bienvenido a Columbia Viajes!');
     }
 }
