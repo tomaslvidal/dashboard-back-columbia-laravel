@@ -16,9 +16,11 @@ class SurveyMade extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $survey;
+
+    public function __construct($survey_made)
     {
-        //
+        $this->survey = $survey_made;
     }
 
     /**
@@ -28,6 +30,10 @@ class SurveyMade extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.survey_made');
+        $email = $this->survey['user']['email'];
+
+        $name_survey = $this->survey['survey']['name'];
+
+        return $this->view('mail.survey_made')->subject('Se ha realizado con exito la encuesta '.$name_survey.', por '.$email);
     }
 }

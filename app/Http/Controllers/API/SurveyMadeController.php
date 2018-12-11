@@ -79,8 +79,10 @@ class SurveyMadeController extends Controller
             }
         }
 
-        Mail::to(User::find(auth()->guard('api')->user()->id))
-            ->send(new EmailSurvey());
+        $survey_made = SurveyMade::with('survey', 'user', 'surveyMadeFields.surveyField', 'surveyMadeFields.surveyMadeOptions', 'surveyMadeFields.surveyMadeOptions.surveyOption')->find($survey->id);
+
+        Mail::to('proventas@columbiaviajes.com.ar')
+            ->send(new EmailSurvey($survey_made));
 
         return response()->json([
             'success' => true,

@@ -1,0 +1,36 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+
+        <mj-image width="200" src="https://i.imgur.com/qE0QfkY.png"></mj-image>
+
+        <mj-divider border-color="#093962"></mj-divider>
+
+        <mj-text font-size="16px" color="#093962" font-family="helvetica">
+          Nombre de encuesta: 
+        </mj-text>
+        
+        <mj-text font-size="16px" color="#093962" font-family="helvetica">
+          ID de encuesta realizada: 
+        </mj-text>
+        
+        <mj-text font-size="16px" color="#093962" font-family="helvetica">
+          Usuario: 
+        </mj-text>
+        
+        <mj-text font-size="16px" color="#093962" font-family="helvetica">
+          Fecha: 
+        </mj-text>
+        
+        <mj-text font-size="16px" color="#093962" font-family="helvetica">
+          Link: 
+        </mj-text>
+        
+        <mj-button font-family="Helvetica" target="_blank" href="http://columbiaapp.eviajes.online/surveysmade/" background-color="#373a3d" color="white">
+          Ver encuesta
+        </mj-button>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
