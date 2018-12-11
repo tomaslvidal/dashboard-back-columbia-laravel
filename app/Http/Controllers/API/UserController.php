@@ -118,4 +118,9 @@ class UserController extends Controller
 
         $user->restore();
     }
+
+    public function download($file)
+    {
+        return Storage::download('users/'.$file);
+    }
 }

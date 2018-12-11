@@ -139,4 +139,9 @@ class DestinationController extends Controller
 
         $destination->restore();
     }
+
+    public function download($file)
+    {
+        return Storage::download('destinations/'.$file);
+    }
 }

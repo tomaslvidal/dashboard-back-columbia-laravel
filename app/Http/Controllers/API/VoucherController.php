@@ -163,4 +163,9 @@ class VoucherController extends Controller
 
         $voucher->restore();
     }
+
+    public function download($file)
+    {
+        return Storage::download('vouchers/'.$file);
+    }
 }
