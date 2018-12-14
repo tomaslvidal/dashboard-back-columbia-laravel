@@ -25,11 +25,11 @@
 						<b-form-select required v-model="item.state" id="state" :options="[
 							{
 								value: '1',
-								text: 'True'
+								text: 'Activo'
 							},
 							{
 								value: '0',
-								text: 'False'
+								text: 'Inactivo'
 							}
 						]">
 							<option slot="first" :value="null">Elegir...</option>
