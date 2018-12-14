@@ -24,11 +24,13 @@ use Illuminate\Support\Facades\Mail;
 
 use Columbia\Mail\SurveyMade as EmailSurvey;
 
+use Columbia\Http\Resources\SurveyMade as CollectionSurveyMade;
+
 class SurveyMadeController extends Controller
 {
     public function index()
     {
-        return SurveyMade::with('survey', 'user', 'surveyMadeFields.surveyField', 'surveyMadeFields.surveyMadeOptions', 'surveyMadeFields.surveyMadeOptions.surveyOption')->get();
+        return new CollectionSurveyMade(SurveyMade::with('survey', 'user', 'surveyMadeFields.surveyField', 'surveyMadeFields.surveyMadeOptions', 'surveyMadeFields.surveyMadeOptions.surveyOption')->get());
     }
 
     public function create()
@@ -96,7 +98,7 @@ class SurveyMadeController extends Controller
     {
         $survey = SurveyMade::with('survey', 'user', 'surveyMadeFields.surveyField', 'surveyMadeFields.surveyMadeOptions', 'surveyMadeFields.surveyMadeOptions.surveyOption')->find($id);
 
-        return $survey;
+        return new CollectionSurveyMade($survey);
     }
 
     public function edit($id)

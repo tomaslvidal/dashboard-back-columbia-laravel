@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Str;
+
 use Columbia\Http\Requests\StoreUserAPI;
 
 use Columbia\Http\Requests\AddVoucherAPI;
@@ -93,6 +95,10 @@ class UserController extends Controller
             $user = User::find($id);
 
             $user->timestamps = false;
+
+            $code_random = Str::random(4);
+            
+            $user->email = $user->email."&".$code_random; $user->update();
 
             $user->delete();            
         }
