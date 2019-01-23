@@ -2,61 +2,61 @@
   <mj-body>
     <mj-section>
       <mj-column>
-        <mj-image height="125" src="https://i.imgur.com/vkOkaGh.png"></mj-image>
+        <mj-image height="186" src="https://i.imgur.com/vkOkaGh.png"></mj-image>
 
         <mj-divider border-color="#1e3148"></mj-divider>
         
-        <mj-text align="center" font-size="17px" color="#1e3148" font-family="helvetica" font-weight="600">Hola Tomás</mj-text>
+        <mj-text align="center" font-size="17px" color="#1c1c1c" font-family="helvetica" font-weight="600">Hola Tomás</mj-text>
         
-        <mj-text align="center" color="#1e3148" padding-top="5" padding-bottom="5" font-size="14px" font-family="helvetica">
+        <mj-text align="center" color="#1c1c1c" padding-top="5" padding-bottom="5" font-size="14px" font-family="helvetica">
           Todo lo que necesitás para tu viaje, está en la aplicación de Columbia Viajes. De lo único que tenes que preocuparte es de disfrutar, del resto nos encargamos nosotros.
         </mj-text>
         
-        <mj-text align="center" color="#1e3148" font-size="15px" font-family="helvetica" font-weight="600">
-          e-mail: tvidal@aptek.com.ar
+        <mj-text align="center" color="black" font-size="15px" font-family="helvetica" font-weight="600">
+          Usuario: tvidal@aptek.com.ar
         </mj-text>
         
-        <mj-button target="_blank" href="#" font-family="Helvetica" font-size="15px" padding-top="0px" background-color="#28a745" color="white">
-          Elegir contraseña
-        </mj-button>
+        <mj-text padding-top="0px" align="center" color="black" font-size="15px" font-family="helvetica" font-weight="600">
+          Contraseña: hhm4n1y2
+        </mj-text>
         
-        <mj-section padding-top="2px" padding-bottom="2px">
+        <mj-section padding="0" padding-top="10px">
           <mj-column>
             <mj-image width="250px" src="https://i.imgur.com/BpzMn1C.png"></mj-image>
           </mj-column>
           
-          <mj-column padding-top="25px">
+          <mj-column padding-top="28px" padding-bottom="28px" vertical-align="middle">
             <mj-text color="#1e3148" font-family="helvetica">
-              Mi viaje: En esta sección encontrarás todos los detalles del itinerario de su reserva.
+              <strong>Mi viaje:</strong> En esta sección encontrarás todos los detalles del itinerario de su reserva.
             </mj-text>
             
             <mj-text color="#1e3148" font-family="helvetica">
-              Destinos: Le ofrecemos las más completas guías de las distintas ciudades.
+              <strong>Destinos:</strong> Le ofrecemos las más completas guías de las distintas ciudades.
             </mj-text>
             
             <mj-text color="#1e3148" font-family="helvetica">
-              Web Check in: Vas a poder realizar el check-in de cualquier aerolínea.
+              <strong>Web Check in:</strong> Vas a poder realizar el check-in de cualquier aerolínea.
             </mj-text>
             
             <mj-text color="#1e3148" font-family="helvetica">
-              Encuesta: Esta es una encuesta de calidad que le rogamos que rellene al finalizar su viaje, nuestro afánde prestarle un mejor servicio. 
+              <strong>Encuesta:</strong> Esta es una encuesta de calidad que le rogamos que rellene al finalizar su viaje, nuestro afánde prestarle un mejor servicio. 
             </mj-text>
             
             <mj-text color="#1e3148" font-family="helvetica">
-              Web: Poder ver y reservar todas las ofertas.
+              <strong>Web:</strong> Poder ver y reservar todas las ofertas.
             </mj-text>
             
             <mj-text color="#1e3148" font-family="helvetica">
-              Reclamo: Podes contarnos los inconvenientes que tengas en tu viaje.
+              <strong>Reclamo:</strong> Podes contarnos los inconvenientes que tengas en tu viaje.
             </mj-text>
             
             <mj-text color="#1e3148" font-family="helvetica">
-              Contacto: Podes escribirnos por si tenes alguna duda sobre tu viaje.
+              <strong>Contacto:</strong> Podes escribirnos por si tenes alguna duda sobre tu viaje.
             </mj-text>
           </mj-column>
         </mj-section>
         
-        <mj-text align="center" color="#1e3148" font-size="17px" font-family="helvetica" font-weight="600">
+        <mj-text align="center" color="#1c1c1c" font-size="17px" font-family="helvetica" font-weight="600">
           La podes descargar
         </mj-text>
 
