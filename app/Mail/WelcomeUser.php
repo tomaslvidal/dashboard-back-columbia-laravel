@@ -20,11 +20,15 @@ class WelcomeUser extends Mailable
 
     public $token;
 
-    public function __construct($user, $token)
+    public $password;
+
+    public function __construct($user, $password)
     {
         $this->user = $user;
 
-        $this->token = $token;
+        $this->password = $password;
+
+        // $this->token = $token;
     }
 
     /**
