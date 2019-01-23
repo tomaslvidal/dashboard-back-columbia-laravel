@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
-Auth::routes(['verify' => true, 'register' => false]);
+Auth::routes(['verify' => false, 'register' => false, 'reset' => false]);
 
 // Route::group(['middleware' => 'auth:api'], function () {
 	Route::get('/vouchers_m/download/{file}', 'API\VoucherController@download');
