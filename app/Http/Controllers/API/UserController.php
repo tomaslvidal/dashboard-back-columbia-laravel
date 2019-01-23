@@ -18,6 +18,8 @@ use Columbia\Http\Controllers\Controller;
 
 use Columbia\Http\Controllers\Auth\ForgotPasswordController;
 
+use Columbia\Mail\WelcomeUser;
+
 class UserController extends Controller
 {
     public function index()
@@ -38,9 +40,7 @@ class UserController extends Controller
 
         $user->save();
 
-        $change_password = new ForgotPasswordController();
-
-        $change_password->sendEmail($request);
+        Mail::to($user)->send(new WelcomeUser($user, $request->password));
 
         if(isset($request->vouchers)){
             for ($i=0; $i < count($request->vouchers); $i++) { 
