@@ -4,7 +4,7 @@
 
 		<hr>
 
-		<b-form @submit="onSubmit" v-if="show">
+		<b-form v-if="show">
 			<div class="d-flex flex-column">
 				<b-row class="select-number-questions mb-3">
 					<b-col cols="12" sm="3" md="2" xl="2">
