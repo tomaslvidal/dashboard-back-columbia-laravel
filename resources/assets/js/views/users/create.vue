@@ -31,32 +31,37 @@
 			</b-form-group>
 
 			<!-- Agregar Vouchers -->
-			<b-form-group id="InputGroup6" label="Vouchers:" label-for="add_vouchers">
-				<treeselect
-					:multiple="treeselect.multiple"
-					:options="items"
-					:value-consists-of="treeselect.valueConsistsOf"
-					:alwaysOpen="treeselect.alwaysOpen"
-					:clearOnSelect="treeselect.clearOnSelect"
-					:closeOnSelect="treeselect.closeOnSelect"
-					:appendToBody="treeselect.appendToBody"
-					:openDirection="treeselect.openDirection"
-					:noChildrenText="treeselect.noChildrenText"
-					:noOptionsText="treeselect.noOptionsText"
-					:noResultsText="treeselect.noResultsText"
-					:placeholder="treeselect.placeholder"
-					:retryText="treeselect.retryText"
-					:retryTitle="treeselect.retryTitle"
-					:searchPromptText="treeselect.searchPromptText"
-					:loadingText="treeselect.loadingText"
-					:clearValueText="treeselect.clearValueText"
-					:clearAllText="treeselect.clearAllText"
-					:matchKeys="treeselect.matchKeys"
-					v-model="treeselect.value"
-					:normalizer="treeselect.normalizer"
-					:valueFormat="treeselect.valueFormat"
-				/>
-			</b-form-group>
+            <div id="InputGroup6" role="group" aria-labelledby="InputGroup6__BV_label_" class="b-form-group form-group">
+                <div class="d-flex align-items-center mb-3 pt-1">
+                    <label id="InputGroup6__BV_label_" for="add_vouchers" class="col-form-label py-0">Vouchers</label>
+
+                    <button type="button" @click="showModal()" class="btn btn-sm btn-primary add_voucher" style="margin-left: 10px;">Agregar</button>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+
+                            <th scope="col">Nombre</th>
+
+                            <th scope="col">Carga</th>
+
+                            <th scope="col">Acción</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <item :key="index" :index="index" :item="item" v-for="(item, index) in item.vouchers" />
+                    </tbody>
+                </table>
+            </div>
+
+            <b-modal :hideFooter="true" title="Voucher" v-model="modal.voucher.state">
+                <div v-if="modal.voucher.state">
+                    <voucher-create :item="item.voucher_modal" :add_voucher="add_voucher"></voucher-create>
+                </div>
+            </b-modal>
 
 			<hr>
 
@@ -72,14 +77,12 @@
 </template>
 
 <script>
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
-
 export default {
+    components: {
+		'voucher-create': require('../vouchers/create.vue'),
+		'item': require('../vouchers/item.vue'),
+	},
 	created(){
-		if(this.$store.state.Vouchers.request_made==false){
-			this.$store.dispatch('Vouchers/FETCH_ITEMS');
-		}
-
 		this.$store.dispatch('Breadcrumb/SET_ITEMS', [{
 			text: 'Inicio',
 			to: {name: 'home'}
@@ -91,19 +94,16 @@ export default {
 			active: true
 		}]);
 	},
-	computed:{
-		items(){
-			return [{
-				id: 'vouchers',
-				name: 'Vouchers',
-				children: this.$store.state.Vouchers.items,
-			}];
-		}
-	},
 	data(){
 		return {
 			show: true,
 			disabledCreate: false,
+            modal:{
+                voucher: {
+                    state: false,
+                    id: null
+                }
+            },
 			progress: {
 				status: false,
 				value: 0,
@@ -117,34 +117,14 @@ export default {
 				last_name: "",
 				email: "",
 				password: "",
-				telephone: ""
-			},
-			treeselect: {
-				noChildrenText: "No hay sub-opciones.",
-				noOptionsText: "No hay opciones disponibles.",
-				noResultsText: "No se encontraron resultados...",
-				placeholder:"Asignar Vouchers...",
-				retryText:"¿Procesar de nuevo?",
-				retryTitle:"Haga clic para volver a intentar",
-				searchPromptText:"Escribe para buscar...",
-				loadingText:"Cargando...",
-				clearValueText:"Limpiar valor",
-				clearAllText:"Limpiar todo",
-				multiple: true,
-				alwaysOpen: false,
-				clearOnSelect: true,
-				closeOnSelect: false,
-				appendToBody: false,
-				openDirection: 'top',
-				matchKeys: ['name'],
-				value: [],
-				valueConsistsOf: 'LEAF_PRIORITY',
-				valueFormat: 'object',
-				normalizer(node) {
-				  return {
-				    label: node.name,
-				  }
-				},
+				telephone: "",
+                voucher_modal: {
+                    name: "",
+                    description: "",
+                    file_name: "",
+                    file: ""
+                },
+                vouchers: []
 			}
 		}
 	},
@@ -154,44 +134,103 @@ export default {
 
 			this.progress.variant = 'primary';
 		},
-		onSubmit(evt){
-			evt.preventDefault();
+        showModal(){
+			this.modal.voucher.state = !this.modal.voucher.state;
+		},
+        reset_modal_voucher(){
+            this.item.voucher_modal = {
+                name: "",
+                description: "",
+                file_name: "",
+                file: ""
+            };
+        },
+        add_voucher(resetFile){
+            resetFile();
+
+			let data = new FormData();
+
+            for(let i=0; Object.keys(this.item.voucher_modal).length>i; i++){
+                if(Object.keys(this.item.voucher_modal)[i]!="id"){
+                    if(this.item.voucher_modal[Object.keys(this.item.voucher_modal)[i]] instanceof FormData){
+                        this.item.voucher_modal[Object.keys(this.item.voucher_modal)[i]].forEach((value,key) => {
+                            data.append(key, value);
+                        });
+                    }
+                    else{
+                        if(Object.keys(this.item.voucher_modal)[i]!="file_name"){
+                            data.append(Object.keys(this.item.voucher_modal)[i], this.item.voucher_modal[Object.keys(this.item.voucher_modal)[i]]);
+                        }
+                    }
+                }
+            }
+
+            this.item.vouchers.push({data: data, apart: {loading: 1}});
+
+            this.reset_modal_voucher();
+        },
+		onSubmit(e){
+			e.preventDefault();
 
 			this.progress.status = false;
 
 			this.$nextTick( () => { this.resetSaveProgress(); this.progress.status = true });
 
-			this.item.vouchers = this.treeselect.value;
+            let vouchers_loaded = 0;
 
-			const config = {
-				onUploadProgress: (progressEvent) => {
-					let percentCompleted = Math.round((progressEvent.loaded * 99) / progressEvent.total);
+            const config = {
+                onUploadProgress: (progressEvent) => {
+                    let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
-					this.progress.label = percentCompleted.toString();
+                    let progress = parseFloat(100-(100/(this.item.vouchers.length+1))*(((this.item.vouchers.length+1)-vouchers_loaded)-(percentCompleted/100))).toFixed(); progress = progress >= 100 ? 100 : progress;
 
-					this.progress.value = percentCompleted;
-				}
-			};
+                    this.progress.label = progress.toString();
 
-			['id', 'created_at'].forEach(e => delete this.item[e]);
+                    this.progress.value = Number(progress);
 
-			axios.post('/api/users', JSON.parse(JSON.stringify(this.item)), config)
+                    if(Number(percentCompleted)==100){
+                        vouchers_loaded++;
+
+                        if((this.item.vouchers.length+1)==vouchers_loaded){
+                            this.progress.variant = "success";
+
+                            this.progress.label = "Su registro fue creado con éxito";
+                        }
+                    }
+                }
+            };
+
+            let item_user = this.item;
+
+			['id', 'created_at', 'vouchers', 'voucher_modal'].forEach(e => delete item_user.e);
+
+			axios.post('/api/users', JSON.parse(JSON.stringify(item_user)), config)
 			.then((res)=>{
 				setTimeout( () => {
-					this.progress.variant = "success";
+                    if (this.item.vouchers.length>0){
+                        for (let i = 0; i < this.item.vouchers.length; i++) {
+                            let items = this.item.vouchers[i];
 
-					this.progress.label = "Su registro fue creado con éxito";
+                            this.$set(this.item.vouchers[i].apart, 'loading', 2)
 
-					this.item.id = res.data.id;
+                            console.log("test: ", JSON.parse(JSON.stringify(this.item.vouchers[i].data)));
 
-					this.item.created_at = res.data.created_at;
-
-					this.disabledCreate = true;
-
-					this.$store.dispatch('Users/ADD_ITEM', JSON.parse(JSON.stringify(this.item)));
+                            axios.post('/api/vouchers', this.item.vouchers[i].data, config)
+                            .then((res)=>{
+                                setTimeout( () => {
+                                    this.$set(this.item.vouchers[i].apart, 'loading', 3)
+                                }, 1000);
+                            })
+                            .catch(()=>{
+                                setTimeout( () => {
+                                    this.$set(this.item.vouchers[i].apart, 'loading', 4)
+                                }, 1000);
+                            });
+                        }
+                    }
 
 					setTimeout( () => {
-						this.$router.push({name: 'users'}); // this.$router.go(-1);
+						// this.$router.push({name: 'users'}); // this.$router.go(-1);
 					}, 1500);
 				}, 1000);
 			})
@@ -203,8 +242,8 @@ export default {
 				}, 1000);
 			});
 		},
-		onReset(evt){
-			evt.preventDefault();
+		onReset(e){
+			e.preventDefault();
 
 			for (var i = 0; i < Object.keys(this.item).length; i++) {
 				this.item[Object.keys(this.item)[i]] = '';
@@ -217,3 +256,21 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+    .ball{
+        height: 24px;
+        width: 24px;
+        background: #343a40;
+        color: #fff;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 0.875rem;
+    }
+
+    .add_voucher{
+        margin-left: 10px;
+        border-color: #343a40;
+        background-color: #343a40;
+    }
+</style>
