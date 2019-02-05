@@ -45,15 +45,15 @@ export default new Router({
       },
       beforeEnter: Authenticated
     },
-    {
-      path: "/vouchers",
-      name: "vouchers",
-      props: {
-        model: 'Voucher'
-      },
-      component: require('./views/vouchers/index.vue'),
-      beforeEnter: Authenticated
-    },
+    // {
+    //   path: "/vouchers",
+    //   name: "vouchers",
+    //   props: {
+    //     model: 'Voucher'
+    //   },
+    //   component: require('./views/vouchers/index.vue'),
+    //   beforeEnter: Authenticated
+    // },
     {
       path: '/vouchers/create',
       name: "voucher_create",
