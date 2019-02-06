@@ -15,6 +15,8 @@
 
         <link href="{{ asset('css/style.css?v='.filemtime(public_path('css/style.css'))) }}" rel="stylesheet">
 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
         <link rel="shortcut icon" href="{{ asset('img/favicon.ico?v='.filemtime(public_path('img/favicon.ico'))) }}">
 
         @yield('style')
@@ -26,8 +28,6 @@
         </div>
 
         <script src="{{ asset('js/app.js?v='.filemtime(public_path('js/app.js'))) }}"></script>
-
-        <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
 
         @yield('script')
     </body>
