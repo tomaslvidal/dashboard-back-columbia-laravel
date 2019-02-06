@@ -45,14 +45,14 @@
 
                             <th scope="col">Nombre</th>
 
-                            <th scope="col">Carga</th>
+                            <th scope="col">Descripción</th>
 
-                            <th scope="col">Acción</th>
+                            <!-- <th scope="col">Acción</th> -->
                         </tr>
                     </thead>
 
                     <tbody>
-                        <item :key="index" :index="index" :item="item" v-for="(item, index) in item.vouchers" />
+                        <item :updateProgress="updateProgress" :key="index" :index="index" :upload_status="uploads_vouchers" :item="item" v-for="(item, index) in item.vouchers" />
                     </tbody>
                 </table>
             </div>
@@ -75,7 +75,6 @@
 		</b-form>
 	</div>
 </template>
-
 <script>
 export default {
     components: {
@@ -94,10 +93,17 @@ export default {
 			active: true
 		}]);
 	},
+    watch: {
+        'item.progress': function (){
+            this.updateProgress();
+        },
+    },
 	data(){
 		return {
 			show: true,
 			disabledCreate: false,
+            uploads_vouchers: false,
+            vouchers_loaded: 0,
             modal:{
                 voucher: {
                     state: false,
@@ -118,6 +124,7 @@ export default {
 				email: "",
 				password: "",
 				telephone: "",
+                progress: 0,
                 voucher_modal: {
                     name: "",
                     description: "",
@@ -130,6 +137,10 @@ export default {
 	},
 	methods: {
 		resetSaveProgress(){
+            this.uploads_vouchers = false;
+
+            this.item.progress = 0;
+            
 			this.progress.value = 0;
 
 			this.progress.variant = 'primary';
@@ -137,6 +148,29 @@ export default {
         showModal(){
 			this.modal.voucher.state = !this.modal.voucher.state;
 		},
+        updateProgress(){
+            let sum = 0;
+
+            for(let i = 0; this.item.vouchers.length>i; i++){
+                sum += (1*this.item.vouchers[i].apart.progress)/100;
+            }
+
+            sum+= (1*this.item.progress)/100;
+
+            this.progress.value = (sum/(this.item.vouchers.length+1))*100;
+
+            this.progress.label = this.progress.value.toFixed().toString();
+
+            if(this.item.vouchers.length>0){
+                if(this.progress.value==100){
+                    setTimeout(() => {
+                        this.progress.variant = "success";
+
+                        this.progress.label = "Su registro fue creado con éxito";
+                    }, 3500);
+                }
+            }
+        },
         reset_modal_voucher(){
             this.item.voucher_modal = {
                 name: "",
@@ -165,7 +199,7 @@ export default {
                 }
             }
 
-            this.item.vouchers.push({data: data, apart: {loading: 1}});
+            this.item.vouchers.push({data: data, apart: {loading: 1, progress: 0}});
 
             this.reset_modal_voucher();
         },
@@ -176,70 +210,34 @@ export default {
 
 			this.$nextTick( () => { this.resetSaveProgress(); this.progress.status = true });
 
-            let vouchers_loaded = 0;
-
             const config = {
                 onUploadProgress: (progressEvent) => {
                     let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
-                    let progress = parseFloat(100-(100/(this.item.vouchers.length+1))*(((this.item.vouchers.length+1)-vouchers_loaded)-(percentCompleted/100))).toFixed(); progress = progress >= 100 ? 100 : progress;
-
-                    this.progress.label = progress.toString();
-
-                    this.progress.value = Number(progress);
-
-                    if(Number(percentCompleted)==100){
-                        vouchers_loaded++;
-
-                        if((this.item.vouchers.length+1)==vouchers_loaded){
-                            this.progress.variant = "success";
-
-                            this.progress.label = "Su registro fue creado con éxito";
-                        }
-                    }
+                    this.item.progress = percentCompleted;
                 }
             };
 
-            let item_user = this.item;
+            let item = JSON.parse(JSON.stringify(this.item));
 
-			['id', 'created_at', 'vouchers', 'voucher_modal'].forEach(e => delete item_user.e);
+			['id', 'created_at', 'vouchers', 'voucher_modal', 'progress'].forEach(e => delete item[e]);
 
-			axios.post('/api/users', JSON.parse(JSON.stringify(item_user)), config)
+			axios.post('/api/users', item, config)
 			.then((res)=>{
-				setTimeout( () => {
-                    if (this.item.vouchers.length>0){
-                        for (let i = 0; i < this.item.vouchers.length; i++) {
-                            let items = this.item.vouchers[i];
+                this.uploads_vouchers = true;
 
-                            this.$set(this.item.vouchers[i].apart, 'loading', 2)
+                if(this.item.vouchers.length==0){
+                    this.progress.variant = "success";
 
-                            console.log("test: ", JSON.parse(JSON.stringify(this.item.vouchers[i].data)));
-
-                            axios.post('/api/vouchers', this.item.vouchers[i].data, config)
-                            .then((res)=>{
-                                setTimeout( () => {
-                                    this.$set(this.item.vouchers[i].apart, 'loading', 3)
-                                }, 1000);
-                            })
-                            .catch(()=>{
-                                setTimeout( () => {
-                                    this.$set(this.item.vouchers[i].apart, 'loading', 4)
-                                }, 1000);
-                            });
-                        }
-                    }
-
-					setTimeout( () => {
-						// this.$router.push({name: 'users'}); // this.$router.go(-1);
-					}, 1500);
-				}, 1000);
+                    this.progress.label = "Su registro fue creado con éxito";
+                }
 			})
 			.catch(()=>{
-				setTimeout( () => {
-					this.progress.variant = 'danger';
+                this.progress.value = 100;
 
-					this.progress.label = "El registro no pudo ser creado"
-				}, 1000);
+                this.progress.variant = 'danger';
+
+                this.progress.label = "El registro no pudo ser creado";
 			});
 		},
 		onReset(e){
