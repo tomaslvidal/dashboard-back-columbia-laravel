@@ -2,8 +2,6 @@ import './bootstrap';
 
 import BootstrapVue from 'bootstrap-vue';
 
-import VueRouter from 'vue-router';
-
 import Template from './Template.vue';
 
 import router from './routes';

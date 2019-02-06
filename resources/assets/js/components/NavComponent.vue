@@ -44,25 +44,6 @@
           </b-collapse>
         </b-nav-item>
 
-        <b-nav-item :active="checkActive.Voucher" v-b-toggle.collapse3 @click="hideNavCollapse" href="#">
-          <i class="fas fa-ticket-alt"></i>
-          
-          <b-nav-text>Vouchers</b-nav-text>
-
-          <b-collapse id="collapse3" accordion="my-accordion" class="mt-2">
-            <b-nav-item @click="hideNavCollapse" :to="{ name: 'vouchers' }">
-              <i class="fas fa-list-ol"></i>
-
-              <b-nav-text>Listado</b-nav-text>
-            </b-nav-item>
-            <b-nav-item @click="hideNavCollapse" :to="{ name: 'voucher_create' }">
-              <i class="fas fa-plus-circle"></i>
-
-              <b-nav-text>Agregar</b-nav-text>
-            </b-nav-item>
-          </b-collapse>
-        </b-nav-item>
-
         <b-nav-item :active="checkActive.Survey" v-b-toggle.collapse4 @click="hideNavCollapse" href="#">
           <i class="fas fa-poll-h"></i>
           
