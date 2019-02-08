@@ -1,10 +1,10 @@
 <template>
-	<div v-if="Object.keys(item).length>0">
+	<div v-if="Object.keys(item).length>1">
 		<h4>Usuario{{item.id ? ' '+item.id : ''}}: {{item.name+" "+item.last_name}}</h4>
 
 		<hr>
 
-		<b-form @submit="onSubmit" @reset="onReset" v-if="show">
+		<b-form @submit="onSubmit">
 			<!-- Nombre -->
 			<b-form-group id="InputGroup1" label="Nombre:" label-for="name">
 				<b-form-input id="name" type="text" v-model="item.name" required placeholder="Escribir nombre" />
@@ -22,41 +22,46 @@
 
 			<!-- Contraseña -->
 			<b-form-group id="InputGroup4" label="Contraseña:" label-for="password">
-				<b-form-input id="password" type="password" v-model="item.password" placeholder="Escribir contraseña nueva" />
+				<b-form-input id="password" type="password" v-model="item.password" placeholder="Escribir contraseña" />
 			</b-form-group>
 
 			<!-- Telefono -->
 			<b-form-group id="InputGroup5" label="Telefono:" label-for="telephone">
-				<b-form-input id="exampleInput1" type="tel" v-model="item.telephone" required placeholder="Escribir telefono" />
+				<b-form-input id="telephone" type="tel" v-model="item.telephone" required placeholder="Escribir telefono" />
 			</b-form-group>
 
-			<!-- Agregar Vouchers -->
-			<b-form-group id="InputGroup6" label="Vouchers:" label-for="add_vouchers">
-				<treeselect
-					:multiple="treeselect.multiple"
-					:options="items"
-					:value-consists-of="treeselect.valueConsistsOf"
-					:alwaysOpen="treeselect.alwaysOpen"
-					:clearOnSelect="treeselect.clearOnSelect"
-					:closeOnSelect="treeselect.closeOnSelect"
-					:appendToBody="treeselect.appendToBody"
-					:openDirection="treeselect.openDirection"
-					:noChildrenText="treeselect.noChildrenText"
-					:noOptionsText="treeselect.noOptionsText"
-					:noResultsText="treeselect.noResultsText"
-					:placeholder="treeselect.placeholder"
-					:retryText="treeselect.retryText"
-					:retryTitle="treeselect.retryTitle"
-					:searchPromptText="treeselect.searchPromptText"
-					:loadingText="treeselect.loadingText"
-					:clearValueText="treeselect.clearValueText"
-					:clearAllText="treeselect.clearAllText"
-					:matchKeys="treeselect.matchKeys"
-					v-model="item.vouchers"
-					:normalizer="treeselect.normalizer"
-					:valueFormat="treeselect.valueFormat"
-				/>
-			</b-form-group>
+            <!-- Agregar Vouchers -->
+            <div id="InputGroup6" role="group" aria-labelledby="InputGroup6__BV_label_" class="b-form-group form-group">
+                <div class="d-flex align-items-center mb-3 pt-1">
+                    <label id="InputGroup6__BV_label_" for="add_vouchers" class="col-form-label py-0">Vouchers</label>
+
+                    <button type="button" @click="() => { this.state.modal.voucher = !this.state.modal.voucher }" class="btn btn-sm btn-primary add_voucher" style="margin-left: 10px;">Agregar</button>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+
+                            <th scope="col">Carga</th>
+
+                            <th scope="col">Nombre</th>
+
+                            <th scope="col">Descripción</th>
+
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <item :user_id="item.id" :delete_item="delete_item" :updateProgress="updateProgress" :key="index" :index="index" :upload_status="state.uploads_vouchers" :item="item_" v-for="(item_, index) in item.vouchers" />
+                    </tbody>
+                </table>
+            </div>
+
+            <b-modal :hideFooter="true" title="Voucher" v-model="state.modal.voucher">
+                <voucher-create :item="modal.voucher" :add_voucher="add_voucher"></voucher-create>
+            </b-modal>
 
 			<hr>
 
@@ -66,20 +71,32 @@
 
 			<br v-if="progress.status">
 
-			<b-button type="submit" variant="primary">Guardar</b-button>
+			<b-button type="submit" variant="primary" :disabled="state.disabledCreate">Editar</b-button>
 		</b-form>
 	</div>
 </template>
 
 <script>
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
-
 export default {
-	created(){
-		if(this.$store.state.Vouchers.request_made==false){
-			this.$store.dispatch('Vouchers/FETCH_ITEMS');
-		}
+    destroyed(){
+		this.$store.dispatch('Users/CLEAR_ITEM');
+	},
+    computed:{
+        item(){
+            let item = this.$store.state.Users.item;
 
+            this.$set(item, 'apart', {
+                progress: 0
+            });
+
+            return item;
+        }
+	},
+    components: {
+		'voucher-create': require('../vouchers/create.vue'),
+		'item': require('../vouchers/item.vue'),
+	},
+	created(){
 		this.$store.dispatch('Users/GET_ITEM', { "id" : this.$route.params.id});
 
 		this.$store.dispatch('Breadcrumb/SET_ITEMS', [{
@@ -93,24 +110,20 @@ export default {
 			active: true
 		}]);
 	},
-	computed:{
-		items(){
-			return [{
-				id: 'vouchers',
-				name: 'Vouchers',
-				children: this.$store.state.Vouchers.items,
-			}];
-		},
-		item(){
-			return this.$store.state.Users.item;
-		},
-	},
-	destroyed(){
-		this.$store.dispatch('Users/CLEAR_ITEM');
-	},
-	data(){
-		return {
-			show: true,
+    watch: {
+        'item.apart.progress': function (){
+            this.updateProgress();
+        },
+    },
+    data(){
+        return {
+            state: {
+                modal: {
+                    voucher: false
+                },
+                uploads_vouchers: false,
+                disabledCreate: false
+            },
 			progress: {
 				status: false,
 				value: 0,
@@ -118,91 +131,135 @@ export default {
 				max: 99,
 				label: "0"
 			},
-			treeselect: {
-				noChildrenText: "No hay sub-opciones.",
-				noOptionsText: "No hay opciones disponibles.",
-				noResultsText: "No se encontraron resultados...",
-				placeholder:"Asignar Vouchers...",
-				retryText:"¿Procesar de nuevo?",
-				retryTitle:"Haga clic para volver a intentar",
-				searchPromptText:"Escribe para buscar...",
-				loadingText:"Cargando...",
-				clearValueText:"Limpiar valor",
-				clearAllText:"Limpiar todo",
-				multiple: true,
-				alwaysOpen: false,
-				clearOnSelect: true,
-				closeOnSelect: false,
-				appendToBody: false,
-				openDirection: 'top',
-				matchKeys: ['name'],
-				// value: [],
-				valueConsistsOf: 'LEAF_PRIORITY',
-				valueFormat: 'object',
-				normalizer(node) {
-				  return {
-				    label: node.name,
-				  }
-				},
-			}
+            modal: {
+                voucher: {
+                    name: "",
+                    description: "",
+                    file_name: "",
+                    file: "",
+                    apart: {
+                        loading: 1,
+                        progress: 0
+                    }
+                }
+            }
 		};
 	},
 	methods: {
-		resetSaveProgress(){
-			this.progress.value = 0;
+        delete_item(item, index){
+            if(this.item.vouchers[index] === item) { 
+                this.item.vouchers.splice(index, 1);
+            }
+            else{
+                let found = this.item.vouchers.indexOf(item);
+                
+                this.item.vouchers.splice(found, 1);
+            }
+        },
+        updateProgress(){
+            let sum = 0, voucher_cant_actions = 0;
 
-			this.progress.variant = 'primary';
+            for(let i = 0; this.item.vouchers.length>i; i++){
+                sum += (1*this.item.vouchers[i].apart.progress)/100;
+
+                voucher_cant_actions += this.item.vouchers[i].apart.action==1 || this.item.vouchers[i].apart.action==2 || this.item.vouchers[i].apart.action==3 ? 1 : 0
+            }
+
+            sum+= (1*this.item.apart.progress)/100;
+
+            this.progress.value = (sum/(voucher_cant_actions+1))*100;
+
+            this.progress.label = this.progress.value.toFixed().toString();
+
+            if(this.progress.value==100){
+                this.progress.variant = "success";
+
+                this.progress.label = "Su registro fue creado con éxito";
+            }
+        },
+        reset_modal_voucher(){
+            this.modal.voucher = {
+                name: "",
+                description: "",
+                file: "",
+                apart: {
+                    loading: 1,
+                    progress: 0,
+                    action: 0
+                }
+            };
+        },
+        add_voucher(resetFile){
+            resetFile();
+
+            this.item.vouchers.push(Object.assign(this.modal.voucher, {apart: {loading: 1, progress: 0, action: 1}}));
+
+            this.reset_modal_voucher();
+        },
+        resetSaveProgress(){
+            this.state.uploads_vouchers = false;
+
+            this.item.apart.progress = 0;
+            
+            this.progress = {
+                status: false,
+                value: 0,
+                variant: "primary",
+                max: 99,
+                label: "0"
+            }
 		},
-		onSubmit(evt){
-			evt.preventDefault();
+		onSubmit(e){
+            e.preventDefault();
 
-			this.progress.status = false;
+			this.$nextTick( () => { this.resetSaveProgress(); this.progress.status = true });
 
-			this.$nextTick(() => { this.resetSaveProgress(); this.progress.status = true });
+            const config = {
+                onUploadProgress: (progressEvent) => {
+                    let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
-			const config = {
-				onUploadProgress: (progressEvent) => {
-					let percentCompleted = Math.round((progressEvent.loaded * 99) / progressEvent.total);
+                    this.item.apart.progress = percentCompleted==100 ? 99 : percentCompleted;
+                }
+            };
 
-					this.progress.label = percentCompleted.toString();
+            let item = JSON.parse(JSON.stringify(this.item));
 
-					this.progress.value = percentCompleted;
-				}
-			};
+			['vouchers', 'apart'].forEach(e => delete item[e]);
 
-			axios.put('/api/users/'+this.$route.params.id, JSON.parse(JSON.stringify(this.item)), config)
+			axios.put('/api/users/'+this.item.id, item, config)
 			.then(()=>{
-				setTimeout( () => {
-					this.progress.variant = "success";
+                this.item.apart.progress = 100;
 
-					this.progress.label = "Su registro fue guardado con éxito";
+                this.state.uploads_vouchers = true;
 
-					this.$store.dispatch('Users/UPDATE_ITEM', JSON.parse(JSON.stringify(this.item)));
-
-					setTimeout( () => {
-						this.$router.push({name: 'users'}); // this.$router.go(-1);
-					}, 1500);
-				}, 1000);
+                this.$store.dispatch('Users/UPDATE_ITEM', item);
 			})
 			.catch(()=>{
-				setTimeout( () => {
-					this.progress.variant = 'danger';
+                this.progress.value = 100;
 
-					this.progress.label = "El registro no pudo ser guardado";
-				}, 1000);
+                this.progress.variant = 'danger';
+
+                this.progress.label = "El registro no pudo ser creado";
 			});
-		},
-		onReset(evt){
-			evt.preventDefault();
-
-			for(var i = 0; i < Object.keys(this.item).length; i++){
-				this.item[Object.keys(this.item)[i]] = '';
-			}
-
-			this.show = false;
-
-			this.$nextTick(() => { this.show = true });
 		}
 	}
 }
 </script>
+
+<style scoped>
+    .ball{
+        height: 24px;
+        width: 24px;
+        background: #343a40;
+        color: #fff;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 0.875rem;
+    }
+
+    .add_voucher{
+        margin-left: 10px;
+        border-color: #343a40;
+        background-color: #343a40;
+    }
+</style>
