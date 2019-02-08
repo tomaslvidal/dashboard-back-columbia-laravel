@@ -4,6 +4,8 @@ namespace Columbia\Http\Controllers\API;
 
 use Columbia\Voucher;
 
+use Columbia\UserVoucher;
+
 use Illuminate\Http\Request;
 
 use Columbia\Http\Requests\StoreVoucherAPI;
@@ -47,10 +49,10 @@ class VoucherController extends Controller
         $voucher->save();
 
         if(isset($request->users)){
-            for ($i=0; $i < count($request->users); $i++) { 
-                if(isset($request->users[$i]['id'])){
-                    $voucher->users()->attach($request->users[$i]['id']);
-                }
+            $request->users = json_decode($request->users);
+
+            for ($i=0; count($request->users) > $i; $i++) { 
+                $voucher->users()->attach($request->users[$i]);
             }
         }
 
@@ -59,6 +61,7 @@ class VoucherController extends Controller
             'id' => $voucher->id,
             'created_at' => $voucher->created_at->toDateTimeString(),
             'message' => 'operation success.',
+            'file_name' => isset($voucher['file_name']) ? $voucher['file_name'] : ''
         ]);
     }
 
@@ -78,7 +81,7 @@ class VoucherController extends Controller
     {
         $voucher = Voucher::find($id);
 
-        $voucher->fill($request->except(['file_name', 'users']));
+        $voucher->fill($request->except(['file_name', 'users', '_method']));
 
         if(null !== $request->file('file_name')){
             if($voucher['file_name']!=""){
@@ -97,14 +100,24 @@ class VoucherController extends Controller
         $voucher->update();
 
         if(isset($request->users)){
-            $voucher->users()->detach();
+            $request->users = json_decode($request->users);
 
-            for ($i=0; $i < count($request->users); $i++) { 
-                if(isset($request->users[$i]['id'])){
-                    $voucher->users()->attach($request->users[$i]['id']);
+            for ($i=0; count($request->users) > $i; $i++) { 
+                $count = UserVoucher::where('user_id', '=', $request->users[$i])->where('voucher_id', '=', $id)->count();
+
+                if($count==0){
+                    $voucher->users()->attach($request->users[$i]);
                 }
             }
         }
+
+        return response()->json([
+            'success' => true,
+            'id' => $voucher->id,
+            'created_at' => $voucher->created_at->toDateTimeString(),
+            'message' => 'operation success.',
+            'file_name' => isset($voucher['file_name']) ? $voucher['file_name'] : ''
+        ]);
     }
 
     public function destroy($id, Request $request)
