@@ -4,7 +4,7 @@
 
 		<hr>
 
-		<b-form @submit="onSubmit" @reset="onReset" v-if="show">
+		<b-form @submit="onSubmit">
 			<!-- Nombre -->
 			<b-form-group id="InputGroup1" label="Nombre:" label-for="name">
 				<b-form-input id="name" type="text" v-model="item.name" required placeholder="Escribir nombre" />
@@ -35,7 +35,7 @@
                 <div class="d-flex align-items-center mb-3 pt-1">
                     <label id="InputGroup6__BV_label_" for="add_vouchers" class="col-form-label py-0">Vouchers</label>
 
-                    <button type="button" @click="showModal()" class="btn btn-sm btn-primary add_voucher" style="margin-left: 10px;">Agregar</button>
+                    <button type="button" @click="() => { this.state.modal.voucher = !this.state.modal.voucher }" class="btn btn-sm btn-primary add_voucher" style="margin-left: 10px;">Agregar</button>
                 </div>
 
                 <table class="table">
@@ -43,24 +43,24 @@
                         <tr>
                             <th scope="col">#</th>
 
+                            <th scope="col">Carga</th>
+
                             <th scope="col">Nombre</th>
 
                             <th scope="col">Descripción</th>
 
-                            <!-- <th scope="col">Acción</th> -->
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <item :updateProgress="updateProgress" :key="index" :index="index" :upload_status="uploads_vouchers" :item="item" v-for="(item, index) in item.vouchers" />
+                        <item :user_id="item.id" :delete_item="delete_item" :updateProgress="updateProgress" :key="index" :index="index" :upload_status="state.uploads_vouchers" :item="item_" v-for="(item_, index) in item.vouchers" />
                     </tbody>
                 </table>
             </div>
 
-            <b-modal :hideFooter="true" title="Voucher" v-model="modal.voucher.state">
-                <div v-if="modal.voucher.state">
-                    <voucher-create :item="item.voucher_modal" :add_voucher="add_voucher"></voucher-create>
-                </div>
+            <b-modal :hideFooter="true" title="Voucher" v-model="state.modal.voucher">
+                <voucher-create :item="modal.voucher" :add_voucher="add_voucher"></voucher-create>
             </b-modal>
 
 			<hr>
@@ -94,21 +94,18 @@ export default {
 		}]);
 	},
     watch: {
-        'item.progress': function (){
+        'item.apart.progress': function (){
             this.updateProgress();
         },
     },
 	data(){
 		return {
-			show: true,
 			disabledCreate: false,
-            uploads_vouchers: false,
-            vouchers_loaded: 0,
-            modal:{
-                voucher: {
-                    state: false,
-                    id: null
-                }
+            state: {
+                modal: {
+                    voucher: false
+                },
+                uploads_vouchers: false,
             },
 			progress: {
 				status: false,
@@ -117,6 +114,19 @@ export default {
 				max: 99,
 				label: "0"
 			},
+            modal: {
+                voucher: {
+                    name: "",
+                    description: "",
+                    file_name: "",
+                    file: "",
+                    apart: {
+                        loading: 1,
+                        progress: 0,
+                        action: 0
+                    }
+                }
+            },
 			item: {
 				id: "",
 				name: "",
@@ -124,89 +134,79 @@ export default {
 				email: "",
 				password: "",
 				telephone: "",
-                progress: 0,
-                voucher_modal: {
-                    name: "",
-                    description: "",
-                    file_name: "",
-                    file: ""
-                },
-                vouchers: []
+                vouchers: [],
+                apart: {
+                    progress: 0
+                }
 			}
 		}
 	},
 	methods: {
-		resetSaveProgress(){
-            this.uploads_vouchers = false;
-
-            this.item.progress = 0;
-            
-			this.progress.value = 0;
-
-			this.progress.variant = 'primary';
-		},
-        showModal(){
-			this.modal.voucher.state = !this.modal.voucher.state;
-		},
+        delete_item(item, index){
+            if(this.item.vouchers[index] === item) { 
+                this.item.vouchers.splice(index, 1);
+            }
+            else{
+                let found = this.item.vouchers.indexOf(item);
+                
+                this.item.vouchers.splice(found, 1);
+            }
+        },
         updateProgress(){
-            let sum = 0;
+            let sum = 0, voucher_cant_actions = 0;
 
             for(let i = 0; this.item.vouchers.length>i; i++){
                 sum += (1*this.item.vouchers[i].apart.progress)/100;
+
+                voucher_cant_actions += this.item.vouchers[i].apart.action==1 || this.item.vouchers[i].apart.action==2 || this.item.vouchers[i].apart.action==3 ? 1 : 0
             }
 
-            sum+= (1*this.item.progress)/100;
+            sum+= (1*this.item.apart.progress)/100;
 
-            this.progress.value = (sum/(this.item.vouchers.length+1))*100;
+            this.progress.value = (sum/(voucher_cant_actions+1))*100;
 
             this.progress.label = this.progress.value.toFixed().toString();
 
-            if(this.item.vouchers.length>0){
-                if(this.progress.value==100){
-                    setTimeout(() => {
-                        this.progress.variant = "success";
+            if(this.progress.value==100){
+                this.progress.variant = "success";
 
-                        this.progress.label = "Su registro fue creado con éxito";
-                    }, 3500);
-                }
+                this.progress.label = "Su registro fue creado con éxito";
             }
         },
         reset_modal_voucher(){
-            this.item.voucher_modal = {
+            this.modal.voucher = {
                 name: "",
                 description: "",
-                file_name: "",
-                file: ""
+                file: "",
+                apart: {
+                    loading: 1,
+                    progress: 0,
+                    action: 0
+                }
             };
         },
         add_voucher(resetFile){
             resetFile();
 
-			let data = new FormData();
-
-            for(let i=0; Object.keys(this.item.voucher_modal).length>i; i++){
-                if(Object.keys(this.item.voucher_modal)[i]!="id"){
-                    if(this.item.voucher_modal[Object.keys(this.item.voucher_modal)[i]] instanceof FormData){
-                        this.item.voucher_modal[Object.keys(this.item.voucher_modal)[i]].forEach((value,key) => {
-                            data.append(key, value);
-                        });
-                    }
-                    else{
-                        if(Object.keys(this.item.voucher_modal)[i]!="file_name"){
-                            data.append(Object.keys(this.item.voucher_modal)[i], this.item.voucher_modal[Object.keys(this.item.voucher_modal)[i]]);
-                        }
-                    }
-                }
-            }
-
-            this.item.vouchers.push({data: data, apart: {loading: 1, progress: 0}});
+            this.item.vouchers.push(Object.assign(this.modal.voucher, {apart: {loading: 1, progress: 0, action: 1}}));
 
             this.reset_modal_voucher();
         },
+        resetSaveProgress(){
+            this.state.uploads_vouchers = false;
+
+            this.item.apart.progress = 0;
+            
+            this.progress = {
+                status: false,
+                value: 0,
+                variant: "primary",
+                max: 99,
+                label: "0"
+            }
+		},
 		onSubmit(e){
 			e.preventDefault();
-
-			this.progress.status = false;
 
 			this.$nextTick( () => { this.resetSaveProgress(); this.progress.status = true });
 
@@ -214,23 +214,33 @@ export default {
                 onUploadProgress: (progressEvent) => {
                     let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
-                    this.item.progress = percentCompleted;
+                    this.item.apart.progress = percentCompleted==100 ? 99 : percentCompleted;
                 }
             };
 
-            let item = JSON.parse(JSON.stringify(this.item));
+            let item = JSON.parse(JSON.stringify(this.item)), method = typeof this.item.id != "undefined" ? (this.item.id.length!=0 ? 'PUT' : 'POST') : 'POST';
 
-			['id', 'created_at', 'vouchers', 'voucher_modal', 'progress'].forEach(e => delete item[e]);
+			['vouchers', 'apart'].forEach(e => delete item[e]);
 
-			axios.post('/api/users', item, config)
+			axios({
+                url: '/api/users'+(method == 'PUT' ? '/'+this.item.id : ''),
+                data: item,
+                method: method,
+                onUploadProgress: config.onUploadProgress
+            })
 			.then((res)=>{
-                this.uploads_vouchers = true;
+                if(typeof res.data.id!="undefined"){
+                    if(res.data.id.length!=0){
+                        this.$set(this.item, 'id', res.data.id); item.id = res.data.id;
 
-                if(this.item.vouchers.length==0){
-                    this.progress.variant = "success";
-
-                    this.progress.label = "Su registro fue creado con éxito";
+                        item.created_at = res.data.created_at
+                    }
                 }
+                this.item.apart.progress = 100;
+
+                this.state.uploads_vouchers = true;
+
+                this.$store.dispatch('Users/ADD_ITEM', item);
 			})
 			.catch(()=>{
                 this.progress.value = 100;
@@ -239,17 +249,6 @@ export default {
 
                 this.progress.label = "El registro no pudo ser creado";
 			});
-		},
-		onReset(e){
-			e.preventDefault();
-
-			for (var i = 0; i < Object.keys(this.item).length; i++) {
-				this.item[Object.keys(this.item)[i]] = '';
-			}
-
-			this.show = false;
-
-			this.$nextTick(() => { this.show = true });
 		}
 	}
 }
