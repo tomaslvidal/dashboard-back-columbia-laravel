@@ -31,7 +31,7 @@
 
             <button type="button" @click="click_delete_item" class="btn btn-sm btn-danger">Borrar</button>
 
-            <b-btn size="sm" :disabled="item.file_name.length==0" variant="outline-secondary" target="_blank" :href="'/vouchers/download/'+item.file_name">Descargar</b-btn>
+            <b-btn size="sm" :disabled="typeof item.file_name != 'undefined' ? (item.file_name.length==0 ? true : false) : true" variant="outline-secondary" target="_blank" :href="'/vouchers/download/'+item.file_name">Descargar</b-btn>
 
             <b-modal :hideFooter="true" title="Voucher" v-model="state.modal.edit_voucher">
                 <voucher-edit :item="item" :closeModal="() => {this.state.modal.edit_voucher = !this.state.modal.edit_voucher}"></voucher-edit>
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import uniqueString from 'unique-string';
+ 
 export default {
     components: {
 		'progress-radius': require('../../components/utilities/Progress.vue'),
@@ -54,6 +56,10 @@ export default {
                 progress: 0,
                 action: 0
             })
+        }
+
+        if(typeof this.item.front_id == "undefined"){
+            this.$set(this.item, 'front_id', uniqueString());
         }
     },
     data(){
@@ -96,24 +102,26 @@ export default {
 
             if(confirm_){
                 if(typeof this.item.id == "undefined"){
-                    this.delete_item(this.item, this.index);
+                    this.delete_item(this.item.front_id);
                 }
                 else{
                     this.item.apart.action = 3;
                 }
             }
         },
-        reset_some_aparts(){
-            this.item.apart.progress = 0;
+        reset_some_aparts(item){
+            item.apart.progress = 0;
 
-            this.item.apart.action = 0;
+            item.apart.action = 0;
         },
         edit(){
+            let item = this.item;
+
             const config = {
                 onUploadProgress: (progressEvent) => {
                     let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                     
-                    this.item.apart.progress = percentCompleted==100 ? 99 : percentCompleted;
+                    item.apart.progress = percentCompleted==100 ? 99 : percentCompleted;
                 }
             };
 
@@ -122,7 +130,7 @@ export default {
             for(let i=0; Object.keys(this.item).length>i; i++){
                 let key_ = Object.keys(this.item)[i];
 
-                if(key_!="apart" && key_!="file_name" && key_!="pivot" && key_!="deleted_at" && key_!="updated_at" && key_!="created_at" && key_!="id"){
+                if(key_!="apart" && key_!="front_id" && key_!="file_name" && key_!="pivot" && key_!="deleted_at" && key_!="updated_at" && key_!="created_at" && key_!="id"){
                     if(this.item[key_] instanceof FormData){
                         this.item[key_].forEach((value,key) => {
                             data.append('file_name', value);
@@ -142,26 +150,28 @@ export default {
 
 			axios.post('/api/vouchers/'+this.item.id, data, config)
 			.then((res)=>{
-                this.item.apart.progress = 100;
+                item.apart.progress = 100;
 
-                this.$set(this.item, 'file_name', res.data.file_name);
+                this.$set(item, 'file_name', res.data.file_name);
 
-                this.$set(this.item.apart, 'loading', 3);
+                this.$set(item.apart, 'loading', 3);
 
-                this.reset_some_aparts();
+                this.reset_some_aparts(item);
 			})
 			.catch(()=>{
-                this.$set(this.item.apart, 'loading', 4)
+                this.$set(item.apart, 'loading', 4)
 
-                this.reset_some_aparts();
+                this.reset_some_aparts(item);
 			});
         },
         create(){
+            let item = this.item;
+
             const config = {
                 onUploadProgress: (progressEvent) => {
                     let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
-                    this.item.apart.progress = percentCompleted==100 ? 99 : percentCompleted;
+                    item.apart.progress = percentCompleted==100 ? 99 : percentCompleted;
                 }
             };
 
@@ -170,7 +180,7 @@ export default {
             for(let i=0; Object.keys(this.item).length>i; i++){
                 let key_ = Object.keys(this.item)[i];
 
-                if(key_!="apart" && key_!="file_name" && key_!="pivot" && key_!="deleted_at" && key_!="updated_at" && key_!="created_at" && key_!="id"){
+                if(key_!="apart" && key_!="front_id" && key_!="file_name" && key_!="pivot" && key_!="deleted_at" && key_!="updated_at" && key_!="created_at" && key_!="id"){
                     if(this.item[key_] instanceof FormData){
                         this.item[key_].forEach((value,key) => {
                             data.append('file_name', value);
@@ -188,26 +198,28 @@ export default {
 
             axios.post('/api/vouchers', data, config)
             .then((res)=>{
-                this.item.apart.progress = 100;
+                item.apart.progress = 100;
 
-                this.$set(this.item.apart, 'loading', 3);
+                this.$set(item.apart, 'loading', 3);
 
-                this.$set(this.item, 'id', res.data.id);
+                this.$set(item, 'id', res.data.id);
 
-                this.$set(this.item, 'file_name', res.data.file_name);
+                this.$set(item, 'file_name', res.data.file_name);
 
-                this.reset_some_aparts();
+                this.reset_some_aparts(item);
             })
             .catch(()=>{
-                this.$set(this.item.apart, 'loading', 4)
+                this.$set(item.apart, 'loading', 4)
 
-                this.reset_some_aparts();
+                this.reset_some_aparts(item);
             });
         },
         delete(){
-            this.$set(this.item.apart, 'loading', 2);
+            let item = this.item;
 
             this.item.apart.progress = 99;
+
+            this.$set(this.item.apart, 'loading', 2);
 
             if(typeof this.item.id != "undefined"){
                 axios({
@@ -215,9 +227,11 @@ export default {
                     url: '/api/vouchers/'+this.item.id,
                 })
                 .then(() => {
-                    this.item.apart.progress = 100;
+                    item.apart.progress = 100;
 
-                    this.delete_item(this.item, this.index);
+                    setTimeout(() => {
+                        this.delete_item(item.front_id);
+                    }, 300)
                 });
             }
         }
