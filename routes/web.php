@@ -7,6 +7,10 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 Auth::routes(['verify' => false, 'register' => false, 'reset' => false]);
 
+// Route::get('/test', function(){
+//     echo "teasteando...2";
+// });
+
 // Route::group(['middleware' => 'auth:api'], function () {
 	Route::get('/vouchers_m/download/{file}', 'API\VoucherController@download');
 

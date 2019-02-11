@@ -45,33 +45,6 @@ export default new Router({
       },
       beforeEnter: Authenticated
     },
-    // {
-    //   path: "/vouchers",
-    //   name: "vouchers",
-    //   props: {
-    //     model: 'Voucher'
-    //   },
-    //   component: require('./views/vouchers/index.vue'),
-    //   beforeEnter: Authenticated
-    // },
-    {
-      path: '/vouchers/create',
-      name: "voucher_create",
-      props: {
-        model: 'Voucher'
-      },
-      component: require('./views/vouchers/create.vue'),
-      beforeEnter: Authenticated
-    },
-    {
-      path: '/vouchers/:id',
-      name: "voucher_edit",
-      props: {
-        model: 'Voucher'
-      },
-      component: require('./views/vouchers/edit.vue'),
-      beforeEnter: Authenticated
-    },
     {
       path: "/users",
       name: "users",
