@@ -142,15 +142,8 @@ export default {
 		}
 	},
 	methods: {
-        delete_item(item, index){
-            if(this.item.vouchers[index] === item) { 
-                this.item.vouchers.splice(index, 1);
-            }
-            else{
-                let found = this.item.vouchers.indexOf(item);
-                
-                this.item.vouchers.splice(found, 1);
-            }
+        delete_item(front_id){
+            this.item.vouchers.splice(this.item.vouchers.findIndex(item => item.front_id == front_id), 1);
         },
         updateProgress(){
             let sum = 0, voucher_cant_actions = 0;
