@@ -73,8 +73,8 @@ class UserController extends Controller
     public function update($id, StoreUserAPI $request)
     {
         $user = User::find($id);
-
-        $user->password = bcrypt($request->password);
+        
+        isset($request->password) ? $user->password = bcrypt($request->password) : null;
 
         $user->update($request->except(['vouchers', 'password']));
 
