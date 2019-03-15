@@ -25,7 +25,7 @@ class Telephone implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(preg_match("/^\+?\d+$/", $value) && strlen($value) <= 15){
+        if(preg_match("/^\+?(\d|\-)+$/", $value) && strlen($value) <= 15){
             return true;
         }
         else{
