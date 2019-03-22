@@ -8,7 +8,7 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Auth::routes(['verify' => false, 'register' => false, 'reset' => false]);
 
 // Route::get('/test', function(){
-//     echo "teasteando...2";
+//     Auth::loginUsingId(1507);
 // });
 
 // Route::group(['middleware' => 'auth:api'], function () {
