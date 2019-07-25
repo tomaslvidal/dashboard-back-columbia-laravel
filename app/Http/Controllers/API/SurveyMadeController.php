@@ -70,6 +70,22 @@ class SurveyMadeController extends Controller
                     }
                 }
                 else{
+                    $survey_field_type = SurveyField::find(intval($key));
+
+                    if(!is_null($survey_field_type)){
+                        if($survey_field_type->type === "2"){
+                            $survey_option = new SurveyMadeOption();
+
+                            $survey_option->survey_made_field_id = $survey_field->id;
+
+                            $survey_option->survey_option_id = $value;
+
+                            $survey_option->save();
+
+                            continue;
+                        }
+                    }
+
                     $survey_option = new SurveyMadeOption();
 
                     $survey_option->survey_made_field_id = $survey_field->id;
