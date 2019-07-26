@@ -26,10 +26,10 @@ class StoreDestinationAPI extends FormRequest
         $return = array(
             'title' => 'string|max:60',
             'subtitle' => 'string|max:60',
-            'image1' => 'file|image|max:2000',
-            'image2' => 'file|image|max:2000',
-            'image3' => 'file|image|max:2000',
-            'image4' => 'file|image|max:2000',
+            'image1' => 'file|image|max:600',
+            'image2' => 'file|image|max:600',
+            'image3' => 'file|image|max:600',
+            'image4' => 'file|image|max:600',
         );
 
         if($this->method()!="PUT" && $this->method()!="PATCH"){
