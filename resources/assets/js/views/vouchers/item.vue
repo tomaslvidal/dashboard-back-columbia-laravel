@@ -149,7 +149,7 @@ export default {
             this.$set(this.item.apart, 'loading', 2);
 
 			axios.post('/api/vouchers/'+this.item.id, data, config)
-			.then((res)=>{
+			.then(res => {
                 item.apart.progress = 100;
 
                 this.$set(item, 'file_name', res.data.file_name);
@@ -158,7 +158,7 @@ export default {
 
                 this.reset_some_aparts(item);
 			})
-			.catch(()=>{
+			.catch(() => {
                 this.$set(item.apart, 'loading', 4)
 
                 this.reset_some_aparts(item);
@@ -197,7 +197,7 @@ export default {
             this.$set(this.item.apart, 'loading', 2);
 
             axios.post('/api/vouchers', data, config)
-            .then((res)=>{
+            .then(res =>{
                 item.apart.progress = 100;
 
                 this.$set(item.apart, 'loading', 3);
@@ -208,7 +208,7 @@ export default {
 
                 this.reset_some_aparts(item);
             })
-            .catch(()=>{
+            .catch(() => {
                 this.$set(item.apart, 'loading', 4)
 
                 this.reset_some_aparts(item);

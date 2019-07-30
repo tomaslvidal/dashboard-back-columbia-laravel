@@ -210,8 +210,8 @@ export default {
 			['created_at', 'deleted_at', 'updated_at'].forEach(e => delete item[e]);
 
 			axios.put('/api/surveys/'+this.$route.params.id, item, config)
-			.then(()=>{
-				setTimeout( () => {
+			.then(() => {
+				setTimeout(() => {
 					this.progress.variant = "success";
 
 					this.progress.label = "Su registro fue guardado con éxito";
@@ -223,7 +223,7 @@ export default {
 					}, 1500);
 				}, 1000);
 			})
-			.catch(()=>{
+			.catch(() => {
 				setTimeout( () => {
 					this.progress.variant = 'danger';
 

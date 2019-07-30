@@ -221,7 +221,7 @@ export default {
                 method: method,
                 onUploadProgress: config.onUploadProgress
             })
-			.then((res)=>{
+			.then(res => {
                 if(typeof res.data.id!="undefined"){
                     if(res.data.id.length!=0){
                         this.$set(this.item, 'id', res.data.id); item.id = res.data.id;
@@ -235,7 +235,7 @@ export default {
 
                 this.$store.dispatch('Users/ADD_ITEM', item);
 			})
-			.catch(()=>{
+			.catch(() => {
                 this.progress.value = 100;
 
                 this.progress.variant = 'danger';

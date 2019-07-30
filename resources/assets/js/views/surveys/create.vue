@@ -208,7 +208,7 @@ export default {
 					}, 1500);
 				}, 1000);
 			})
-			.catch(()=>{
+			.catch(() => {
 				setTimeout( () => {
 					this.progress.variant = 'danger';
 

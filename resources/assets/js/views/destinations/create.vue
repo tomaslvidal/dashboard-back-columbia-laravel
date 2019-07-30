@@ -214,7 +214,7 @@ export default {
 			['id', 'created_at'].forEach(e => delete items[e]);
 
 			axios.post('/api/destinations', JSON.parse(JSON.stringify(items)), config)
-			.then((res)=>{
+			.then(res =>{
 				setTimeout( () => {
 					this.progress.variant = "success";
 
@@ -233,7 +233,7 @@ export default {
 					}, 1500);
 				}, 1000);
 			})
-			.catch(()=>{
+			.catch(() => {
 				this.progress.variant = 'danger';
 
 				this.progress.label = "El registro no pudo ser creado"
