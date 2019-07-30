@@ -14,9 +14,15 @@ use Columbia\Http\Controllers\Controller;
 
 class DestinationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Destination::all();
+        $columns_hidden = ['subtitle', 'image2', 'image3', 'image4', 'image5', 'updated_at', 'created_at', 'deleted_at'];
+
+        if(isset($request->new_version)){
+            array_push($columns_hidden, 'description');
+        }
+
+        return Destination::all()->makeHidden($columns_hidden);
     }
 
     public function create()
@@ -53,7 +59,7 @@ class DestinationController extends Controller
     {
         $destination = Destination::find($id);
 
-        return $destination;
+        return $destination->makeHidden(['subtitle', 'updated_at', 'image2', 'image3', 'image4', 'image5', 'updated_at', 'created_at', 'deleted_at']);
     }
 
     public function edit($id)
