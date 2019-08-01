@@ -16,10 +16,16 @@ class DestinationController extends Controller
 {
     public function index(Request $request)
     {
-        $columns_hidden = ['subtitle', 'image2', 'image3', 'image4', 'image5', 'updated_at', 'created_at', 'deleted_at'];
+        $columns_hidden = ['image2', 'image3', 'image4', 'image5', 'updated_at', 'deleted_at'];
 
         if(isset($request->new_version)){
             array_push($columns_hidden, 'description');
+
+            $paginator = Destination::paginate(8);
+
+            $paginator->data = $paginator->makeHidden($columns_hidden);
+
+            return $paginator;
         }
 
         return Destination::all()->makeHidden($columns_hidden);
@@ -41,7 +47,6 @@ class DestinationController extends Controller
                 $storageName = basename($storagePath);
 
                 $destination['image'.$i] = $storageName;
-
             }
         }
     
@@ -59,7 +64,7 @@ class DestinationController extends Controller
     {
         $destination = Destination::find($id);
 
-        return $destination->makeHidden(['subtitle', 'updated_at', 'image2', 'image3', 'image4', 'image5', 'updated_at', 'created_at', 'deleted_at']);
+        return $destination->makeHidden(['image2', 'image3', 'image4', 'image5', 'updated_at', 'created_at', 'deleted_at']);
     }
 
     public function edit($id)
