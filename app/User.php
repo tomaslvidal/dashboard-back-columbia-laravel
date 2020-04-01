@@ -59,6 +59,12 @@ class User extends Authenticatable
         $this->attributes['last_name'] = ucfirst($value);
     }
 
+    //01-04-20 dado de baja
+    public function validateForPassportPasswordGrant($password)
+    {
+        return false;
+    }
+
     // public function setPasswordAttribute($value)
     // {
     //     $this->attributes['password'] = bcrypt($value);
